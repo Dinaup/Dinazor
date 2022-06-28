@@ -1,0 +1,30 @@
+﻿
+
+@page "/MiCuenta"
+@inherits DinaupPage
+
+
+
+<PageTitle>Mi cuenta.</PageTitle>
+
+
+<h1>Mi cuenta</h1>
+
+@if (Dinaup_Sesion.ConexionDisponibleConElServidorDinaup  == false )
+{
+	
+	<b>Sin Conexion</b>
+
+}
+else if(Dinaup_Sesion.SesionIniciada){
+
+	<b>Hola</b>
+
+
+}else{
+
+
+	<b>No ha iniciado sesión</b>
+
+}
+

@@ -1,0 +1,59 @@
+﻿@inject DinaNETCore.ICookie cookie  
+@inject NavigationManager NavManager
+
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">
+             <img src="archivos/logo.png"  height="50"/> 
+        </a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="fi fi-sr-menu-burger" style="color:black; ">
+            </span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Inicio
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Recambios">
+                <span class="oi oi-cart" aria-hidden="true"></span> Recambios
+            </NavLink>
+        </div>
+
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Talleres">
+                <span class="oi fi fi-sr-car-mechanic" aria-hidden="true"></span> Talleres
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Contacto">
+                <span class="oi fi fi-sr-phone-call" aria-hidden="true"></span> Contacto
+            </NavLink>
+        </div>
+  
+
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+
+
+}

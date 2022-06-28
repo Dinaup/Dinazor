@@ -1,0 +1,95 @@
+﻿@inherits DinaupPage 
+@inject DinaNETCore.ICookie Coockie
+
+<PageTitle>x</PageTitle>
+
+
+	
+@if (!Dinaup_Sesion.SesionIniciada)
+{
+
+	<div class="barralogin">
+
+
+
+	<a class="item" href="/Sesion">
+		<span class="fi fi-sr-sign-in" aria-hidden="true"></span> Iniciar Sesión
+	</a> 
+	<div class="item">|</div>
+	<a  class="item" href="/Sesion">
+		<span class="fi fi-sr-user-add" aria-hidden="true"></span> Crear Cuenta
+	</a>
+
+
+	
+</div>
+}
+
+<div class="page">
+
+	
+
+
+
+	<div class="sidebar">
+		<NavMenu />
+	</div>
+
+	<main>
+		<div class="top-row px-4">
+			
+		@if ( Dinaup_Sesion.SesionIniciada)
+		{
+
+			<a class="item" @onclick="CerrarSesion">
+				<span class="fi fi-sr-power" aria-hidden="true"></span> Cerrar sesión
+			</a>
+		}
+		 
+		</div>
+
+	
+		<article class="content px-4">
+			@Body
+		</article>
+	</main>
+
+</div>
+<RadzenDialog/>
+<RadzenNotification/>
+<RadzenContextMenu/>
+<RadzenTooltip/>
+<NavFooter>
+</NavFooter>
+
+@code{
+
+
+	
+	[Parameter]
+	public Microsoft.AspNetCore.Components.RenderFragment Body { get; set; } 
+
+	private void CerrarSesion()
+	{
+
+		Coockie.SetValue("sesionid", "");
+		Dinaup_Sesion.CerrarSesion( );
+		this.NavigationManager.NavigateTo("/");
+
+	}
+
+	protected override Task OnInitializedAsync()
+	{
+
+		 Dinaup_Sesion.SesionCambiada +=  this.StateHasChanged ;
+		return base.OnInitializedAsync();
+	}
+
+	public void Dispose()
+	{
+		 Dinaup_Sesion.SesionCambiada -=  this.StateHasChanged ;
+	}
+
+
+
+}

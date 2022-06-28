@@ -1,0 +1,78 @@
+﻿@code {
+
+	
+	/// <summary>
+	/// SeccionID, InformeID o Token.
+	/// </summary>
+	[Parameter]
+	public string  TokenID { get; set; }
+
+	[Parameter]
+	public DinaNETCore.APID.APID_InformeC DinaupInformeRespuesta { get; set; }
+
+
+}
+
+
+
+
+
+
+
+
+<RadzenDropDownDataGrid TValue="string" 
+                        LoadData="@LoadDataVirtualization" 
+                        AllowFiltering="true"
+                        AllowClear="true" 
+                        AllowVirtualization="true"
+                        Data=@customCustomersDataVirtualization 
+                        Count="@customCustomersDataVirtualizationCount"
+                        TextProperty="CompanyName" 
+                        ValueProperty="CustomerID"
+                        Change=@(args => OnChange(args, "DropDownDataGrid with virtualization using LoadData event")) Class="w-100"/>
+
+
+
+
+@code {
+
+
+	
+
+
+
+	IEnumerable<IDictionary<string, object>> data;
+	
+
+	int count;
+	int countActual;
+	bool isLoading;
+
+
+
+
+
+	int customCustomersDataVirtualizationCount;
+	IEnumerable<object> customCustomersDataVirtualization;
+
+	void OnChange(object value, string name)
+	{
+		var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
+	}
+    
+	void LoadDataVirtualization(LoadDataArgs args)
+	{
+
+		isLoading = true;
+		Utilidades.AplicarConfiguracionDeCargaAInforme(args, DinaupInformeRespuesta);
+		DinaupInformeRespuesta.ActualizarDatos();
+		data = DinaupInformeRespuesta.Respuesta.Listado.FilasEnDic();
+		count = DinaupInformeRespuesta.Respuesta.Listado.Totalresultados;
+		isLoading = false;
+
+
+		InvokeAsync(StateHasChanged);
+	}
+
+
+}

@@ -1,0 +1,70 @@
+﻿@page "/"
+@inherits DinaupPage
+
+
+
+
+
+
+
+
+<PageTitle>Autodesguaces Alicante</PageTitle>
+
+
+ 
+@*
+
+<h4 class="mb-4">Virtualization using LoadData event</h4>
+<RadzenDropDownDataGrid TValue="string" 
+                        LoadData="@LoadDataVirtualization" 
+                        AllowFiltering="true"
+                        AllowClear="true" 
+                        AllowVirtualization="true"
+                        Data=@customCustomersDataVirtualization 
+                        Count="@customCustomersDataVirtualizationCount"
+                        TextProperty="CompanyName" 
+                        ValueProperty="CustomerID"
+						Change=@(args => OnChange(args, "DropDownDataGrid with virtualization using LoadData event")) Class="w-100"/>
+
+*@
+
+@*<h1>Lista de marcas y modelos!</h1>
+
+
+
+
+<ul>
+
+@foreach (var MarcaActual in InformeDeMarcasYModelos.Filas )
+{
+
+	<li> <b> @MarcaActual.Marca </b> : y @MarcaActual.Modelo    </li> 
+	
+}
+
+ </ul>
+ 
+
+<BarraCambiarDePagina DinaupInformeRespuesta="@InformeDeMarcasYModelos"  PaginaCambiada="this.StateHasChanged"></BarraCambiarDePagina>
+*@
+
+@code {
+
+
+
+
+	//private MiDinaup.InformesD. InformeDeMarcasYModelos = new MiDinaup.InformesD.FuncionalidadD.APIMarcasYModelosC();
+	protected override Task OnInitializedAsync()
+	{
+		//if(Dinaup_Sesion  != null && Dinaup_Sesion .DinaupUsuario != null){
+		//   InformeDeMarcasYModelos.ConsultarAsync(Dinaup_Sesion.DinaupUsuario , 1, 100);
+		//}
+
+		return base.OnInitializedAsync();
+	}
+
+ 
+
+}  
+
+

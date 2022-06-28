@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@namespace Dinazor.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="~/" />
+    
+    
+    <script src="css/bootstrap/bootstrap.bundle.min.js"></script>
+    
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="css/uicons-solid-rounded/css/uicons-solid-rounded.css" rel="stylesheet" />
+    <link href="Dinazor.styles.css" rel="stylesheet" />
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/default-base.css">
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+
+    <script>
+	    window.CookieFunction = {
+		    acceptMessage: function (cookieString) {
+			    document.cookie = cookieString;
+		    }
+	    };    
+    </script>
+    
+
+</head>
+<body>
+
+
+    @RenderBody()
+
+
+	<div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            Se ha producido un error. Es posible que esta aplicación ya no responda hasta que se vuelva a cargar.
+        </environment>
+        <environment include="Development">
+            Se ha producido una excepción no controlada. Consulte las herramientas de desarrollo del navegador para obtener más información.        
+        </environment>
+        <a href="" class="reload">Recargar</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>
+
+            

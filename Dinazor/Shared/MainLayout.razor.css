@@ -1,0 +1,132 @@
+
+:root {
+    --alto-footer: 100px
+}
+
+
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 200px);
+}
+
+ 
+main {
+    flex: 1;
+    margin: 0px;
+}
+
+
+
+.sidebar, .top-row {
+    background: #F9F9F9;
+    box-shadow: 0 1px 6px rgba(3,0,71,.09) !important;
+}
+
+
+
+.sidebar {
+    background-image: radial-gradient(at top left, #FFE7E7 20%, #F9F9F9 50%);
+    background-size: 300px 100px;
+    background-repeat: no-repeat;
+    background-position: left top
+}
+
+
+.top-row {
+    /*background-image: url( 'archivos/foto01 - copia.png' );*/
+    height: 50px;
+    background-size: cover;
+    background-position: center center;
+    border: 1px solid rgba(255,255,255,0.25);
+}
+
+.top-row {
+    background-color: #f7f7f7;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+.top-row ::deep a, .top-row .btn-link {
+    white-space: nowrap;
+    margin-left: 1.5rem;
+}
+
+    .top-row a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth) {
+        display: none;
+    }
+
+    .top-row.auth {
+        justify-content: space-between;
+    }
+
+    .top-row a, .top-row .btn-link {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        min-height: calc(100vh - 200px);
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row, article {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+
+
+.barralogin {
+    background: #212121;
+    color: white;
+    padding: 5px;
+    display: flex;
+    justify-content: flex-end;
+}
+ 
+
+.barralogin * {
+    color: white;
+}
+
+    .barralogin .item {
+        color: white;
+        padding: 12px;
+        text-decoration: none;
+        margin-left: 5px;
+        vertical-align: middle;
+        align-items: center;
+        display:inline-block
+    }
+
+.barralogin a span {
+    margin-right: 5px;
+    position: relative;
+    top:1px
+}
+

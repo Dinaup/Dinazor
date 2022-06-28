@@ -1,0 +1,53 @@
+﻿
+
+@inherits DinaupPage 
+
+
+@if(DinaupInformeRespuesta != null && DinaupInformeRespuesta.Respuesta!= null && DinaupInformeRespuesta.Respuesta.Listado != null){
+
+    <RadzenPager ShowPagingSummary="true"
+		PagingSummaryFormat="@pagingSummaryFormat" HorizontalAlign="HorizontalAlign.Right"
+	Count="@DinaupInformeRespuesta.Respuesta.Listado.Totalresultados" PageSize="@DinaupInformeRespuesta.Respuesta.Listado.ResultadosPorPagina" 
+	PageNumbersCount="10" 
+	PageChanged="@PageChanged" />
+
+
+	}
+
+@code{
+
+
+
+
+	[Parameter]
+	public DinaNETCore.APID.APID_InformeC DinaupInformeRespuesta { get; set; } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public string pagingSummaryFormat = "Mostrando página {0} de {1} (total {2} registros)";
+
+
+
+	void PageChanged(PagerEventArgs args)
+	{
+
+		if (DinaupInformeRespuesta == null) { return;}
+		var Rpp = DinaupInformeRespuesta.Respuesta.Listado.ResultadosPorPagina  ;
+		DinaupInformeRespuesta.ConsultarAsync(Dinaup_Sesion.DinaupUsuario , args.PageIndex+1, Rpp  );
+		PaginaCambiada.InvokeAsync(null);
+	}
+
+	   [Parameter]
+    public EventCallback<EventArgs> PaginaCambiada{ get; set; }
+
+}

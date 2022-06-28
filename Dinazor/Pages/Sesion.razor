@@ -1,0 +1,437 @@
+﻿@page "/Sesion"
+@page "/Sesion/{Accion}"
+@inherits DinaupPage
+@inject DinaNETCore.ICookie Coockie
+
+
+<PageTitle>Mi cuenta: @Accion .</PageTitle>
+
+
+
+<Dinaup_Avisos avisosoks="@AvisosOk" avisoserrores="@AvisosError">
+</Dinaup_Avisos>
+ 
+
+ 
+
+
+
+@if (Dinaup_Sesion.ConexionDisponibleConElServidorDinaup == false)
+{
+
+
+	<div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+		<div class="contenedor" style="width:600px;;">
+			<h1> <span class="fi-rr-time-quarter-to"></span>No disponible en este momento</h1><hr>
+			<p>Actualmente estamos realizando tareas de mantenimiento y el servidor web no está disponible, por favor inténtelo de nuevo más tarde.</p>
+			<div align="center"><img src="/archivos/mantenimiento.svg" width="200px" height="200px" style="margin-top:10px; opacity: 0.3" alt="xx"></div>
+		</div>
+	</div>
+
+
+}
+else if (Dinaup_Sesion.SesionIniciada && Dinaup_Sesion.CambiarPass)
+{
+
+	<div class="contenedor container p-5" style="max-width:600px">
+		<div class="row">
+			<div class="col">
+			<h1> <span class="fi-sr-edit"> </span>Cambio de contraseña</h1>
+			<p>Por seguridad asigne una contraseña que únicamente usted conozca.</p>
+
+
+			<EditForm Model="@Form_CambiarContrasena" OnSubmit="@ProcesarFormulario_CambiarContrasena">
+				<DataAnnotationsValidator />
+				<ValidationSummary />
+
+ 
+					 
+					<div class="input-group flex-nowrap mb-3">
+						<span class="input-group-text fi fi-sr-password" id="addon-wrapping">  </span>
+						<InputText @bind-Value="Form_CambiarContrasena.Pass1"   class="form-control" placeholder="Contraseña"  type="password"/>
+					</div>
+					
+					
+					<div class="input-group flex-nowrap mb-3">
+						<span class="input-group-text fi fi-sr-password" id="addon-wrapping">  </span>
+						<InputText @bind-Value="Form_CambiarContrasena.Pass2"   class="form-control" placeholder="Contraseña"  type="password"/>
+					</div>
+
+
+
+
+				<div align="center">
+					<button class="btn btn-primary mb-3" type="submit">Cambiar contraseña</button>
+				</div>
+
+			</EditForm >
+			</div>
+		</div>
+
+	</div>
+
+		
+}
+else if (Dinaup_Sesion.SesionIniciada == false && Form_CrearCuenta_Activar is not  null)
+{
+@*
+
+			
+				<RadzenButton Text="Show notification with custom position" Class="w-100"
+				              Click=@(args => ShowNotification(new NotificationMessage { Style = "position: absolute; left: -1000px;", 
+					                    Severity = NotificationSeverity.Success, 
+					                    Summary = "Success Summary", 
+					                    Detail = "Success Detail", Duration = 40000 })) />
+*@
+
+	<div class="contenedor container p-5" style="max-width:600px">
+		<div class="row">
+
+			<EditForm Model="@Form_CrearCuenta_Activar" OnSubmit="@ProcesarFormulario_CrearCuenta_Activar">
+				<DataAnnotationsValidator />
+				<ValidationSummary />
+				
+			@if (Form_CrearCuenta_Activar_Procesando )
+			{
+
+
+				<div class="d-flex align-items-center">
+					<strong>Procesando...</strong>
+					<div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+				</div>
+
+			}else{
+
+		
+				<environment include="Development">
+					@if (Form_CrearCuenta.EmailValidacion_Enviar == false && Form_CrearCuenta.Retornar_CodigoDeValidacion != "")
+					{
+						<RadzenBadge  BadgeStyle="BadgeStyle.Light" IsPill="true" Text="@Form_CrearCuenta.Retornar_CodigoDeValidacion" />
+					}
+				</environment>
+							
+
+
+				<h1> <span class="fi fi-sr-redo"> </span>Activación requerida</h1>
+				<span class="mb-3 ">
+					Para completar el proceso introduzca el código que hemos enviado a <i class="bg-light border">@Form_CrearCuenta.Usuario_Identificador</i> .
+				</span>
+				<div class="input-group flex-nowrap mb-3 ">
+					<span class="input-group-text fi fi-sr-hastag" id="addon-wrapping">  </span>
+					<InputText @bind-Value="Form_CrearCuenta_Activar.CodigoDeActivacion" class="form-control" placeholder="Código" />
+				</div>
+				<div class="row align-items-center justify-content-between">
+					<div class="col">
+						<button class="btn btn-primary mb-3" type="submit">Validar cuenta</button>
+						<a class="btn btn-outline-secondary  mb-3" @onclick="@(()=> Form_CrearCuenta_Activar = null)">
+							Cambiar datos
+						</a>
+					</div>
+				</div>
+				<hr class="m-3" />
+				<div class="row">
+					* Si tiene algún problema durante el proceso, puede llamar a atención al cliente.
+				</div>
+
+			}
+			</EditForm>
+		</div>
+	</div>
+
+
+
+
+}
+else if (Dinaup_Sesion.SesionIniciada == false && Accion == "Recuperar")
+{
+
+	
+	<div class="contenedor container p-5" style="max-width:600px" >
+	
+		<EditForm  Model="@Form_RecuperarContrasena" OnSubmit="@ProcesarFormulario_RecuperarContrasena">
+			<DataAnnotationsValidator/>
+			<ValidationSummary/>
+
+		<div class="row">
+			<h1> <span class="fi fi-sr-redo" > </span>Recuperar contraseña</h1>
+			
+				
+				
+               	@if (Form_RecuperarContrasena_Procesando){
+
+
+		               <div class="d-flex align-items-center">
+			               <strong>Procesando...</strong>
+			               <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+		               </div>
+
+               	}else if (Form_RecuperarContrasena.Return_EsperandoCodigo){
+               
+               		<span class="mb-3 ">
+               			 Para completar el proceso introduzca el código que hemos enviado a <i class="bg-light border">@Form_RecuperarContrasena.Identificador</i> .
+               		</span>
+               		<div class="input-group flex-nowrap mb-3 ">
+               			<span class="input-group-text fi fi-sr-hastag" id="addon-wrapping">  </span>
+               			<InputText @bind-Value="Form_RecuperarContrasena.Codigo"  class="form-control" placeholder="Código" />
+               		</div>
+               
+               		<div class="row align-items-center justify-content-between">
+               
+               			<div class="col">
+               				<button class="btn btn-primary mb-3" type="submit">Validar cuenta</button>
+               				<a  class="btn btn-outline-secondary  mb-3" @onclick="@(()=> Form_RecuperarContrasena.Return_EsperandoCodigo = false)">
+               					Cambiar datos
+               				</a>
+               			</div>
+               
+               
+               		</div>
+               		<hr class="m-3"  />
+               		<div class="row" >
+               			* Si tiene algún problema durante el proceso, puede llamar a atención al cliente.
+               		</div>
+               
+               	}
+               	else
+               	{
+               
+               		<div class="input-group flex-nowrap mb-3">
+               			<span class="input-group-text" id="addon-wrapping">@@</span>
+               			<InputText @bind-Value="Form_RecuperarContrasena.Identificador"  class="form-control" placeholder="Email" />
+               		</div>
+		               <div class="row align-items-center justify-content-between">
+
+			               <div class="col">
+				               <button class="btn btn-primary mb-3" type="submit">Recuperar</button>
+			    
+				               <a class="btn btn-outline-secondary  mb-3"  href="/Sesion">
+					               Iniciar sesión
+				               </a>
+			               </div>
+
+
+		               </div>
+               	}
+               	
+               		
+			 
+
+		</div>
+		
+	</EditForm>
+
+	</div>
+
+
+}
+else if (Dinaup_Sesion.SesionIniciada == false && Accion == "Registro" )
+{
+
+
+          
+	<div class="contenedor container p-5" style="max-width:800px" >
+		<div class="row g-5">
+
+				<div  class="col-md-12 col-lg-6"  >
+
+					<h1> <span class="fi fi-sr-user-add"  > </span>Crear cuenta</h1>
+					
+					
+					@if (this.Form_CrearCuenta_Procesando)
+					{
+
+						<div class="spinner-border" role="status">
+							<span class="visually-hidden">Cargando...</span>
+						</div>
+
+
+					}
+					else
+					{
+
+						<EditForm Model="@Form_CrearCuenta" OnSubmit="@ProcesarFormulario_CrearCuenta">
+							<DataAnnotationsValidator />
+							<ValidationSummary />
+ 
+						
+						 
+						
+
+							<div class="input-group flex-nowrap mb-3">
+								<span class="input-group-text fi fi-sr-label" id="addon-wrapping">  </span>
+								<InputText @bind-Value="Form_CrearCuenta.Usuario_Nombre"   class="form-control" placeholder="Nombre"  />
+							</div>
+
+
+				 
+							<div class="input-group flex-nowrap mb-3">
+								<span class="input-group-text" id="addon-tags">@@</span>
+								<InputText @bind-Value="Form_CrearCuenta.Usuario_Identificador"  class="form-control" placeholder="Email" />
+							</div>
+
+					 
+							<div class="input-group flex-nowrap mb-3">
+								<span class="input-group-text fi fi-sr-password" id="addon-wrapping">  </span>
+								<InputText @bind-Value="Form_CrearCuenta.Usuario_Contrasena"   class="form-control" placeholder="Contraseña"  type="password"/>
+							</div>
+
+							<div class="input-group flex-nowrap mb-3">
+								<span class="input-group-text fi fi-sr-password" id="addon-wrapping">  </span>
+								<InputText @bind-Value="Form_CrearCuenta.Usuario_RepetirContrasena"   class="form-control" placeholder="Repita la Contraseña"  type="password"/>
+							</div>
+							
+							<environment include="Development">
+								<RadzenCheckBox @bind-Value=@Form_CrearCuenta.EmailValidacion_Enviar Name="CheckBox1"     />
+								<RadzenLabel Text="Enviar email de validación (Solo desarrollo)" Component="CheckBox1" Style="margin-left: 8px; vertical-align: middle;" />
+							</environment>
+							
+
+						 
+							<center>
+								<p><button class="btn btn-primary" type="submit">Crear cuenta</button></p>
+							</center>
+				
+
+						</EditForm>
+
+					}
+
+				</div>
+					
+			<div class="col-md-12 col-lg-6" >
+				
+				<h1>¿Ya tiene una cuenta?</h1>
+				Puede iniciar sesión fácilmente.<br>
+				<a href="/Sesion" class="btn btn-primary mt-3"  >Iniciar Sesión</a>
+
+	
+			</div>
+
+			</div>
+		</div>
+
+
+}
+else if (Dinaup_Sesion.SesionIniciada == false   )
+{
+
+
+	
+
+	<div class="contenedor container p-5" style="max-width:800px" >
+		<div class="row g-5">
+			<div class="col-md-12 col-lg-6" style="border-right: 1px solid #E1E1E1;">
+
+				<h1 > <span class="fi fi-sr-sign-in-alt" > </span>Inicio de sesión</h1>
+				
+						
+			@if (this.Form_IniciarSesion_Procesando)
+			{
+
+				<div class="spinner-border" role="status">
+					<span class="visually-hidden">Cargando...</span>
+				</div>
+
+
+			}
+			else
+			{
+
+				<EditForm Model="@Form_IniciarSesion" OnSubmit="@ProcesarFormulario_IniciarSesion">
+					<DataAnnotationsValidator/>
+					<ValidationSummary/>
+					
+					<div class="input-group flex-nowrap mb-3">
+						<span class="input-group-text" id="addon-wrapping">@@</span>
+						<InputText @bind-Value="Form_IniciarSesion.Identificador"  class="form-control" placeholder="Email" />
+					</div>
+					
+
+					<div class="input-group flex-nowrap mb-3">
+						<span class="input-group-text fi fi-sr-password" id="addon-wrapping">  </span>
+						<InputText @bind-Value="Form_IniciarSesion.Pass"   class="form-control" placeholder="Contraseña"  type="password"/>
+					</div>
+
+
+
+					@if (Form_IniciarSesion.Respuesta_UbicacionesASeleccionar.TieneDatos())
+					{
+						<div class="input-group flex-nowrap mb-3">
+							<span class="input-group-text fi fi-sr-marker" id="addon-wrapping">  </span>
+							<InputSelect @bind-Value="Form_IniciarSesion.UbicacionID" class="form-select">
+								<option value="">  </option>
+								@foreach (var item in Form_IniciarSesion.Respuesta_UbicacionesASeleccionar)
+								{
+									<option value="@item.Key"> @item.Value </option>
+								}
+							</InputSelect>
+						</div>
+						 
+					}
+
+
+					@if (Form_IniciarSesion.Respuesta_EmpresaASeleccionar.TieneDatos())
+					{
+						<div class="input-group flex-nowrap mb-3">
+							<span class="input-group-text fi fi-sr-briefcase" id="addon-wrapping">  </span>
+							<InputSelect @bind-Value="Form_IniciarSesion.EmpresaID" class="form-select">
+								<option value="">  </option>
+								@foreach (var item in Form_IniciarSesion.Respuesta_EmpresaASeleccionar)
+								{
+									<option value="@item.Key"> @item.Value </option>
+								}
+							</InputSelect>
+						</div>
+					}
+
+				
+
+					<div class="row align-items-center justify-content-between">
+
+						<div class="col">
+					 
+							<button class="btn btn-primary mb-3" type="submit">Iniciar Sesión</button>
+					 
+							<a class="btn btn-outline-secondary  mb-3"  href="/Sesion/Recuperar">
+								Olvidé la contraseña
+							</a>
+						</div>
+
+
+					</div>
+
+
+
+				</EditForm>
+
+			}
+
+			</div>
+			
+			<div class="col-md-12 col-lg-6">
+				
+				<h1>¿No tiene una cuenta?</h1>
+				Puede crear una cuenta fácilmente.<br>
+				<a href="/Sesion/Registro" class="btn btn-primary mt-3"  >Crear una cuenta</a>
+
+	
+			</div>
+
+		</div>
+	</div>
+
+
+}
+
+				
+@code {
+
+
+	
+	
+		[Parameter]
+		public string Accion { get; set; }
+
+
+
+}

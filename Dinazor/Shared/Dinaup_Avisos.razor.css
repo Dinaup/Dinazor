@@ -1,0 +1,16 @@
+﻿
+
+.cont_error {
+    padding: 10px;
+    background: rgba(255, 12, 12, 0.15);
+    border-left: 8px solid rgba(255, 12, 12, 0.50);
+    margin: 5px;
+}
+
+
+.cont_ok {
+    padding: 10px;
+    background: rgba(20, 255, 12, 0.15);
+    border-left: 8px solid rgba(12, 255, 24, 0.5);
+    margin: 5px;
+}

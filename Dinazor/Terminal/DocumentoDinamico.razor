@@ -1,0 +1,49 @@
+﻿
+
+
+@page "/Terminal/Documento"
+@inject DinaupPage DinaPeticion
+
+
+
+
+
+
+
+<PageTitle>Autodesguaces Alicante</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+
+<cache expires-sliding="@TimeSpan.FromSeconds(15)">
+    Current Time Inside Cache Tag Helper: @FechaActual()
+</cache>
+
+<Dinazor.Shared.Dinaup_Terminal.Dinaup_Informe InformeID=""> </Dinazor.Shared.Dinaup_Terminal.Dinaup_Informe>
+
+@code {
+
+	private DinaupAPI_SeccionC? pacox = null;
+
+	private int paco = 2;
+
+	void cafe()
+	{
+
+
+
+	}
+
+
+	string FechaActual()
+	{
+
+		System.Threading.Thread.Sleep(5000);
+		return System.DateTime.Now.ToString();
+
+	}
+
+
+}  

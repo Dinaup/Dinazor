@@ -1,0 +1,398 @@
+﻿@inject DinaupPage DinaPeticion
+ 
+
+
+
+
+
+@if(Titulo != ""){
+	<h1>@Titulo</h1>
+}
+
+
+@if(Comentario != ""){
+	<p>@Comentario</p>
+}
+ 
+
+
+
+
+@if (DinaupInformeRespuesta == null)
+{
+
+
+
+}else if(ModoScrollInfinito) {
+
+	<RadzenDataGrid  AllowColumnReorder="true" ColumnReordered="@OnColumnReordered"  Data="@data" Count="@count" LoadData="@LoadData" TItem="IDictionary<string, object>" AllowVirtualization="true" Style="height:400px"
+				AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.And" FilterMode="FilterMode.SimpleWithMenu" 
+				AllowSorting="true" AllowColumnPicking="@SelectorDeColumnasVisibles" AllowColumnResize="true" ColumnResized=@OnColumnResized>
+		<Columns>
+
+
+			@foreach (var item in DinaupInformeRespuesta.Respuesta.Listado.Columnas)
+			{
+
+				<RadzenDataGridColumn TItem="IDictionary<string, object>" Property="@item.KeyWord" Title="@item.Etiqueta" Type="@item.NetType">
+					<Template>
+						@context[item.KeyWord]
+					</Template>
+				</RadzenDataGridColumn>
+			}
+
+		</Columns>
+	</RadzenDataGrid>
+
+}
+else
+{
+
+	<RadzenDataGrid AllowColumnReorder="true" ColumnReordered="@OnColumnReordered" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.SimpleWithMenu" AllowPaging="true"
+				AllowSorting="true" Data="@data" TItem="IDictionary<string, object>"
+				IsLoading="@isLoading"  
+				Count="@count" AllowColumnPicking="@SelectorDeColumnasVisibles" LoadData="@LoadData" LogicalFilterOperator="LogicalFilterOperator.And" AllowColumnResize="true" ColumnResized=@OnColumnResized>
+		<Columns>
+			
+			
+
+			@foreach (var item in DinaupInformeRespuesta.Respuesta.Listado.Columnas)
+			{
+
+				if (item.Es_ClavePrimaria_ID)
+				{
+					@if (URL_Ver == "" && URL_Editar == "" && PuedeEliminar == false)
+					{
+						continue;
+					}
+				}
+
+				<RadzenDataGridColumn Filterable="!item.Es_ClavePrimaria_ID" Visible="@item.Visible" TItem="IDictionary<string, object>" Property="@item.KeyWord" Title="@item.Etiqueta" Type="@item.NetType">
+					<Template>
+
+						@if (item.Es_ClavePrimaria_ID)
+						{
+
+							@if (URL_Ver != "")
+							{
+								<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="open_in_new" Size="ButtonSize.Small" Class="m-1" Click="@(args => DeleteRow(context))">
+								</RadzenButton>
+							}
+
+							@if (URL_Editar != "")
+							{
+								<RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="m-1" Click="@(args => EditRow(context))" @onclick:stopPropagation="true">
+								</RadzenButton>
+							}
+
+							@if (PuedeEliminar)
+							{
+								<RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Small" Class="m-1" Click="@(args => DeleteRow(context))">
+								</RadzenButton>
+							}
+
+						}
+						else
+						{
+							@context[item.KeyWord]
+
+						}
+
+					</Template>
+				</RadzenDataGridColumn>
+			}
+
+		</Columns>
+	</RadzenDataGrid>
+
+}
+
+
+
+@code {
+
+	IEnumerable<IDictionary<string, object>> data;
+
+
+	int count;
+	int countActual;
+	bool isLoading;
+
+
+
+
+	async Task LoadData(LoadDataArgs args)
+	{
+
+		isLoading = true;
+		Utilidades.AplicarConfiguracionDeCargaAInforme(args, DinaupInformeRespuesta);
+		DinaupInformeRespuesta.ActualizarDatos();
+		data = DinaupInformeRespuesta.Respuesta.Listado.FilasEnDic();
+		count = DinaupInformeRespuesta.Respuesta.Listado.Totalresultados;
+		isLoading = false;
+
+
+
+
+		//if (DinaupInformeRespuesta.Parametros_Predeterminados == null)
+		//{
+		//	DinaupInformeRespuesta.GuardarConfiguracionActualComoPredeterminada();
+		//}
+		//DinaupInformeRespuesta.CargarConfiguracionPredeterminada();
+
+
+		//var Filter = args.Filter;
+		//var Top = 20;
+		//var Skip = args.Skip;
+		//var OrderBy = args.OrderBy;
+		//var Pagina = 1;
+
+
+		//if (args.Top != null)
+		//{
+		//	Top = args.Top.Value;
+		//}
+		//if (args.Skip != null && args.Skip > 0)
+		//{
+		//	Pagina = (int)(args.Skip / args.Top) + 1;
+		//}
+
+
+
+		//if (args.Filters != null)
+		//{
+		//	foreach (var filtroactual in args.Filters)
+		//	{
+
+
+		//		if (filtroactual.FilterOperator == FilterOperator.Equals)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "=", filtroactual.FilterValue.ToString());
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.NotEquals)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "<>", filtroactual.FilterValue.ToString());
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.LessThan)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "<", filtroactual.FilterValue.ToString());
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.LessThanOrEquals)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "<=", filtroactual.FilterValue.ToString());
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.GreaterThan)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, ">", filtroactual.FilterValue.ToString());
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.GreaterThanOrEquals)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, ">=", filtroactual.FilterValue.ToString());
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.Contains)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "contiene", filtroactual.FilterValue.ToString());
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.StartsWith)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "empiezapor", filtroactual.FilterValue.ToString());
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.EndsWith)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "terminapor", filtroactual.FilterValue.ToString());
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.DoesNotContain)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "nocontiene", filtroactual.FilterValue.ToString());
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.IsNull)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "=", "''");
+
+		//		}
+		//		else if (filtroactual.FilterOperator == FilterOperator.IsNotNull)
+		//		{
+		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "<>", "''");
+
+		//		}
+
+
+
+		//	}
+
+
+		//}
+
+
+
+		//if (args.Sorts != null)
+		//{
+		//	foreach (var orden in args.Sorts)
+		//	{
+		//		DinaupInformeRespuesta.Agregar_Ordenar(orden.Property, orden.SortOrder == SortOrder.Descending);
+		//	}
+		//}
+
+	
+
+	}
+
+	void OnColumnResized(DataGridColumnResizedEventArgs<IDictionary<string, object>> args)
+	{
+	}
+	  
+	
+	
+	void OnColumnReordered(DataGridColumnReorderedEventArgs<IDictionary<string, object>> args)
+    {
+        //console.Log($"Reordered {args.Column.Title}. Old index: {args.OldIndex}, New index: {args.NewIndex}");
+    }
+	
+    async Task EditRow(IDictionary<string, object> order)
+    {
+        //await ordersGrid.EditRow(order);
+    }
+
+    void OnUpdateRow(IDictionary<string, object> order)
+    {
+        //if (order == orderToInsert)
+        //{
+        //    orderToInsert = null;
+        //}
+
+        //dbContext.Update(order);
+
+        // For demo purposes only
+        //order.Customer = dbContext.Customers.Find(order.CustomerID);
+        //order.Employee = dbContext.Employees.Find(order.EmployeeID);
+
+        // For production
+        //dbContext.SaveChanges();
+    }
+
+    async Task SaveRow(IDictionary<string, object> order)
+    {
+        //if (order == orderToInsert)
+        //{
+        //    orderToInsert = null;
+        //}
+
+        //await ordersGrid.UpdateRow(order);
+    }
+
+    void CancelEdit(IDictionary<string, object> order)
+    {
+        //if (order == orderToInsert)
+        //{
+        //    orderToInsert = null;
+        //}
+
+        //ordersGrid.CancelEditRow(order);
+
+        //// For production
+        //var orderEntry = dbContext.Entry(order);
+        //if (orderEntry.State == EntityState.Modified)
+        //{
+        //    orderEntry.CurrentValues.SetValues(orderEntry.OriginalValues);
+        //    orderEntry.State = EntityState.Unchanged;
+        //}
+    }
+
+    async Task DeleteRow(IDictionary<string, object> order)
+    {
+        //if (order == orderToInsert)
+        //{
+        //    orderToInsert = null;
+        //}
+
+        //if (orders.Contains(order))
+        //{
+        //    dbContext.Remove<IDictionary<string, object>>(order);
+
+        //    // For demo purposes only
+        //    orders.Remove(order);
+
+        //    // For production
+        //    //dbContext.SaveChanges();
+
+        //    await ordersGrid.Reload();
+        //}
+        //else
+        //{
+        //    ordersGrid.CancelEditRow(order);
+        //}
+    }
+
+    //IDictionary<string, object> orderToInsert;
+
+    async Task InsertRow()
+    {
+        //orderToInsert = new IDictionary<string, object>();
+        //await ordersGrid.InsertRow(orderToInsert);
+    }
+
+    void OnCreateRow(IDictionary<string, object> order)
+    {
+        //dbContext.Add(order);
+
+        //// For demo purposes only
+        //order.Customer = dbContext.Customers.Find(order.CustomerID);
+        //order.Employee = dbContext.Employees.Find(order.EmployeeID);
+
+        // For production
+        //dbContext.SaveChanges();
+    }
+ 
+}
+
+
+@code {
+
+
+	[Parameter]
+	public Boolean ModoScrollInfinito { get; set; } = false;
+
+	[Parameter]
+	public Boolean SelectorDeColumnasVisibles { get; set; } = true;
+
+
+	 
+	[Parameter]
+	public string Titulo { get; set; } = "Título";
+	
+	[Parameter]
+	public string Comentario { get; set; } = "xx";
+
+
+	[Parameter]
+	public DinaNETCore.APID.APID_InformeC DinaupInformeRespuesta { get; set; }
+
+
+
+
+		
+	[Parameter]
+	public string URL_Ver { get; set; } = "";
+
+	
+	[Parameter]
+	public string URL_Editar { get; set; } = "";
+
+	
+	[Parameter]
+	public bool PuedeEliminar { get; set; } = false;
+
+
+
+
+}
