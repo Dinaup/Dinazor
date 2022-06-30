@@ -19,13 +19,6 @@
     <link rel="stylesheet" href="_content/Radzen.Blazor/css/default-base.css">
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
 
-    <script>
-	    window.CookieFunction = {
-		    acceptMessage: function (cookieString) {
-			    document.cookie = cookieString;
-		    }
-	    };    
-    </script>
     
 
 </head>
@@ -34,8 +27,9 @@
 
     @RenderBody()
 
-
-	<div id="blazor-error-ui">
+ 
+     
+<div id="blazor-error-ui">
         <environment include="Staging,Production">
             Se ha producido un error. Es posible que esta aplicación ya no responda hasta que se vuelva a cargar.
         </environment>

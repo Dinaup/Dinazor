@@ -26,6 +26,8 @@
             this.Config_Apikey = Configuration.GetValue<string>("Dinaup:Apikey");
             this.Config_UbicacionID = Configuration.GetValue<string>("Dinaup:UbicacionID");
             this.Config_EmpresaID = Configuration.GetValue<string>("Dinaup:EmpresaID");
+
+      
             DinaNETCore.ASP_NETD.PaginaD.Iniciar(Config_Apikey, Config_Host, Config_Port);
             this.Conexion = DinaNETCore.ASP_NETD.PaginaD.DinaupServer;
         }

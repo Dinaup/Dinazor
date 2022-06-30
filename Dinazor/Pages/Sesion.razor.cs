@@ -29,6 +29,12 @@ namespace Dinazor.Pages
         public CrearCuenta_ModelC Form_CrearCuenta = new();
         public CrearCuenta_Activar_ModelC? Form_CrearCuenta_Activar = null;
 
+        public static DinaNETCore.RateLimitsD.RateLimitsC FormLimites_IniciarSesion = new(10, 100, 60 * 5);
+        public static DinaNETCore.RateLimitsD.RateLimitsC FormLimites_CambiarContrasena = new(10, 100, 60 * 5);
+        public static DinaNETCore.RateLimitsD.RateLimitsC FormLimites_RecuperarContrasena = new(10, 100, 60 * 5);
+        public static DinaNETCore.RateLimitsD.RateLimitsC FormLimites_CrearCuenta = new(10, 100, 60 * 5);
+        public static DinaNETCore.RateLimitsD.RateLimitsC FormLimites_CrearCuenta_Activar = new(10, 100, 60 * 5);
+
 
 
         public bool Form_IniciarSesion_Procesando = false;
@@ -40,24 +46,51 @@ namespace Dinazor.Pages
 
 
 
+        //@@    Iniciar Sesión    
         public async void ProcesarFormulario_IniciarSesion()
         {
+
+            if (string.IsNullOrEmpty(Form_IniciarSesion.EmpresaID))
+            {
+                Form_IniciarSesion.EmpresaID = (Dinaup_Servidor.Config_EmpresaID);
+            }
+
+            if (string.IsNullOrEmpty(Form_IniciarSesion.UbicacionID))
+            {
+                Form_IniciarSesion.UbicacionID = (Dinaup_Servidor.Config_UbicacionID);
+            }
+
+            //!++ Formato 
+            if (Form_IniciarSesion == null)
+                return;
+
+            var MotivoNo = Form_IniciarSesion.Motivo_RellenadoIncorrecto();
+            if (!string.IsNullOrEmpty(MotivoNo))
+            {
+                AvisosError = new List<string> { MotivoNo };
+                AvisosOk = null;
+                return;
+            }
+
+
+
+            //!++ Límites  
+            var LoPermitenLosLimites = FormLimites_IniciarSesion.Autorizar(Dinaup_Sesion.Request_UserIP);
+            if (!string.IsNullOrEmpty(LoPermitenLosLimites))
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Ups",
+                    "Estamos recibiendo demasiado tráfico." +
+                    "<br>La opción de <b>iniciar sesión</b> estará desactivada durante unos minutos. " +
+                    "<br>Inténtelo de nuevo más tarde. ", 10000);
+                return;
+            }
+
 
 
             try
             {
 
                 Form_IniciarSesion_Procesando = true;
-
-                if (string.IsNullOrEmpty(Form_IniciarSesion.EmpresaID))
-                {
-                    Form_IniciarSesion.EmpresaID = (Dinaup_Servidor.Config_EmpresaID);
-                }
-
-                if (string.IsNullOrEmpty(Form_IniciarSesion.UbicacionID))
-                {
-                    Form_IniciarSesion.UbicacionID = (Dinaup_Servidor.Config_UbicacionID);
-                }
 
 
                 await Dinaup_Sesion.IniciarSesion(Form_IniciarSesion, this.Coockie);
@@ -88,36 +121,40 @@ namespace Dinazor.Pages
 
         }
 
+        //@@    Cambiar Contraseña    
 
         public async void ProcesarFormulario_CambiarContrasena()
         {
 
 
+                //!++ Formato 
+                if (Form_CambiarContrasena == null)
+                    return;
 
-            if (Form_CambiarContrasena.Pass1 == "")
-            {
-                AvisosError = new List<string> { "Debe rellenar contraseña 1" };
-                AvisosOk = null;
-            }
-            else if (Form_CambiarContrasena.Pass2 == "")
-            {
 
-                AvisosError = new List<string> { "Debe rellenar contraseña 2" };
-                AvisosOk = null;
-            }
-            else if (Form_CambiarContrasena.Pass1 != Form_CambiarContrasena.Pass2)
-            {
+                var MotivoNo = Form_CambiarContrasena.Motivo_RellenadoIncorrecto();
+                if (!string.IsNullOrEmpty(MotivoNo))
+                {
+                    AvisosError = new List<string> { MotivoNo };
+                    AvisosOk = null;
+                    return;
+                }
 
-                AvisosError = new List<string> { "Las contraseñas indicadas deben ser iguales" };
-                AvisosOk = null;
-            }
-            else if (Form_CambiarContrasena.Pass1.Length < 4)
-            {
-                AvisosError = new List<string> { "Las contraseñas es demasiado corta." };
-                AvisosOk = null;
-            }
-            else
-            {
+
+                //!++ Límites  
+                var LoPermitenLosLimites = FormLimites_CambiarContrasena.Autorizar(Dinaup_Sesion.Request_UserIP);
+
+                if (!string.IsNullOrEmpty(LoPermitenLosLimites))
+                {
+
+                    NotificationService.Notify(NotificationSeverity.Error, "Ups",
+                        "Estamos recibiendo demasiado tráfico." +
+                        "<br>Esta opción estará desactivada durante unos minutos. " +
+                        "<br>Inténtelo de nuevo más tarde. ", 10000);
+
+                    return;
+                }
+
 
 
 
@@ -126,7 +163,7 @@ namespace Dinazor.Pages
                     Form_CambiarContrasena_Procesando = true;
                     var x = await Dinaup_Servidor.Conexion.Funcion_Sesion_CambiarContrasena(
                     Dinaup_Sesion.DinaupSesionIDCoockie.ToGuid(),
-                    Form_CambiarContrasena.Pass1, Form_CambiarContrasena.Pass2,
+                    Form_CambiarContrasena.Usuario_Contrasena, Form_CambiarContrasena.Usuario_RepetirContrasena,
                     Dinaup_Sesion.Request_UserIP, Dinaup_Sesion.Request_UserAgent);
 
                     AvisosError = x.avisoserror;
@@ -151,117 +188,251 @@ namespace Dinazor.Pages
                     Form_CambiarContrasena_Procesando = false;
                     this.StateHasChanged();
                 }
+
+
             }
 
 
 
-        }
 
-
-        public async void ProcesarFormulario_CrearCuenta_Activar()
-        {
-
-
-
-
-
-            try
+            //@@    CREAR CUENTA    
+            public async void ProcesarFormulario_CrearCuenta()
             {
-                Form_CrearCuenta_Activar_Procesando = true;
-                var respuesta = await Dinaup_Servidor.Conexion.Funcion_Sesion_CrearCuenta_Activar(Form_CrearCuenta_Activar, Form_CrearCuenta.Usuario_Identificador, Dinaup_Sesion.Request_UserIP);
-                this.AvisosError = respuesta.avisoserror;
-                this.AvisosOk = respuesta.avisosok;
 
-                if (Form_CrearCuenta_Activar.Retornar_Identificador != "")
+
+                //!++ Formato 
+                if (Form_CrearCuenta == null)
+                    return;
+
+
+                var MotivoNo = Form_CrearCuenta.Motivo_RellenadoIncorrecto();
+                if (!string.IsNullOrEmpty(MotivoNo))
                 {
-                    Form_IniciarSesion.UbicacionID = Form_CrearCuenta.Contexto_UbicacionID.STR();
-                    Form_IniciarSesion.EmpresaID = Form_CrearCuenta.Contexto_EmpresaID.STR();
+                    AvisosError = new List<string> { MotivoNo };
+                    AvisosOk = null;
+                    return;
+                }
 
 
-                    if (Form_CrearCuenta != null)
+                //!++ Límites  
+
+                var LoPermitenLosLimites = FormLimites_CrearCuenta.Autorizar(Dinaup_Sesion.Request_UserIP);
+                if (!string.IsNullOrEmpty(LoPermitenLosLimites))
+                {
+
+                    NotificationService.Notify(NotificationSeverity.Error, "Ups",
+                        "Estamos recibiendo demasiado tráfico." +
+                        "<br>Esta opción estará desactivada durante unos minutos. " +
+                        "<br>Inténtelo de nuevo más tarde. ", 10000);
+
+                    return;
+                }
+
+
+
+
+                //!++ ¡Se procesa!  
+
+                try
+                {
+                    Form_CrearCuenta_Procesando = true;
+                    Form_CrearCuenta.Contexto_EmpresaID = (Dinaup_Servidor.Config_EmpresaID).ToGuid();
+                    Form_CrearCuenta.Contexto_UbicacionID = (Dinaup_Servidor.Config_UbicacionID).ToGuid();
+
+                    var respuesta = await Dinaup_Servidor.Conexion.Funcion_Sesion_CrearCuenta(Form_CrearCuenta, Dinaup_Sesion.Request_UserAgent, Dinaup_Sesion.Request_UserIP);
+
+                    this.AvisosError = respuesta.avisoserror;
+                    this.AvisosOk = respuesta.avisosok;
+
+
+                    if (Form_CrearCuenta.Retornar_RegistroID_CuentaTemporal != Guid.Empty)
                     {
-                        Form_IniciarSesion.Identificador = Form_CrearCuenta.Usuario_Identificador;
-                        Form_IniciarSesion.Pass = Form_CrearCuenta.Usuario_Contrasena;
-                    }
-                    Form_CrearCuenta_Activar = null;
-                    NavigationManager.NavigateTo("/Sesion");
+                        if (Form_CrearCuenta.Retornar_CodigoDeValidacion_Requerido)
+                        {
 
+                            /* Al asignar esta referencia el formulario se hará visible */
+                            Form_CrearCuenta_Activar = new CrearCuenta_Activar_ModelC();
+                            Form_CrearCuenta_Activar.CuentaTemporalID = Form_CrearCuenta.Retornar_RegistroID_CuentaTemporal;
+                        }
+                    }
+
+
+                }
+                catch
+                {
+                }
+                finally
+                {
+                    Form_CrearCuenta_Procesando = false;
+                    this.StateHasChanged();
+                }
+
+
+            }
+
+
+
+
+            //@@    CREAR CUENTA > Activar
+            public async void ProcesarFormulario_CrearCuenta_Activar()
+            {
+
+                //!++ Formato 
+                if (Form_CrearCuenta_Activar == null)
+                    return;
+
+
+                var MotivoNo = Form_CrearCuenta_Activar.Motivo_RellenadoIncorrecto();
+                if (!string.IsNullOrEmpty(MotivoNo))
+                {
+                    AvisosError = new List<string> { MotivoNo };
+                    AvisosOk = null;
+                    return;
+                }
+
+
+                //!++ Límites  
+                var LoPermitenLosLimites = FormLimites_CrearCuenta_Activar.Autorizar(Dinaup_Sesion.Request_UserIP);
+                if (!string.IsNullOrEmpty(LoPermitenLosLimites))
+                {
+
+                    NotificationService.Notify(NotificationSeverity.Error, "Ups",
+                        "Estamos recibiendo demasiado tráfico." +
+                        "<br>Esta opción estará desactivada durante unos minutos. " +
+                        "<br>Inténtelo de nuevo más tarde. ", 10000);
+
+                    return;
+                }
+
+
+
+                //!++ ¡Se procesa!  
+                try
+                {
+                    Form_CrearCuenta_Activar_Procesando = true;
+                    var respuesta = await Dinaup_Servidor.Conexion.Funcion_Sesion_CrearCuenta_Activar(Form_CrearCuenta_Activar, Form_CrearCuenta.Usuario_Identificador, Dinaup_Sesion.Request_UserIP);
+                    this.AvisosError = respuesta.avisoserror;
+                    this.AvisosOk = respuesta.avisosok;
+
+                    if (Form_CrearCuenta_Activar.Retornar_Identificador != "")
+                    {
+                        Form_IniciarSesion.UbicacionID = Form_CrearCuenta.Contexto_UbicacionID.STR();
+                        Form_IniciarSesion.EmpresaID = Form_CrearCuenta.Contexto_EmpresaID.STR();
+
+
+                        if (Form_CrearCuenta != null)
+                        {
+                            Form_IniciarSesion.Identificador = Form_CrearCuenta.Usuario_Identificador;
+                            Form_IniciarSesion.Pass = Form_CrearCuenta.Usuario_Contrasena;
+                        }
+                        Form_CrearCuenta_Activar = null;
+                        NavigationManager.NavigateTo("/Sesion");
+
+                    }
+
+
+
+                }
+                catch
+                {
+                }
+                finally
+                {
+                    Form_CrearCuenta_Activar_Procesando = false;
+                    this.StateHasChanged();
+                }
+
+            }
+
+
+
+
+            //@@    Recuperar Contraseña 
+            public async void ProcesarFormulario_RecuperarContrasena()
+            {
+                //!++ Formato 
+                if (Form_RecuperarContrasena == null)
+                    return;
+
+                var MotivoNo = Form_RecuperarContrasena.Motivo_RellenadoIncorrecto();
+                if (!string.IsNullOrEmpty(MotivoNo))
+                {
+                    AvisosError = new List<string> { MotivoNo };
+                    AvisosOk = null;
+                    return;
+                }
+
+
+
+
+
+                //!++ Límites  
+
+                var LoPermitenLosLimites = FormLimites_RecuperarContrasena.Autorizar(Dinaup_Sesion.Request_UserIP);
+                if (!string.IsNullOrEmpty(LoPermitenLosLimites))
+                {
+
+                    NotificationService.Notify(NotificationSeverity.Error, "Ups",
+                        "Estamos recibiendo demasiado tráfico." +
+                        "<br>Esta opción estará desactivada durante unos minutos. " +
+                        "<br>Inténtelo de nuevo más tarde. ", 10000);
+
+                    return;
+                }
+
+
+
+
+
+
+                //!++ ¡Se procesa!  
+
+
+                try
+                {
+                    Form_CrearCuenta_Procesando = true;
+                    Form_RecuperarContrasena.Contexto_EmpresaID = (Dinaup_Servidor.Config_EmpresaID).ToGuid();
+                    Form_RecuperarContrasena.Contexto_UbicacionID = (Dinaup_Servidor.Config_UbicacionID).ToGuid();
+
+                    var respuesta = await Dinaup_Servidor.Conexion.Funcion_Sesion_RecuperarContrasena(Form_RecuperarContrasena, Dinaup_Sesion.Request_UserAgent, Dinaup_Sesion.Request_UserIP);
+
+                    this.AvisosError = respuesta.avisoserror;
+                    this.AvisosOk = respuesta.avisosok;
+
+
+                    if (Form_CrearCuenta.Retornar_RegistroID_CuentaTemporal != Guid.Empty)
+                    {
+                        if (Form_CrearCuenta.Retornar_CodigoDeValidacion_Requerido)
+                        {
+
+                            /* Al asignar esta referencia el formulario se hará visible */
+                            Form_CrearCuenta_Activar = new CrearCuenta_Activar_ModelC();
+                            Form_CrearCuenta_Activar.CuentaTemporalID = Form_CrearCuenta.Retornar_RegistroID_CuentaTemporal;
+                        }
+                    }
+
+
+                }
+                catch
+                {
+                }
+                finally
+                {
+                    Form_CrearCuenta_Procesando = false;
+                    this.StateHasChanged();
                 }
 
 
 
             }
-            catch
-            {
-            }
-            finally
-            {
-                Form_CrearCuenta_Activar_Procesando = false;
-                this.StateHasChanged();
-            }
-
-        }
 
 
 
 
-        public async void ProcesarFormulario_CrearCuenta()
-        {
 
 
 
-            try
-            {
-                Form_CrearCuenta_Procesando = true;
-                Form_CrearCuenta.Contexto_EmpresaID = (Dinaup_Servidor.Config_EmpresaID).ToGuid();
-                Form_CrearCuenta.Contexto_UbicacionID = (Dinaup_Servidor.Config_UbicacionID).ToGuid();
-
-                var respuesta = await Dinaup_Servidor.Conexion.Funcion_Sesion_CrearCuenta(Form_CrearCuenta, Dinaup_Sesion.Request_UserAgent, Dinaup_Sesion.Request_UserIP);
-
-                this.AvisosError = respuesta.avisoserror;
-                this.AvisosOk = respuesta.avisosok;
-
-
-                if (Form_CrearCuenta.Retornar_RegistroID_CuentaTemporal != Guid.Empty)
-                {
-                    if (Form_CrearCuenta.Retornar_CodigoDeValidacion_Requerido)
-                    {
-
-                        /* Al asignar esta referencia el formulario se hará visible */
-                        Form_CrearCuenta_Activar = new CrearCuenta_Activar_ModelC();
-                        Form_CrearCuenta_Activar.CuentaTemporalID = Form_CrearCuenta.Retornar_RegistroID_CuentaTemporal;
-                    }
-                }
-
-
-            }
-            catch
-            {
-            }
-            finally
-            {
-                Form_CrearCuenta_Procesando = false;
-                this.StateHasChanged();
-            }
 
 
         }
-
-
-        public async void ProcesarFormulario_RecuperarContrasena()
-        {
-            Form_RecuperarContrasena.Return_EsperandoCodigo = !Form_RecuperarContrasena.Return_EsperandoCodigo;
-
-
-        }
-
-
-
-
-
-
-
-
-
     }
-}

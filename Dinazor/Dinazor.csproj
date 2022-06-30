@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Radzen.Blazor" Version="3.18.16" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="CaptchaGenerator">
+      <HintPath>CaptchaGenerator.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\GitHub\DinaNet\src\DinaNetCore\Newtonsoft.Json.dll</HintPath>
     </Reference>

@@ -18,14 +18,14 @@
 
 
 
-@if (DinaupInformeRespuesta == null)
+@if (DinaupInformeRespuesta?.Respuesta?.Listado?.Columnas == null )
 {
 
 
 
 }else if(ModoScrollInfinito) {
 
-	<RadzenDataGrid  AllowColumnReorder="true" ColumnReordered="@OnColumnReordered"  Data="@data" Count="@count" LoadData="@LoadData" TItem="IDictionary<string, object>" AllowVirtualization="true" Style="height:400px"
+	<RadzenDataGrid  AllowColumnReorder="true" ColumnReordered="@OnColumnReordered"  Data="@data" Count="@count" LoadData="@LoadData" TItem="Dic<string, string>" AllowVirtualization="true" Style="height:400px"
 				AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.And" FilterMode="FilterMode.SimpleWithMenu" 
 				AllowSorting="true" AllowColumnPicking="@SelectorDeColumnasVisibles" AllowColumnResize="true" ColumnResized=@OnColumnResized>
 		<Columns>
@@ -34,7 +34,7 @@
 			@foreach (var item in DinaupInformeRespuesta.Respuesta.Listado.Columnas)
 			{
 
-				<RadzenDataGridColumn TItem="IDictionary<string, object>" Property="@item.KeyWord" Title="@item.Etiqueta" Type="@item.NetType">
+				<RadzenDataGridColumn TItem="Dic<string, object>" Property="@item.KeyWord" Title="@item.Etiqueta" Type="@item.NetType">
 					<Template>
 						@context[item.KeyWord]
 					</Template>
@@ -49,7 +49,7 @@ else
 {
 
 	<RadzenDataGrid AllowColumnReorder="true" ColumnReordered="@OnColumnReordered" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.SimpleWithMenu" AllowPaging="true"
-				AllowSorting="true" Data="@data" TItem="IDictionary<string, object>"
+				AllowSorting="true" Data="@data" TItem="Dic<string, string>"
 				IsLoading="@isLoading"  
 				Count="@count" AllowColumnPicking="@SelectorDeColumnasVisibles" LoadData="@LoadData" LogicalFilterOperator="LogicalFilterOperator.And" AllowColumnResize="true" ColumnResized=@OnColumnResized>
 		<Columns>
@@ -59,6 +59,8 @@ else
 			@foreach (var item in DinaupInformeRespuesta.Respuesta.Listado.Columnas)
 			{
 
+	
+
 				if (item.Es_ClavePrimaria_ID)
 				{
 					@if (URL_Ver == "" && URL_Editar == "" && PuedeEliminar == false)
@@ -67,10 +69,28 @@ else
 					}
 				}
 
-				<RadzenDataGridColumn Filterable="!item.Es_ClavePrimaria_ID" Visible="@item.Visible" TItem="IDictionary<string, object>" Property="@item.KeyWord" Title="@item.Etiqueta" Type="@item.NetType">
+				if (item.Formato == TipoCamposSQLServerE.Guid)
+				{
+					continue;
+				}
+				<RadzenDataGridColumn Filterable="!item.Es_ClavePrimaria_ID" Visible="@item.Visible" TItem="Dic<string, string>" Property="@item.KeyWord" Title="@item.Etiqueta" Type="@item.NetType">
 					<Template>
+						 
 
-						@if (item.Es_ClavePrimaria_ID)
+						
+						@if (item.Predefinidos_Textos.TieneDatos())
+						{
+
+							var Icono = item.RecibirIcono(context[item.KeyWord].ToString());
+							@if (Icono != "")
+							{
+								<img src="@Icono" width="24" height="24">
+							}
+							@item.RecibirLegible(context[item.KeyWord].ToString());
+
+
+						}
+						else if (item.Es_ClavePrimaria_ID)
 						{
 
 							@if (URL_Ver != "")
@@ -94,9 +114,28 @@ else
 						}
 						else
 						{
+
+						
+						
+							var KeyFoto =   item.KeyWord + "Foto";
+							var KeyFoto2 =  item.KeyWord + "Icono";
+
+							if (  !string.IsNullOrEmpty(context.get_HacerMagia(KeyFoto,"")) )
+							{
+								<RadzenImage Path="@context[KeyFoto]" style="width: 32px; height: 32px; border-radius: 16px; margin-right: 6px;" />
+
+							}else if (!string.IsNullOrEmpty(context.get_HacerMagia(KeyFoto2,null) )  ){
+
+								<RadzenImage Path="@context[KeyFoto2]" style="width: 32px; height: 32px; border-radius: 16px; margin-right: 6px;" />
+
+
+
+							}
 							@context[item.KeyWord]
 
 						}
+
+
 
 					</Template>
 				</RadzenDataGridColumn>
@@ -111,7 +150,7 @@ else
 
 @code {
 
-	IEnumerable<IDictionary<string, object>> data;
+	IEnumerable<Dic<string, string>> data;
 
 
 	int count;
@@ -119,6 +158,10 @@ else
 	bool isLoading;
 
 
+	void Actualizar_Paginas()
+	{
+
+	}
 
 
 	async Task LoadData(LoadDataArgs args)
@@ -126,144 +169,35 @@ else
 
 		isLoading = true;
 		Utilidades.AplicarConfiguracionDeCargaAInforme(args, DinaupInformeRespuesta);
-		DinaupInformeRespuesta.ActualizarDatos();
+		await DinaupInformeRespuesta.ActualizarDatos_Async();
 		data = DinaupInformeRespuesta.Respuesta.Listado.FilasEnDic();
 		count = DinaupInformeRespuesta.Respuesta.Listado.Totalresultados;
 		isLoading = false;
 
 
 
-
-		//if (DinaupInformeRespuesta.Parametros_Predeterminados == null)
-		//{
-		//	DinaupInformeRespuesta.GuardarConfiguracionActualComoPredeterminada();
-		//}
-		//DinaupInformeRespuesta.CargarConfiguracionPredeterminada();
-
-
-		//var Filter = args.Filter;
-		//var Top = 20;
-		//var Skip = args.Skip;
-		//var OrderBy = args.OrderBy;
-		//var Pagina = 1;
-
-
-		//if (args.Top != null)
-		//{
-		//	Top = args.Top.Value;
-		//}
-		//if (args.Skip != null && args.Skip > 0)
-		//{
-		//	Pagina = (int)(args.Skip / args.Top) + 1;
-		//}
-
-
-
-		//if (args.Filters != null)
-		//{
-		//	foreach (var filtroactual in args.Filters)
-		//	{
-
-
-		//		if (filtroactual.FilterOperator == FilterOperator.Equals)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "=", filtroactual.FilterValue.ToString());
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.NotEquals)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "<>", filtroactual.FilterValue.ToString());
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.LessThan)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "<", filtroactual.FilterValue.ToString());
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.LessThanOrEquals)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "<=", filtroactual.FilterValue.ToString());
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.GreaterThan)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, ">", filtroactual.FilterValue.ToString());
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.GreaterThanOrEquals)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, ">=", filtroactual.FilterValue.ToString());
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.Contains)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "contiene", filtroactual.FilterValue.ToString());
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.StartsWith)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "empiezapor", filtroactual.FilterValue.ToString());
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.EndsWith)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "terminapor", filtroactual.FilterValue.ToString());
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.DoesNotContain)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "nocontiene", filtroactual.FilterValue.ToString());
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.IsNull)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "=", "''");
-
-		//		}
-		//		else if (filtroactual.FilterOperator == FilterOperator.IsNotNull)
-		//		{
-		//			DinaupInformeRespuesta.Agregar_Filtro(filtroactual.Property, "<>", "''");
-
-		//		}
-
-
-
-		//	}
-
-
-		//}
-
-
-
-		//if (args.Sorts != null)
-		//{
-		//	foreach (var orden in args.Sorts)
-		//	{
-		//		DinaupInformeRespuesta.Agregar_Ordenar(orden.Property, orden.SortOrder == SortOrder.Descending);
-		//	}
-		//}
-
+		 
 	
 
 	}
 
-	void OnColumnResized(DataGridColumnResizedEventArgs<IDictionary<string, object>> args)
+	void OnColumnResized(DataGridColumnResizedEventArgs<Dic<string, string>> args)
 	{
 	}
 	  
 	
 	
-	void OnColumnReordered(DataGridColumnReorderedEventArgs<IDictionary<string, object>> args)
+	void OnColumnReordered(DataGridColumnReorderedEventArgs<Dic<string, string>> args)
     {
         //console.Log($"Reordered {args.Column.Title}. Old index: {args.OldIndex}, New index: {args.NewIndex}");
     }
 	
-    async Task EditRow(IDictionary<string, object> order)
+    async Task EditRow(Dic<string, string> order)
     {
         //await ordersGrid.EditRow(order);
     }
 
-    void OnUpdateRow(IDictionary<string, object> order)
+    void OnUpdateRow(Dic<string, string> order)
     {
         //if (order == orderToInsert)
         //{
@@ -280,7 +214,7 @@ else
         //dbContext.SaveChanges();
     }
 
-    async Task SaveRow(IDictionary<string, object> order)
+    async Task SaveRow(Dic<string, string> order)
     {
         //if (order == orderToInsert)
         //{
@@ -290,7 +224,7 @@ else
         //await ordersGrid.UpdateRow(order);
     }
 
-    void CancelEdit(IDictionary<string, object> order)
+    void CancelEdit(Dic<string, string> order)
     {
         //if (order == orderToInsert)
         //{
@@ -308,7 +242,7 @@ else
         //}
     }
 
-    async Task DeleteRow(IDictionary<string, object> order)
+    async Task DeleteRow(Dic<string, string> order)
     {
         //if (order == orderToInsert)
         //{
@@ -317,7 +251,7 @@ else
 
         //if (orders.Contains(order))
         //{
-        //    dbContext.Remove<IDictionary<string, object>>(order);
+        //    dbContext.Remove<Dic<string, object>>(order);
 
         //    // For demo purposes only
         //    orders.Remove(order);
@@ -333,15 +267,15 @@ else
         //}
     }
 
-    //IDictionary<string, object> orderToInsert;
+    //Dic<string, object> orderToInsert;
 
     async Task InsertRow()
     {
-        //orderToInsert = new IDictionary<string, object>();
+        //orderToInsert = new Dic<string, object>();
         //await ordersGrid.InsertRow(orderToInsert);
     }
 
-    void OnCreateRow(IDictionary<string, object> order)
+    void OnCreateRow(Dic<string, string> order)
     {
         //dbContext.Add(order);
 

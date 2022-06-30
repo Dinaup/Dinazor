@@ -1,0 +1,66 @@
+﻿@using System.Drawing
+<h3>DinaCaptcha</h3>
+
+<img src="@Base64" />
+<span @onclick=@Nuevo>Nuevo</span>
+
+@code {
+
+
+	public string Base64;
+	public string Codigo;
+	static CaptchaGenerator.Builder builder;
+	static CaptchaGenerator.CaptchaProperties captchaProperties;
+
+
+	void Nuevo()
+	{
+
+
+		if (builder == null)
+		{
+			builder = new();
+		    captchaProperties  = new();
+			var FuenteX = new Font("Segoe UI", 24, FontStyle.Strikeout);
+			captchaProperties = new CaptchaGenerator.CaptchaProperties();
+			captchaProperties.Configure.WithBackgroundColor(Color.White);
+			captchaProperties.Configure.WithCharacters(6);
+			captchaProperties.Configure.WithColorDownUpLine(Color.Gray);
+			captchaProperties.Configure.WithColorUpDownLine(Color.Gray);
+			captchaProperties.Configure.WithDownUpLine(true);
+			captchaProperties.Configure.WithUpDownLine(true);
+			captchaProperties.Configure.WithRandomCharacters(CaptchaGenerator.RandomCharactersType.All);
+			captchaProperties.Configure.WithSizeDownUpLine(2);
+			captchaProperties.Configure.WithSizeUpDownLine(2);
+			captchaProperties.Configure.WithFont(FuenteX);
+			captchaProperties.Configure.WithFontColor(Color.Gray);
+			captchaProperties.Configure.Get();
+		}
+
+		var response = builder.CreateImage(captchaProperties);
+
+
+		this.Codigo = response.Item2;
+
+		using (System.IO.MemoryStream MS = new())
+		{
+			response.Item1.Save(MS, System.Drawing.Imaging.ImageFormat.Png);
+			response.Item1.Dispose();
+			this.Base64 = "data:image/jpeg;base64, " + Convert.ToBase64String(MS.ToArray());
+		}
+
+
+		//this.pictureBox1.Image = response.Item1;
+		//this.label1.Text = response.Item2;
+	}
+
+
+	protected override void OnInitialized()
+	{
+		Nuevo();
+		base.OnInitialized();
+	}
+
+
+
+}

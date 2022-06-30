@@ -41,7 +41,7 @@
 
 
 
-	IEnumerable<IDictionary<string, object>> data;
+	IEnumerable<IDictionary<string, string>> data;
 	
 
 	int count;
@@ -65,7 +65,7 @@
 
 		isLoading = true;
 		Utilidades.AplicarConfiguracionDeCargaAInforme(args, DinaupInformeRespuesta);
-		DinaupInformeRespuesta.ActualizarDatos();
+		DinaupInformeRespuesta.ActualizarDatos_Async ();
 		data = DinaupInformeRespuesta.Respuesta.Listado.FilasEnDic();
 		count = DinaupInformeRespuesta.Respuesta.Listado.Totalresultados;
 		isLoading = false;

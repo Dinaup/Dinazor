@@ -2,6 +2,8 @@
 @page "/Sesion/{Accion}"
 @inherits DinaupPage
 @inject DinaNETCore.ICookie Coockie
+@using  System.ComponentModel
+@inject IJSRuntime JS;
 
 
 <PageTitle>Mi cuenta: @Accion .</PageTitle>
@@ -10,8 +12,6 @@
 
 <Dinaup_Avisos avisosoks="@AvisosOk" avisoserrores="@AvisosError">
 </Dinaup_Avisos>
- 
-
  
 
 
@@ -48,13 +48,13 @@ else if (Dinaup_Sesion.SesionIniciada && Dinaup_Sesion.CambiarPass)
 					 
 					<div class="input-group flex-nowrap mb-3">
 						<span class="input-group-text fi fi-sr-password" id="addon-wrapping">  </span>
-						<InputText @bind-Value="Form_CambiarContrasena.Pass1"   class="form-control" placeholder="Contraseña"  type="password"/>
+						<InputText @bind-Value="Form_CambiarContrasena.Usuario_Contrasena"   class="form-control" placeholder="Contraseña"  type="password"/>
 					</div>
 					
 					
 					<div class="input-group flex-nowrap mb-3">
 						<span class="input-group-text fi fi-sr-password" id="addon-wrapping">  </span>
-						<InputText @bind-Value="Form_CambiarContrasena.Pass2"   class="form-control" placeholder="Contraseña"  type="password"/>
+						<InputText @bind-Value="Form_CambiarContrasena.Usuario_RepetirContrasena"   class="form-control" placeholder="Contraseña"  type="password"/>
 					</div>
 
 
@@ -74,15 +74,7 @@ else if (Dinaup_Sesion.SesionIniciada && Dinaup_Sesion.CambiarPass)
 }
 else if (Dinaup_Sesion.SesionIniciada == false && Form_CrearCuenta_Activar is not  null)
 {
-@*
 
-			
-				<RadzenButton Text="Show notification with custom position" Class="w-100"
-				              Click=@(args => ShowNotification(new NotificationMessage { Style = "position: absolute; left: -1000px;", 
-					                    Severity = NotificationSeverity.Success, 
-					                    Summary = "Success Summary", 
-					                    Detail = "Success Detail", Duration = 40000 })) />
-*@
 
 	<div class="contenedor container p-5" style="max-width:600px">
 		<div class="row">
@@ -165,40 +157,43 @@ else if (Dinaup_Sesion.SesionIniciada == false && Accion == "Recuperar")
 			               <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
 		               </div>
 
-               	}else if (Form_RecuperarContrasena.Return_EsperandoCodigo){
+               	}else if (Form_RecuperarContrasena.Return_CodigoGenerado ){
                
-               		<span class="mb-3 ">
-               			 Para completar el proceso introduzca el código que hemos enviado a <i class="bg-light border">@Form_RecuperarContrasena.Identificador</i> .
-               		</span>
-               		<div class="input-group flex-nowrap mb-3 ">
-               			<span class="input-group-text fi fi-sr-hastag" id="addon-wrapping">  </span>
-               			<InputText @bind-Value="Form_RecuperarContrasena.Codigo"  class="form-control" placeholder="Código" />
-               		</div>
-               
-               		<div class="row align-items-center justify-content-between">
-               
-               			<div class="col">
-               				<button class="btn btn-primary mb-3" type="submit">Validar cuenta</button>
-               				<a  class="btn btn-outline-secondary  mb-3" @onclick="@(()=> Form_RecuperarContrasena.Return_EsperandoCodigo = false)">
-               					Cambiar datos
-               				</a>
-               			</div>
-               
-               
-               		</div>
-               		<hr class="m-3"  />
-               		<div class="row" >
-               			* Si tiene algún problema durante el proceso, puede llamar a atención al cliente.
-               		</div>
-               
+						
+
+	               <environment include="Development">
+		               <RadzenBadge  BadgeStyle="BadgeStyle.Light" IsPill="true" Text="@Form_RecuperarContrasena.Return_Codigo" ></RadzenBadge>
+	               </environment>
+						
+
+	               <span class="mb-3 ">
+		               Hemos enviado una contraseña temporal al correo <RadzenBadge  BadgeStyle="BadgeStyle.Light" IsPill="true" Text="@Form_RecuperarContrasena.Identificador" />.
+		               Puede utilizarla durante los próximos 20 minutos.
+	               </span>
+               	 
+               	<hr class="m-3"  />
+               	<div class="row" >
+               		* Si tiene algún problema durante el proceso, puede llamar a atención al cliente.
+               	</div>
+           
+
+
                	}
                	else
                	{
                
-               		<div class="input-group flex-nowrap mb-3">
-               			<span class="input-group-text" id="addon-wrapping">@@</span>
-               			<InputText @bind-Value="Form_RecuperarContrasena.Identificador"  class="form-control" placeholder="Email" />
-               		</div>
+		               <div class="input-group flex-nowrap mb-3">
+			               <span class="input-group-text" id="addon-wrapping">@@</span>
+			               <InputText @bind-Value="Form_RecuperarContrasena.Identificador"  class="form-control" placeholder="Email" />
+		               </div>
+
+					   		   	
+		               <environment include="Development">
+			               <RadzenCheckBox @bind-Value=@Form_RecuperarContrasena.EnviarEmail Name="CheckBox1"     />
+			               <RadzenLabel Text="Enviar código por email (Solo desarrollo)" Component="CheckBox1" Style="margin-left: 8px; vertical-align: middle;" />
+		               </environment>
+							
+
 		               <div class="row align-items-center justify-content-between">
 
 			               <div class="col">
@@ -226,7 +221,6 @@ else if (Dinaup_Sesion.SesionIniciada == false && Accion == "Recuperar")
 }
 else if (Dinaup_Sesion.SesionIniciada == false && Accion == "Registro" )
 {
-
 
           
 	<div class="contenedor container p-5" style="max-width:800px" >
@@ -353,7 +347,7 @@ else if (Dinaup_Sesion.SesionIniciada == false   )
 					</div>
 
 
-
+@*
 					@if (Form_IniciarSesion.Respuesta_UbicacionesASeleccionar.TieneDatos())
 					{
 						<div class="input-group flex-nowrap mb-3">
@@ -382,7 +376,7 @@ else if (Dinaup_Sesion.SesionIniciada == false   )
 								}
 							</InputSelect>
 						</div>
-					}
+					}*@
 
 				
 
@@ -427,11 +421,14 @@ else if (Dinaup_Sesion.SesionIniciada == false   )
 @code {
 
 
-	
-	
-		[Parameter]
-		public string Accion { get; set; }
 
 
+	[Parameter]
+	public string Accion { get; set; }
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+	}
 
 }

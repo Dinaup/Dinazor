@@ -33,7 +33,10 @@ namespace Dinazor
 
         [Inject]
         protected NotificationService NotificationService { get; set; }
-        
+
+
+
+       
 
 
         protected override void OnInitialized()
@@ -56,18 +59,6 @@ namespace Dinazor
             base.OnInitialized();
         }
 
-
-
-
-     public   void ShowNotification(NotificationMessage message)
-        {
-            NotificationService.Notify(message);
-
-        }
-
-        public DinaupPage()
-        {
-        }
-
+         
     }
 }

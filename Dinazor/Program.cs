@@ -2,6 +2,7 @@
 using Dinazor.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.FileProviders;
 using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,12 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton <DinaupService>();
+builder.Services.AddSingleton<DinaupService>();
 builder.Services.AddScoped<HttpContextAccessor>();
 builder.Services.AddScoped<Dinazor.DinaupPage>();
 builder.Services.AddScoped<DinaNETCore.ASP_NETD.SesionServicio>();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped <DinaNETCore.ICookie , Cookie>();
+builder.Services.AddScoped<DinaNETCore.ICookie, Cookie>();
 
 builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();
@@ -34,7 +35,18 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.Use(async (context, next) =>
+{
+
+    await DinaupServidorDeArchivos.ProcesarArchivo(context, next);
+
+});
+
+app.UseRouting();
+
+
 app.UseStaticFiles();
+
 
 app.UseRouting();
 

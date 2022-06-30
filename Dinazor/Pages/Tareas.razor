@@ -1,0 +1,46 @@
+﻿
+
+@page "/Tareas"
+@inherits DinaupPage
+
+<PageTitle>Tareas</PageTitle>
+
+
+<RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Agregar nueva tarea" Click="@InsertRow"  />
+
+
+<Dinaup_Informe DinaupInformeRespuesta=@Tarea_INF SelectorDeColumnasVisibles=false    ></Dinaup_Informe>
+
+
+
+
+
+
+
+
+@code{
+
+	void InsertRow()
+	{
+
+	}
+
+	public MiDinaup.InformesD.FuncionalidadD.APITareasC Tarea_INF = new();
+	async void ActualizarUI()
+	{
+
+
+		await Tarea_INF.ConsultarAsync(Dinaup_Sesion, 1, 100);
+		this.StateHasChanged();
+
+	}
+
+
+	protected override Task OnInitializedAsync()
+	{
+		ActualizarUI();
+		return base.OnInitializedAsync();
+	}
+
+
+}

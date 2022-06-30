@@ -79,6 +79,7 @@
     <Compile Include="DocDinamicos\Documentos\Gantt Agendas.vb" />
     <Compile Include="DocDinamicos\PaginasInformes\Panel - Desarrollador API.vb" />
     <Compile Include="Informes\Funcionalidad\Algoritmos  Todos los Algoritmos.vb" />
+    <Compile Include="Informes\Funcionalidad\API - Tareas.vb" />
     <Compile Include="Informes\Funcionalidad\Buzones de correo  Correos Enviados %28Programados%29.vb" />
     <Compile Include="Informes\Funcionalidad\Buzones de correo  Correos Enviados.vb" />
     <Compile Include="Informes\Funcionalidad\Buzones de correo  Correos Recibidos.vb" />
@@ -175,6 +176,10 @@
     <Compile Include="Secciones\Correos electrónicos\Lista - Cuentas de Correo electrónico.vb" />
     <Compile Include="Secciones\Correos electrónicos\Lista - Envíos programados de correos.vb" />
     <Compile Include="Secciones\Correos electrónicos\Lista - Estados de correos recibidos.vb" />
+    <Compile Include="Secciones\Estados de Registros\Base - Estados de Registros.vb" />
+    <Compile Include="Secciones\Estados de Registros\Base Lista - Estados de Registros.vb" />
+    <Compile Include="Secciones\Estados de Registros\Estados de Registros.vb" />
+    <Compile Include="Secciones\Estados de Registros\Lista - Estados de Registros.vb" />
     <Compile Include="Secciones\Núcleo Dinaup\Accesos a empresas.vb" />
     <Compile Include="Secciones\Núcleo Dinaup\Accesos a ubicaciones.vb" />
     <Compile Include="Secciones\Núcleo Dinaup\Agrupadores de registros.vb" />
@@ -501,6 +506,18 @@
     <Compile Include="Secciones\Servicio REST JSON\Sección de pruebas JSON.vb" />
     <Compile Include="Secciones\Servicio REST JSON\Sesiones Web.vb" />
     <Compile Include="Secciones\Servicio REST JSON\Sincronizaciones REST.vb" />
+    <Compile Include="Secciones\Tareas\Base - Tareas.vb" />
+    <Compile Include="Secciones\Tareas\Base Lista - Tareas.vb" />
+    <Compile Include="Secciones\Tareas\Estados de tareas.vb" />
+    <Compile Include="Secciones\Tareas\Lista - Estados de tareas.vb" />
+    <Compile Include="Secciones\Tareas\Lista - Tareas.vb" />
+    <Compile Include="Secciones\Tareas\Lista - Tipos de tareas v1.vb" />
+    <Compile Include="Secciones\Tareas\Tareas.vb" />
+    <Compile Include="Secciones\Tareas\Tipos de tareas v1.vb" />
+    <Compile Include="Secciones\Tipos de Registros\Base - Tipos de registros.vb" />
+    <Compile Include="Secciones\Tipos de Registros\Base Lista - Tipos de registros.vb" />
+    <Compile Include="Secciones\Tipos de Registros\Lista - Tipos de registros.vb" />
+    <Compile Include="Secciones\Tipos de Registros\Tipos de registros.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
