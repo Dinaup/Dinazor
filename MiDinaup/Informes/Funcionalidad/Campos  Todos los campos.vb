@@ -4,38 +4,30 @@ Partial Public Class InformesD
       Public Class CamposTodosLosCamposC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of CamposTodosLosCampos_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of CamposTodosLosCampos_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New CamposTodosLosCampos_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new()
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("3475cb8a-117d-4d10-bd6a-7a66e401000c"))
               me.ID = new GUID("3475cb8a-117d-4d10-bd6a-7a66e401000c")
               me.Titulo  = "Campos > Todos los campos"
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class CamposTodosLosCampos_FilaC
-              Public SeccionAgrupada As String
-              Public Formato As Decimal
-              Public Titulo As String
-              Public EtiquetaAbreviada As String
-              Public FechaAltaSistema As Date?
-              Public Rolespecialdefuncionalidad As Decimal
-              Public Copiarnombrealagregarrelacion As Boolean
-              Public SeccionrelacionadaID As Guid
-              Public Eliminado As Boolean
-              Public Indexado As Boolean
-              Public EsBase As Boolean
-              Public ID As Guid
-              Public Etiqueta As String
-              Public VisibleRI As Boolean
-              Public Seccion As String
-              Public FechaUltimaModificacion As Date?
+                <ProtoBuf.ProtoMember(100)>  Public SeccionAgrupada As String
+                <ProtoBuf.ProtoMember(101)>  Public Formato As Decimal
+                <ProtoBuf.ProtoMember(102)>  Public Titulo As String
+                <ProtoBuf.ProtoMember(103)>  Public EtiquetaAbreviada As String
+                <ProtoBuf.ProtoMember(104)>  Public FechaAltaSistema As DateTime
+                <ProtoBuf.ProtoMember(105)>  Public Rolespecialdefuncionalidad As Decimal
+                <ProtoBuf.ProtoMember(106)>  Public Copiarnombrealagregarrelacion As Boolean
+                <ProtoBuf.ProtoMember(107)>  Public SeccionrelacionadaID As Guid
+                <ProtoBuf.ProtoMember(108)>  Public Eliminado As Boolean
+                <ProtoBuf.ProtoMember(109)>  Public Indexado As Boolean
+                <ProtoBuf.ProtoMember(110)>  Public EsBase As Boolean
+                <ProtoBuf.ProtoMember(111)>  Public ID As Guid
+                <ProtoBuf.ProtoMember(112)>  Public Etiqueta As String
+                <ProtoBuf.ProtoMember(113)>  Public VisibleRI As Boolean
+                <ProtoBuf.ProtoMember(114)>  Public Seccion As String
+                <ProtoBuf.ProtoMember(115)>  Public FechaUltimaModificacion As DateTime
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.SeccionAgrupada = o("SeccionAgrupada").STR
               Me.Formato = o("Formato").DEC
@@ -54,7 +46,21 @@ Partial Public Class InformesD
               Me.Seccion = o("Seccion").STR
               Me.FechaUltimaModificacion = o("FechaUltimaModificacion").ToDateTime_UTC
               End Sub
+              Sub new()
+              End Sub
           End Class
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_Filas As New List(Of CamposTodosLosCampos_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New CamposTodosLosCampos_FilaC(Actual)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class

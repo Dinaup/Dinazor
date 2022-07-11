@@ -4,33 +4,25 @@ Partial Public Class InformesD
       Public Class InformesTodosLosInformesC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of InformesTodosLosInformes_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of InformesTodosLosInformes_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New InformesTodosLosInformes_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new()
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("eeb28c83-c158-4226-8496-1bb53b7aa671"))
               me.ID = new GUID("eeb28c83-c158-4226-8496-1bb53b7aa671")
               me.Titulo  = "Informes > Todos los informes"
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class InformesTodosLosInformes_FilaC
-              Public Ambito As Boolean
-              Public Categoria As String
-              Public FechaSincronizacion As Date?
-              Public Subcategoria As String
-              Public FechaIA As Date?
-              Public TextoPrincipal As String
-              Public FechaUltimaModificacion As Date?
-              Public Eliminado As Boolean
-              Public FechaAltaSistema As Date?
-              Public ID As Guid
-              Public Seccion As String
+                <ProtoBuf.ProtoMember(100)>  Public Ambito As Boolean
+                <ProtoBuf.ProtoMember(101)>  Public Categoria As String
+                <ProtoBuf.ProtoMember(102)>  Public FechaSincronizacion As DateTime
+                <ProtoBuf.ProtoMember(103)>  Public Subcategoria As String
+                <ProtoBuf.ProtoMember(104)>  Public FechaIA As DateTime
+                <ProtoBuf.ProtoMember(105)>  Public TextoPrincipal As String
+                <ProtoBuf.ProtoMember(106)>  Public FechaUltimaModificacion As DateTime
+                <ProtoBuf.ProtoMember(107)>  Public Eliminado As Boolean
+                <ProtoBuf.ProtoMember(108)>  Public FechaAltaSistema As DateTime
+                <ProtoBuf.ProtoMember(109)>  Public ID As Guid
+                <ProtoBuf.ProtoMember(110)>  Public Seccion As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Ambito = o("Ambito").BOOL
               Me.Categoria = o("Categoria").STR
@@ -44,7 +36,42 @@ Partial Public Class InformesD
               Me.ID = o("ID").ToGuid
               Me.Seccion = o("Seccion").STR
               End Sub
+              Sub new()
+              End Sub
           End Class
+              Partial Public Class InformesTodosLosInformes_FilaC
+                  Implements IDatoCacheable
+                  Private ReadOnly Property IDatoCacheable_ID As Guid Implements IDatoCacheable.ID
+                      Get
+                          Return ID
+                      End Get
+                  End Property
+                  Private ReadOnly Property IDatoCacheable_FechaIA As Date Implements IDatoCacheable.FechaIA
+                      Get
+                          Return FechaIA
+                      End Get
+                  End Property
+              End Class
+          Public MaxFechaIA As Date 
+          Public FilasPorID As New Dic(Of Guid, InformesTodosLosInformes_FilaC)
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_MaxFechaIA As Date 
+                Dim Creando_FilasPorID As New Dic(Of Guid, InformesTodosLosInformes_FilaC) 
+                Dim Creando_Filas As New List(Of InformesTodosLosInformes_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New InformesTodosLosInformes_FilaC(Actual)
+                    Creando_MaxFechaIA = Max(Creando_MaxFechaIA, N.FechaIA) 
+                    Creando_FilasPorID.AddSiNoExiste(N.ID, N)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                Me.MaxFechaIA = Creando_MaxFechaIA
+                Me.FilasPorID = Creando_FilasPorID
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class

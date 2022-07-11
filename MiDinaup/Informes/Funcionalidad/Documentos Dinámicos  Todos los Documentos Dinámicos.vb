@@ -4,29 +4,21 @@ Partial Public Class InformesD
       Public Class DocumentosDinamicosTodosLosDocumentosDinamicosC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of DocumentosDinamicosTodosLosDocumentosDinamicos_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of DocumentosDinamicosTodosLosDocumentosDinamicos_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New DocumentosDinamicosTodosLosDocumentosDinamicos_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new()
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("acd19d19-a4cc-4e0b-8235-3dd5cc0689d1"))
               me.ID = new GUID("acd19d19-a4cc-4e0b-8235-3dd5cc0689d1")
               me.Titulo  = "Documentos Dinámicos > Todos los Documentos Dinámicos"
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class DocumentosDinamicosTodosLosDocumentosDinamicos_FilaC
-              Public FechaAltaSistema As Date?
-              Public TextoPrincipal As String
-              Public Subcategoria As String
-              Public ID As Guid
-              Public FechaUltimaModificacion As Date?
-              Public Categoria As String
-              Public Eliminado As Boolean
+                <ProtoBuf.ProtoMember(100)>  Public FechaAltaSistema As DateTime
+                <ProtoBuf.ProtoMember(101)>  Public TextoPrincipal As String
+                <ProtoBuf.ProtoMember(102)>  Public Subcategoria As String
+                <ProtoBuf.ProtoMember(103)>  Public ID As Guid
+                <ProtoBuf.ProtoMember(104)>  Public FechaUltimaModificacion As DateTime
+                <ProtoBuf.ProtoMember(105)>  Public Categoria As String
+                <ProtoBuf.ProtoMember(106)>  Public Eliminado As Boolean
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.FechaAltaSistema = o("FechaAltaSistema").ToDateTime_UTC
               Me.TextoPrincipal = o("TextoPrincipal").STR
@@ -36,7 +28,21 @@ Partial Public Class InformesD
               Me.Categoria = o("Categoria").STR
               Me.Eliminado = o("Eliminado").BOOL
               End Sub
+              Sub new()
+              End Sub
           End Class
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_Filas As New List(Of DocumentosDinamicosTodosLosDocumentosDinamicos_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New DocumentosDinamicosTodosLosDocumentosDinamicos_FilaC(Actual)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class

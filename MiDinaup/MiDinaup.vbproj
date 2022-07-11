@@ -48,6 +48,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\DinaNet\src\DinaNetCore\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>.\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -69,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.vb" />
+    <Compile Include="DatosCacheables.vb" />
     <Compile Include="DocDinamicos\API\Documento de Prueba API.vb" />
     <Compile Include="DocDinamicos\Archivos\Board_HTML.vb" />
     <Compile Include="DocDinamicos\Archivos\chart.js.vb" />
@@ -78,7 +82,10 @@
     <Compile Include="DocDinamicos\Archivos\Vue.js.vb" />
     <Compile Include="DocDinamicos\Documentos\Gantt Agendas.vb" />
     <Compile Include="DocDinamicos\PaginasInformes\Panel - Desarrollador API.vb" />
+    <Compile Include="Enumeraciones.vb" />
     <Compile Include="Informes\Funcionalidad\Algoritmos  Todos los Algoritmos.vb" />
+    <Compile Include="Informes\Funcionalidad\API - Archivos.vb" />
+    <Compile Include="Informes\Funcionalidad\API - Mis Tareas.vb" />
     <Compile Include="Informes\Funcionalidad\API - Tareas.vb" />
     <Compile Include="Informes\Funcionalidad\Buzones de correo  Correos Enviados %28Programados%29.vb" />
     <Compile Include="Informes\Funcionalidad\Buzones de correo  Correos Enviados.vb" />

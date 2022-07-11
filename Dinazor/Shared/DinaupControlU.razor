@@ -1,0 +1,302 @@
+﻿ 
+
+
+@if (Configuracion==null)
+{
+
+	<span>Cargando..</span>
+
+}
+else if (Configuracion.Formato == TipoCamposSQLServerE.Bool)
+{
+
+	<label> 
+	<RadzenCheckBox   TValue="bool"   @bind-Value=@Valor_Boolean  /> @Configuracion.Etiqueta
+	</label>
+
+}
+else if (Configuracion.Formato == TipoCamposSQLServerE.Doble)
+{
+
+	<label>@Configuracion.Etiqueta<br>
+	  <RadzenNumeric TValue="decimal"  @bind-Value=@Valor_Decimal   />
+	</label>
+
+}
+else if (Configuracion.Formato == TipoCamposSQLServerE.Entero)
+{
+
+	<label  >@Configuracion.Etiqueta<br>
+
+
+	@if (Configuracion.ItemsDesplegable.TieneDatos())
+	{
+	
+		<RadzenDropDown Value="@Configuracion.ItemsDesplegable.HacerMagiaArray(this.Valor_Int)" AllowClear="true" AllowFiltering="false"  TValue="DesplegableItemC"   Placeholder="Seleccione..."
+		                Data=@Configuracion.ItemsDesplegable ValueProperty="ID"   Change=@(args => OnChange(args as DesplegableItemC)) >
+			<Template>
+				@((context as DesplegableItemC).Texto )
+			</Template>
+		</RadzenDropDown>
+
+ 
+
+	}
+	else
+	{
+	
+		<RadzenNumeric   TValue="int"  @bind-Value=@Valor_Int />
+
+	}
+	</label>
+
+
+}
+else if (Configuracion.Formato == TipoCamposSQLServerE.Fecha)
+{
+
+
+
+	<label>@Configuracion.Etiqueta<br>
+	   <RadzenDatePicker  @bind-Value=@Valor_DateTimeNulable DateFormat="d"  TValue="DateTime?"  />
+	</label>
+
+}
+else if (Configuracion.Formato == TipoCamposSQLServerE.FechaYHora)
+{
+
+
+
+	 
+
+	<label>@Configuracion.Etiqueta<br>
+
+	 @if (Configuracion.RolCampo == RolCampoE.SinSegundos)
+	 {
+	 	<RadzenDatePicker Value=@Valor_DateTimeNulable.ToLocalTime_PN()   Change=@(args => OnChange(args   ))  TValue="DateTime?" ShowTime="true" ShowSeconds="false" DateFormat="dd/MM/yyyy HH:mm"   />
+	 }
+	 else
+	 {
+	 	<RadzenDatePicker Value=@Valor_DateTimeNulable.ToLocalTime_PN()   Change=@(args => OnChange(args  ))  TValue="DateTime?" ShowTime="true" ShowSeconds="true" DateFormat="dd/MM/yyyy HH:mm:ss"  />
+	 }
+         
+	</label>
+
+}
+else if (Configuracion.Formato == TipoCamposSQLServerE.Hora)
+{
+	<label >@Configuracion.Etiqueta<br>
+
+
+	@if (Configuracion.RolCampo == RolCampoE.SinSegundos)
+	{
+		<RadzenDatePicker @bind-Value=@Valor_DateTimeNulable   TValue="DateTime?" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"  />
+	}
+	else
+	{
+		<RadzenDatePicker @bind-Value=@Valor_DateTimeNulable    TValue="DateTime?" ShowTime="true" TimeOnly="true" ShowSeconds="true" DateFormat="HH:mm:ss"  />
+	}
+
+	</label>
+
+}
+else if (Configuracion.Formato == TipoCamposSQLServerE.Texto)
+{
+
+
+	@if (Configuracion.EsMultilinea)
+	{
+		<label class="w-100">@Configuracion.Etiqueta<br>
+		   <RadzenTextArea  @bind-Value=@Valor_String  class="w-100"  Style="height:100px"/>
+		</label>
+	}
+	else
+	{
+
+		<label class="w-100">@Configuracion.Etiqueta<br>
+			<RadzenTextBox @bind-Value=@Valor_String   class="w-100" />
+		</label>
+	}
+
+}
+else if (Configuracion.Formato == TipoCamposSQLServerE.Guid)
+{
+
+
+	<label class="w-100">@Configuracion.Etiqueta<br>
+	</label>
+
+}
+else
+{
+
+	<span>Formato no compatible</span>
+
+}
+
+
+@code {
+
+	
+	[Parameter]
+	public DinaNETCore.APID.DinaupAPI_CampoC? Configuracion { get; set; }
+
+
+
+	[Parameter]
+	public string Valor_String
+	{
+		get => _valor_String;
+		set
+		{
+			if (_valor_String == value) return;
+			_valor_String = value;
+			Valor_StringChanged.InvokeAsync(value);
+		}
+	}
+
+
+
+	[Parameter]
+	public bool Valor_Boolean
+	{
+		get => _valor_Boolean;
+		set
+		{
+			if (_valor_Boolean == value) return;
+			_valor_Boolean = value;
+			Valor_BooleanChanged.InvokeAsync(value);
+		}
+	}
+
+	
+
+	
+
+	[Parameter]
+	public int Valor_Int
+	{
+		get => _valor_Int;
+		set
+		{
+			if (_valor_Int == value) return;
+			_valor_Int = value;
+			Valor_IntChanged.InvokeAsync(value);
+		}
+	}
+
+	[Parameter]
+	public decimal Valor_Decimal
+	{
+		get => _valor_Decimal;
+		set
+		{
+			if (_valor_Decimal == value) return;
+			_valor_Decimal = value;
+			Valor_DecimalChanged.InvokeAsync(value);
+		}
+	}
+	
+	[Parameter]
+	public DateTime Valor_DateTime
+	{
+		get => _valor_DateTime;
+		set
+		{
+			if (_valor_DateTime == value) return;
+			_valor_DateTime = value;
+			Valor_DateTimeChanged.InvokeAsync(value);
+		}
+	}
+
+
+	[Parameter]
+	public DateTime? Valor_DateTimeNulable
+	{
+		get => _valor_DateTimeNulable;
+		set
+		{
+			if (_valor_DateTimeNulable == value) return;
+			_valor_DateTimeNulable = value;
+			Valor_DateTimeNulableChanged.InvokeAsync(value);
+		}
+	}
+
+
+	[Parameter]
+	public DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC Valor_Relacion
+	{
+		get => _Valor_Relacion;
+		set
+		{
+			if (_Valor_Relacion == value) return;
+			_Valor_Relacion = value;
+			Valor_RelacionChanged.InvokeAsync(value);
+		}
+	}
+
+
+
+	private DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC  _Valor_Relacion;
+
+
+
+	[Parameter] public EventCallback<DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC > Valor_RelacionChanged { get; set; }
+	[Parameter] public EventCallback<string> Valor_StringChanged { get; set; }
+	[Parameter] public EventCallback<Boolean> Valor_BooleanChanged { get; set; }
+	[Parameter] public EventCallback<decimal> Valor_DecimalChanged { get; set; }
+	[Parameter] public EventCallback<int> Valor_IntChanged { get; set; }
+	[Parameter] public EventCallback<DateTime> Valor_DateTimeChanged { get; set; }
+	[Parameter] public EventCallback<DateTime?> Valor_DateTimeNulableChanged { get; set; }
+
+	private string _valor_String ="";
+	private Boolean _valor_Boolean;
+	private decimal _valor_Decimal;
+	private int _valor_Int;
+	private DateTime _valor_DateTime;
+	private DateTime? _valor_DateTimeNulable;
+
+
+
+ 
+	void OnChange(DesplegableItemC item)
+	{
+
+		if (item != null)
+		{
+			this.Valor_Int = item.ID;
+		}
+		else
+		{
+			this.Valor_Int = 0;
+		}
+
+	}
+
+
+
+	
+
+ 
+ 
+	void OnChange(DateTime? item)
+	{
+
+		if (item != null)
+		{
+			this.Valor_DateTimeNulable  = item.Value.ToUniversalTime();
+		}
+		else
+		{
+			this.Valor_DateTimeNulable = null;
+		}
+
+	}
+
+
+
+	void OnChange(int item)
+	{
+
+	}
+}

@@ -1,0 +1,233 @@
+﻿@page "/Pruebas"
+@page "/Pruebas/{id}"
+@inherits DinaupPage
+
+@code {
+
+	// ##############################
+	// ##        PARAMETROS       ##
+	// ##############################
+	// Siempre los ponemos en un bloque @code  por separado,  al inicio del documento, para poder identificarlos facilmente.
+
+	[Parameter]
+	public string ID { get; set; }
+}
+
+@code {
+
+
+
+
+	// ##############################
+	// ##          Datos          ##
+	// ##############################
+	// Siempre los ponemos en un bloque @code  por separado, después de los parámetros.
+	// Esto son los datos que condicionan la interfaz
+	List<MiDinaup.SeccionesD.SeccionDePruebasJSOND.SeccionDePruebasJSON_ConListaC>? Lista_Datos = null;
+	MiDinaup.SeccionesD.SeccionDePruebasJSOND.SeccionDePruebasJSON_ConListaC Abierto_Dato = null;
+
+
+}
+
+
+<style>
+	form .row {
+		margin-bottom: 16px;
+	}
+</style>
+
+
+<h1>Ejemplo</h1>
+Este ejemplo utiliza la sección de datos de prueba.
+<br />
+Se ha utiliza el API en modo directo, es decir, que carga los datos de la sección sin necesidad de un informe.
+<br />
+
+
+
+<RadzenCard>
+
+	<h1>Seccion datos de prueba</h1>
+
+</RadzenCard>
+
+
+@if (Abierto_Dato != null)
+{
+
+
+	<RadzenCard>
+
+		<h1>@Abierto_Dato.Listador.TextoPrincipal</h1>
+
+		<DinaupControlU @bind-Valor_Relacion=Abierto_Dato.Listador.ReferenciaAutorDelAlta Configuracion=Abierto_Dato.Listador.__ReferenciaAutorDelAlta ></DinaupControlU>
+
+
+
+		
+		@code{ /* Al ser de tipo ENUM. No se hace bind-value. Se controla el cambio manualmente para hacer la conversion. */ }
+		<DinaupControlU Valor_Int=@Abierto_Dato.Listador.CampoDeTipoEnumeracionMeses.INT()
+						Valor_IntChanged="@((int v) => Abierto_Dato.Listador.CampoDeTipoEnumeracionMeses = (EnumMesE)v)"
+					Configuracion=Abierto_Dato.Listador.__CampoDeTipoEnumeracionMeses ></DinaupControlU>
+		
+		
+		<DinaupControlU @bind-Valor_String=Abierto_Dato.Listador.TextoDePrueba Configuracion="Abierto_Dato.Listador.__TextoDePrueba"></DinaupControlU>
+		<DinaupControlU @bind-Valor_Decimal=Abierto_Dato.Listador.CampoDecimal Configuracion="Abierto_Dato.Listador.__CampoDecimal"></DinaupControlU>
+		<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.FechaDePrueba Configuracion="Abierto_Dato.Listador.__FechaDePrueba"></DinaupControlU>
+		<DinaupControlU @bind-Valor_Boolean=Abierto_Dato.Listador.CasillaSiNoDePrueba Configuracion="Abierto_Dato.Listador.__CasillaSiNoDePrueba"></DinaupControlU>
+		<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.FechaYHoraConSegundos_UTC Configuracion="Abierto_Dato.Listador.__FechaYHoraConSegundos_UTC"></DinaupControlU>
+		<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.FechaYHoraSinSegundos_UTC Configuracion="Abierto_Dato.Listador.__FechaYHoraSinSegundos_UTC"></DinaupControlU>
+		<DinaupControlU @bind-Valor_String=Abierto_Dato.Listador.TextoMultilinea Configuracion="Abierto_Dato.Listador.__TextoMultilinea"></DinaupControlU>
+		<DinaupControlU @bind-Valor_String=Abierto_Dato.Listador.TextoDePrueba Configuracion="Abierto_Dato.Listador.__TextoDePrueba"></DinaupControlU>
+		<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.HoraConSegundos Configuracion="Abierto_Dato.Listador.__HoraConSegundos"></DinaupControlU>
+		<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.HoraSinSegundos Configuracion="Abierto_Dato.Listador.__HoraSinSegundos"></DinaupControlU>
+
+	</RadzenCard>
+ 
+
+	<hr>
+	<h2>Elementos de prueba</h2>
+
+
+	@if (Abierto_Dato.Lista != null)
+	{
+		@foreach (MiDinaup.SeccionesD.SeccionDePruebasJSONListaD.SeccionDePruebasJSONListaC ElementoActual in Abierto_Dato.Lista)
+		{
+			<RadzenCard>
+				
+				@if (!ElementoActual.Eliminado)
+				{
+					<DinaupControlU @bind-Valor_String=ElementoActual.ValorDePrueba Configuracion=ElementoActual.__ValorDePrueba ></DinaupControlU>
+					<DinaupControlU @bind-Valor_String=ElementoActual.TextoPrincipal Configuracion=ElementoActual.__TextoPrincipal ></DinaupControlU>
+					<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Eliminar" Click="(() => ElementoActual.Eliminado = true)"/>
+				}
+				else
+				{	
+					<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Restaurar" Click="(() => ElementoActual.Eliminado = false)"/>
+		
+				}
+				
+			</RadzenCard>
+		}
+	}
+
+	<br>
+	<br />
+
+
+
+	<PieFormulario  Evento_AgregarFila="AgregarFila" Evento_Cancelar="Cancelar" Evento_Guardar="Guardar" ></PieFormulario>
+
+}
+else if (Lista_Datos != null)
+{
+
+
+	<ul>
+		@foreach (var item in Lista_Datos)
+		{
+			<li @onclick=@(async ()=> await AbrirRegistro(item.Listador.ID))>@item.Listador.TextoPrincipal</li>
+		}
+	</ul>
+
+
+}
+else
+{
+
+	<div class="spinner-border text-primary" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@code {
+
+
+
+
+
+	async Task AgregarFila()
+	{
+
+		if (Abierto_Dato == null) return;
+		Abierto_Dato.Lista.Add(new());
+
+	}
+
+
+
+
+
+	async Task Cancelar()
+	{
+		if (Abierto_Dato == null) return;
+		Abierto_Dato = null;
+
+	}
+
+
+	async Task Guardar()
+	{
+		if (Abierto_Dato == null) return;
+		var respuesta = await MiDinaup.SeccionesD.SeccionDePruebasJSOND.DatosGuardar_Async( Dinaup_Sesion.DinaupUsuario, Abierto_Dato);
+
+
+	}
+
+
+
+	async Task AbrirRegistro(System.Guid id)
+	{
+		var Dato = await MiDinaup.SeccionesD.SeccionDePruebasJSOND.ConsultarDatos_ConLista_Async(Dinaup_Sesion.DinaupUsuario, "id", id.ToString());
+
+
+
+		if (Dato.Count() == 1)
+		{
+			this.Abierto_Dato = Dato[0];
+			NotificationService.Notify(NotificationSeverity.Success, "Registro abierto.");
+
+		}
+		else
+		{
+			NotificationService.Notify(NotificationSeverity.Error, "No se ha encontrado el registro indicado.");
+		}
+	}
+
+
+	async void ActualizarUI()
+	{
+		Lista_Datos = await MiDinaup.SeccionesD.SeccionDePruebasJSOND.ConsultarDatos_ConLista_Async(Dinaup_Sesion.DinaupUsuario, "eliminado", "0");
+		this.StateHasChanged();
+	}
+
+
+	protected override Task OnInitializedAsync()
+	{
+
+
+
+		ActualizarUI();
+		return base.OnInitializedAsync();
+	}
+
+
+}
+
+
+
+

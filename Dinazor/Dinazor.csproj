@@ -35,6 +35,13 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\GitHub\DinaNet\src\DinaNetCore\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>protobuf-net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\duparchivos\" />
   </ItemGroup>
 
 </Project>

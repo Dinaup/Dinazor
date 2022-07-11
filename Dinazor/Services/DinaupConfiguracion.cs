@@ -1,8 +1,11 @@
-﻿namespace Dinazor.Services
+﻿using static DinaNETCore.APID;
+
+namespace Dinazor.Services
 {
-    public class DinaupService
+    public class DinaupConfiguracionC
     {
 
+ 
 
 
 
@@ -17,7 +20,12 @@
 
 
 
-        public DinaupService()
+        public string Config_Archivos = "";
+        public string Config_ArchivosPublicos = "";
+
+
+
+        public DinaupConfiguracionC()
         {
             var configurationBuilder = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, false);
             this.Configuration = configurationBuilder.Build();
@@ -27,10 +35,18 @@
             this.Config_UbicacionID = Configuration.GetValue<string>("Dinaup:UbicacionID");
             this.Config_EmpresaID = Configuration.GetValue<string>("Dinaup:EmpresaID");
 
-      
+            this.Config_Archivos = Configuration.GetValue<string>("APP:Archivos");
+            this.Config_ArchivosPublicos = Configuration.GetValue<string>("APP:ArchivosPublicos");
+
+
+
             DinaNETCore.ASP_NETD.PaginaD.Iniciar(Config_Apikey, Config_Host, Config_Port);
             this.Conexion = DinaNETCore.ASP_NETD.PaginaD.DinaupServer;
+           
         }
+
+
+
 
 
 

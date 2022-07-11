@@ -1,0 +1,77 @@
+﻿@page "/Archivos"
+@inherits DinaupPage
+ 
+
+
+
+
+
+
+
+<h1>Informe de Archivos</h1> 
+
+Cantidad: @Datos_Archivos.Filas.Count
+Cantidad DIC: @Datos_Archivos.FilasPorID.Count
+Max Fecha: @Datos_Archivos.MaxFechaIA 
+
+
+
+@if(Datos_Archivos != null){
+
+	@if (Datos_Archivos.Filas.TieneDatos())
+	{
+		
+		@foreach (var item in Datos_Archivos.Filas)
+		{
+			
+			<RadzenCard>
+			<span>@item.Filename  </span>
+			</RadzenCard>
+
+
+
+		}
+
+
+	}
+
+}
+ 
+
+
+
+
+@code{
+
+
+
+
+
+	decimal ValorDePrueba = 2;
+
+
+	static MiDinaup.InformesD.FuncionalidadD.APIArchivosC  Datos_Archivos = new(   );
+
+
+	async void ActualizarUI()
+	{
+
+		await Datos_Archivos.ConsultarAsync(Dinaup_Sesion.DinaupUsuario, 1, 1000000);
+		this.StateHasChanged();
+
+	}
+
+
+
+	protected override Task OnInitializedAsync()
+	{
+
+
+		ActualizarUI();
+		return base.OnInitializedAsync();
+	}
+
+
+
+
+}

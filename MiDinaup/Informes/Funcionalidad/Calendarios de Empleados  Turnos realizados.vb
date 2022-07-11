@@ -4,16 +4,7 @@ Partial Public Class InformesD
       Public Class CalendariosDeEmpleadosTurnosRealizadosC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of CalendariosDeEmpleadosTurnosRealizados_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of CalendariosDeEmpleadosTurnosRealizados_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New CalendariosDeEmpleadosTurnosRealizados_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new(Empleado As Guid, Fecha_Desde As Date, Fecha_Hasta As Date)
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("d51b72c9-3d6a-4647-879f-3b5ab8de36f1"))
               me.ID = new GUID("d51b72c9-3d6a-4647-879f-3b5ab8de36f1")
@@ -22,26 +13,41 @@ Partial Public Class InformesD
               Agregar_Respuesta("Fecha_Desde",Fecha_Desde)
               Agregar_Respuesta("Fecha_Hasta",Fecha_Hasta)
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class CalendariosDeEmpleadosTurnosRealizados_FilaC
-              Public Fecha As Date?
-              Public Tipo As Integer
-              Public Duracion As Integer
-              Public Realizacion As Integer
-              Public Estado As Integer
-              Public Fuerzamayor As Boolean
-              Public HExtraNomina As Decimal
-              Public AusenciaNomina As Decimal
+                <ProtoBuf.ProtoMember(100)>  Public Fecha As Date?
+                <ProtoBuf.ProtoMember(101)>  Public Tipo As Integer
+                <ProtoBuf.ProtoMember(102)>  Public Duracion As Integer
+                <ProtoBuf.ProtoMember(103)>  Public Realizacion As Integer
+                <ProtoBuf.ProtoMember(104)>  Public Estado As Integer
+                <ProtoBuf.ProtoMember(105)>  Public Fuerzamayor As Boolean
+                <ProtoBuf.ProtoMember(106)>  Public HExtraNomina As Decimal
+                <ProtoBuf.ProtoMember(107)>  Public AusenciaNomina As Decimal
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Fecha = o("Fecha").ToDate
-              Me.Tipo = o("Tipo").INT
+              Me.Tipo = ctype(o("Tipo").INT(0), EnumTipoDeTurnoE)
               Me.Duracion = o("Duracion").INT
               Me.Realizacion = o("Realizacion").INT
-              Me.Estado = o("Estado").INT
+              Me.Estado = ctype(o("Estado").INT(0), EnumTipoDeRealizacionDeTurnoE)
               Me.Fuerzamayor = o("Fuerzamayor").BOOL
               Me.HExtraNomina = o("HExtraNomina").DEC
               Me.AusenciaNomina = o("AusenciaNomina").DEC
               End Sub
+              Sub new()
+              End Sub
           End Class
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_Filas As New List(Of CalendariosDeEmpleadosTurnosRealizados_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New CalendariosDeEmpleadosTurnosRealizados_FilaC(Actual)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class

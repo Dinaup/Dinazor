@@ -4,16 +4,7 @@ Partial Public Class InformesD
       Public Class HistorialDeActividadEnRegistrosPorEmpleadoC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of HistorialDeActividadEnRegistrosPorEmpleado_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of HistorialDeActividadEnRegistrosPorEmpleado_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New HistorialDeActividadEnRegistrosPorEmpleado_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new(Empleado As Guid, Fecha_Desde As Date, Fecha_Hasta As Date)
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("454381c6-7ff6-49e5-b721-318a16828828"))
               me.ID = new GUID("454381c6-7ff6-49e5-b721-318a16828828")
@@ -22,13 +13,14 @@ Partial Public Class InformesD
               Agregar_Respuesta("Fecha_Desde",Fecha_Desde)
               Agregar_Respuesta("Fecha_Hasta",Fecha_Hasta)
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class HistorialDeActividadEnRegistrosPorEmpleado_FilaC
-              Public Empleado As String
-              Public Fecha As Date?
-              Public Ubicacion As String
-              Public Dato As String
-              Public DatoIcono As Guid
-              Public Seccion As String
+                <ProtoBuf.ProtoMember(100)>  Public Empleado As String
+                <ProtoBuf.ProtoMember(101)>  Public Fecha As Date?
+                <ProtoBuf.ProtoMember(102)>  Public Ubicacion As String
+                <ProtoBuf.ProtoMember(103)>  Public Dato As String
+                <ProtoBuf.ProtoMember(104)>  Public DatoIcono As Guid
+                <ProtoBuf.ProtoMember(105)>  Public Seccion As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Empleado = o("Empleado").STR
               Me.Fecha = o("Fecha").ToDateTime_UTC
@@ -37,7 +29,21 @@ Partial Public Class InformesD
               Me.DatoIcono = o("DatoIcono").ToGuid
               Me.Seccion = o("Seccion").STR
               End Sub
+              Sub new()
+              End Sub
           End Class
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_Filas As New List(Of HistorialDeActividadEnRegistrosPorEmpleado_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New HistorialDeActividadEnRegistrosPorEmpleado_FilaC(Actual)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class

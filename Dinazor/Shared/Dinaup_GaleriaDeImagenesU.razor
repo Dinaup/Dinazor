@@ -1,0 +1,42 @@
+﻿@inject ControladorDeArchivosC  ControladorDeArchivos
+@inject DatosCacheC  DatosCacheados
+
+
+
+
+
+@foreach (var ArchivoActual in Datos_Archivos)
+{
+
+
+	<li>@ArchivoActual.Value.Filename</li>
+	<RadzenImage Path=@ControladorDeArchivos.FirmarURL_Archivo(ArchivoActual.Value)></RadzenImage>
+
+
+
+}
+
+
+
+
+@code {
+
+
+
+
+	[Parameter]
+	public string ArchivosSeparadosPorcomas { get; set; }
+
+
+	private Dic<Guid, InformesD.FuncionalidadD.APIArchivosC.APIArchivos_FilaC> Datos_Archivos = new();
+
+	protected override Task OnInitializedAsync()
+	{
+		Datos_Archivos = DatosCacheados.Cache_Archivos.RecibirPorIDS_SeparadasPorComas(ArchivosSeparadosPorcomas);
+		return base.OnInitializedAsync();
+	}
+
+
+
+
+}

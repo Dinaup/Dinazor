@@ -4,29 +4,21 @@ Partial Public Class InformesD
       Public Class ConfiguracionInformeListaColumnasC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of ConfiguracionInformeListaColumnas_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of ConfiguracionInformeListaColumnas_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New ConfiguracionInformeListaColumnas_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new()
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("447d7dbb-efa6-4f76-af52-910a1ade836e"))
               me.ID = new GUID("447d7dbb-efa6-4f76-af52-910a1ade836e")
               me.Titulo  = "Configuración Informe > Lista Columnas"
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class ConfiguracionInformeListaColumnas_FilaC
-              Public PosicionOrden As Decimal
-              Public ID As Guid
-              Public IconoID As Guid
-              Public FechaUltimaModificacion As Date?
-              Public FechaAltaSistema As Date?
-              Public Titulo As String
-              Public Eliminado As Boolean
+                <ProtoBuf.ProtoMember(100)>  Public PosicionOrden As Decimal
+                <ProtoBuf.ProtoMember(101)>  Public ID As Guid
+                <ProtoBuf.ProtoMember(102)>  Public IconoID As Guid
+                <ProtoBuf.ProtoMember(103)>  Public FechaUltimaModificacion As DateTime
+                <ProtoBuf.ProtoMember(104)>  Public FechaAltaSistema As DateTime
+                <ProtoBuf.ProtoMember(105)>  Public Titulo As String
+                <ProtoBuf.ProtoMember(106)>  Public Eliminado As Boolean
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.PosicionOrden = o("PosicionOrden").DEC
               Me.ID = o("ID").ToGuid
@@ -36,7 +28,21 @@ Partial Public Class InformesD
               Me.Titulo = o("Titulo").STR
               Me.Eliminado = o("Eliminado").BOOL
               End Sub
+              Sub new()
+              End Sub
           End Class
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_Filas As New List(Of ConfiguracionInformeListaColumnas_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New ConfiguracionInformeListaColumnas_FilaC(Actual)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class

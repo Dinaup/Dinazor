@@ -4,30 +4,22 @@ Partial Public Class InformesD
       Public Class CatalogosTodosLosCatalogosC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of CatalogosTodosLosCatalogos_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of CatalogosTodosLosCatalogos_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New CatalogosTodosLosCatalogos_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new()
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("e33d9547-d22c-47f5-87ca-ab7efc7896a6"))
               me.ID = new GUID("e33d9547-d22c-47f5-87ca-ab7efc7896a6")
               me.Titulo  = "Catálogos > Todos los catálogos"
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class CatalogosTodosLosCatalogos_FilaC
-              Public TextoPrincipal As String
-              Public FechaUltimaModificacion As Date?
-              Public SeccionPrincipal As String
-              Public SeccionID As Guid
-              Public ID As Guid
-              Public FechaAltaSistema As Date?
-              Public SecciondecatalogoID As Guid
-              Public SecciondeCatalogo As String
+                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoBuf.ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
+                <ProtoBuf.ProtoMember(102)>  Public SeccionPrincipal As String
+                <ProtoBuf.ProtoMember(103)>  Public SeccionID As Guid
+                <ProtoBuf.ProtoMember(104)>  Public ID As Guid
+                <ProtoBuf.ProtoMember(105)>  Public FechaAltaSistema As DateTime
+                <ProtoBuf.ProtoMember(106)>  Public SecciondecatalogoID As Guid
+                <ProtoBuf.ProtoMember(107)>  Public SecciondeCatalogo As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.FechaUltimaModificacion = o("FechaUltimaModificacion").ToDateTime_UTC
@@ -38,7 +30,21 @@ Partial Public Class InformesD
               Me.SecciondecatalogoID = o("SecciondecatalogoID").ToGuid
               Me.SecciondeCatalogo = o("SecciondeCatalogo").STR
               End Sub
+              Sub new()
+              End Sub
           End Class
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_Filas As New List(Of CatalogosTodosLosCatalogos_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New CatalogosTodosLosCatalogos_FilaC(Actual)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class

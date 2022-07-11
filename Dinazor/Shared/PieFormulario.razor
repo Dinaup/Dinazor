@@ -1,0 +1,41 @@
+﻿<div class="row justify-content-center">
+	<div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+		<RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" Click="( async  ()=>  _Gardar())" />
+		<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel"  Click="( async  ()=>  _Cancelar())"  />
+		<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Agregar dato a lista"  Click="( async  ()=>  _AgregarFila())"  />
+	</div>
+</div>
+
+
+
+
+
+
+@code {
+
+
+	async void _Gardar()
+	{
+		await  Evento_Guardar.InvokeAsync();
+	}
+	async void _Cancelar()
+	{
+		await  Evento_Cancelar.InvokeAsync();
+	}
+	async void _AgregarFila()
+	{
+		await Evento_AgregarFila.InvokeAsync();
+	}
+
+
+	[Parameter]
+	public EventCallback<EventArgs> Evento_Guardar{ get; set; }
+
+	[Parameter]
+	public EventCallback<EventArgs> Evento_Cancelar{ get; set; }
+
+	[Parameter]
+	public EventCallback<EventArgs> Evento_AgregarFila{ get; set; }
+
+
+}

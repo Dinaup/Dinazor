@@ -4,40 +4,32 @@ Partial Public Class InformesD
       Public Class SeccionesTodasLasSeccionesC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of SeccionesTodasLasSecciones_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of SeccionesTodasLasSecciones_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New SeccionesTodasLasSecciones_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new()
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("c0966773-c4b3-4474-b7a4-3c40c9614a83"))
               me.ID = new GUID("c0966773-c4b3-4474-b7a4-3c40c9614a83")
               me.Titulo  = "Secciones > Todas las secciones"
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class SeccionesTodasLasSecciones_FilaC
-              Public EtiquetaTextoPrincipal As String
-              Public Femenina As Boolean
-              Public SeccionBase As String
-              Public FechaAltaSistema As Date?
-              Public IconocolorAlto As Decimal
-              Public EtiquetaSingular As String
-              Public Obsoleto As Boolean
-              Public Iconoalto As Decimal
-              Public Titulo As String
-              Public IconoID As Guid
-              Public Motordealmacenamiento As Decimal
-              Public IconocolorID As Guid
-              Public FechaUltimaModificacion As Date?
-              Public Exportable As Boolean
-              Public Etiquetaautomatica As Boolean
-              Public Derivable As Boolean
-              Public ID As Guid
-              Public EtiquetaPlural As String
+                <ProtoBuf.ProtoMember(100)>  Public EtiquetaTextoPrincipal As String
+                <ProtoBuf.ProtoMember(101)>  Public Femenina As Boolean
+                <ProtoBuf.ProtoMember(102)>  Public SeccionBase As String
+                <ProtoBuf.ProtoMember(103)>  Public FechaAltaSistema As DateTime
+                <ProtoBuf.ProtoMember(104)>  Public IconocolorAlto As Decimal
+                <ProtoBuf.ProtoMember(105)>  Public EtiquetaSingular As String
+                <ProtoBuf.ProtoMember(106)>  Public Obsoleto As Boolean
+                <ProtoBuf.ProtoMember(107)>  Public Iconoalto As Decimal
+                <ProtoBuf.ProtoMember(108)>  Public Titulo As String
+                <ProtoBuf.ProtoMember(109)>  Public IconoID As Guid
+                <ProtoBuf.ProtoMember(110)>  Public Motordealmacenamiento As Decimal
+                <ProtoBuf.ProtoMember(111)>  Public IconocolorID As Guid
+                <ProtoBuf.ProtoMember(112)>  Public FechaUltimaModificacion As DateTime
+                <ProtoBuf.ProtoMember(113)>  Public Exportable As Boolean
+                <ProtoBuf.ProtoMember(114)>  Public Etiquetaautomatica As Boolean
+                <ProtoBuf.ProtoMember(115)>  Public Derivable As Boolean
+                <ProtoBuf.ProtoMember(116)>  Public ID As Guid
+                <ProtoBuf.ProtoMember(117)>  Public EtiquetaPlural As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.EtiquetaTextoPrincipal = o("EtiquetaTextoPrincipal").STR
               Me.Femenina = o("Femenina").BOOL
@@ -58,7 +50,21 @@ Partial Public Class InformesD
               Me.ID = o("ID").ToGuid
               Me.EtiquetaPlural = o("EtiquetaPlural").STR
               End Sub
+              Sub new()
+              End Sub
           End Class
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_Filas As New List(Of SeccionesTodasLasSecciones_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New SeccionesTodasLasSecciones_FilaC(Actual)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class

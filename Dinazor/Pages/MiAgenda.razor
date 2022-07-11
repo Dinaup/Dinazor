@@ -1,7 +1,8 @@
 ﻿
 
-@page "/scheduler"
+@page "/MiAgenda"
 @inject DialogService DialogService
+@inherits DinaupPage
 
     <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="EventoEnAgendaC" Data=@appointments StartProperty="StartX" EndProperty="EndX"
         TextProperty="TextX" SelectedIndex="2"
@@ -13,35 +14,56 @@
 
 
 @code {
-    RadzenScheduler<EventoEnAgendaC> scheduler;
-    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 
-    IList<EventoEnAgendaC> appointments = new List<EventoEnAgendaC>
+
+
+    RadzenScheduler<EventoEnAgendaC> scheduler;
+    IList<EventoEnAgendaC> appointments = new List<EventoEnAgendaC>();
+
+
+
+    protected override Task OnInitializedAsync()
     {
 
+        var CreandoLista = new List<EventoEnAgendaC>();
+	    
+
+	    var temp = new MiDinaup.InformesD.FuncionalidadD.EventosDeAgendasC();
+
+	    Task.Run(() => temp.ConsultarAsync( Dinaup_Sesion.DinaupUsuario , 1, 900)).Wait();
+
         
-        new EventoEnAgendaC { StartX = DateTime.Today.AddDays(-2), EndX = DateTime.Today.AddDays(-2), TextX = "Birthday" },
-        new EventoEnAgendaC { StartX = DateTime.Today.AddDays(-11), EndX = DateTime.Today.AddDays(-10), TextX = "Day off" },
-        new EventoEnAgendaC { StartX = DateTime.Today.AddDays(-10), EndX = DateTime.Today.AddDays(-8), TextX = "Work from home" },
-        new EventoEnAgendaC { StartX = DateTime.Today.AddHours(10), EndX = DateTime.Today.AddHours(12), TextX = "Online meeting" },
-        new EventoEnAgendaC { StartX = DateTime.Today.AddHours(10), EndX = DateTime.Today.AddHours(13), TextX = "Skype call" },
-        new EventoEnAgendaC { StartX = DateTime.Today.AddHours(14), EndX = DateTime.Today.AddHours(14).AddMinutes(30), TextX = "Dentist appointment" },
-        new EventoEnAgendaC { StartX = DateTime.Today.AddDays(1), EndX = DateTime.Today.AddDays(12), TextX = "Vacation" }
-    };
+
+        if(temp.Filas.TieneDatos()){
+          foreach (var item in temp.Filas )
+          {
+
+	          CreandoLista.Add(new EventoEnAgendaC { StartX = item.Desde.Value.ToLocalTime() , EndX = item.Hasta.Value.ToLocalTime() , TextX = item.Evento});
+
+          }
+        }
+
+	    appointments = CreandoLista;
+        return base.OnInitializedAsync();
+    }
+
+
+
+
 
     void OnSlotRender(SchedulerSlotRenderEventArgs args) 
     {
-        // Highlight today in month view
-        if (args.View.Text == "Month" && args.Start.Date == DateTime.Today)
-        {
-            args.Attributes["style"] = "background: rgba(255,220,40,.2);";
-        }
+        //// Highlight today in month view
+        //if (args.View.Text == "Month" && args.Start.Date == DateTime.Today)
+        //{
+        //    args.Attributes["style"] = "background: rgba(255,220,40,.2);";
+        //}
 
-        // Highlight working hours (9-18)
-        if ((args.View.Text == "Week" || args.View.Text == "Day") && args.Start.Hour > 8 && args.Start.Hour < 19)
-        {
-            args.Attributes["style"] = "background: rgba(255,220,40,.2);";
-        }
+        //// Highlight working hours (9-18)
+        //if ((args.View.Text == "Week" || args.View.Text == "Day") && args.Start.Hour > 8 && args.Start.Hour < 19)
+        //{
+        //    args.Attributes["style"] = "background: rgba(255,220,40,.2);";
+        //}
     }
 
     async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)

@@ -2,46 +2,83 @@
 using static DinaNETCore.APID;
 using Microsoft.JSInterop;
 using Radzen;
+using Dinazor.Services;
 
 namespace Dinazor
 {
 
 
-    public class DinaupPage : OwningComponentBase 
+    public class DinaupPage : OwningComponentBase
     {
 
 
         [Inject]
-        protected DinaNETCore.ASP_NETD.SesionServicio Dinaup_Sesion { get; set; }
-
-
-        [Inject]
-        protected Dinazor.Services.DinaupService Dinaup_Servidor { get; set; }
-
-
-        //[Inject]
-        //protected IJSRuntime Js { get; set; }
-
-        //[Inject]
-        //protected DinaNETCore.ICookie CoockieX { get; set; }
+        public DinaNETCore.ASP_NETD.SesionServicio Dinaup_Sesion { get; set; }
 
         [Inject]
-        protected HttpContextAccessor HttpContext { get; set; }
+        public Dinazor.Services.DinaupConfiguracionC Dinaup_Servidor { get; set; }
 
         [Inject]
-        protected NavigationManager NavigationManager { get; set; }
+        public HttpContextAccessor HttpContext { get; set; }
 
         [Inject]
-        protected NotificationService NotificationService { get; set; }
+        public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        public NotificationService NotificationService { get; set; }
+
+        [Inject]
+        public DialogService DialogService { get; set; }
+
+        [Inject]
+        public DatosCacheC DatosCacheados { get; set; }
+
+        [Inject]
+        public ControladorDeArchivosC  ControladorDeArchivos { get; set; }
 
 
 
-       
+
+        //TODO Pendiente sacar la zona horaria del usuario
+        public DateTime Convertir_A_FechaLocal(DateTime Fecha)
+        {
+            return Fecha.ToLocalTime();
+        }
+
+
+        //TODO Pendiente sacar la zona horaria del usuario
+        public DateTime? Convertir_A_FechaLocal(DateTime? Fecha)
+        {
+            if (Fecha == null)
+                return null;
+
+            return Fecha.Value.ToLocalTime();
+        }
+
+
+
+        //TODO Pendiente sacar la zona horaria del usuario
+        public DateTime Convertir_A_UTC(DateTime Fecha)
+        {
+            return Fecha.ToUniversalTime();
+        }
+
+
+        //TODO Pendiente sacar la zona horaria del usuario
+        public DateTime? Convertir_A_UTC(DateTime? Fecha)
+        {
+            if (Fecha == null)
+                return null;
+
+            return Fecha.Value.ToUniversalTime();
+        }
 
 
         protected override void OnInitialized()
         {
 
+
+        
             if (!Dinaup_Sesion.Iniciado)
             {
 
@@ -53,12 +90,46 @@ namespace Dinazor
                     SesionID = "";
                 }
 
-                  Dinaup_Sesion.Iniciar(IP, Request_UserAgent, SesionID);
+                Dinaup_Sesion.Iniciar(IP, Request_UserAgent, SesionID);
             }
 
             base.OnInitialized();
         }
 
-         
+
+
+
+
+
+
+        public async Task BusyDialog(string message)
+        {
+            await DialogService.OpenAsync("", ds =>
+            {
+                RenderFragment content = b =>
+                {
+                    b.OpenElement(0, "div");
+                    b.AddAttribute(1, "class", "row");
+
+                    b.OpenElement(2, "div");
+                    b.AddAttribute(3, "class", "col-md-12");
+
+                    b.AddContent(4, message);
+
+                    b.CloseElement();
+                    b.CloseElement();
+                };
+                return content;
+            }, new DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto", CloseDialogOnEsc = false });
+        }
+
+
+
+
+
+
+
+
+
     }
 }

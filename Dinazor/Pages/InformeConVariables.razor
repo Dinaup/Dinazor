@@ -1,0 +1,75 @@
+﻿@page "/InformeConVariables"
+@inherits DinaupPage
+ 
+
+
+
+
+
+
+
+<h1>Informe de prueba</h1>
+
+<RadzenNumeric Value=ValorDePrueba  TValue="decimal" Change=@((decimal args) => {   ValorDePrueba = args;ActualizarUI();  })   ></RadzenNumeric>
+
+
+@if(Datos_InformeDePrueba != null){
+
+	@if (Datos_InformeDePrueba.Filas.TieneDatos())
+	{
+		
+		@foreach (var item in Datos_InformeDePrueba.Filas)
+		{
+			
+			<RadzenCard>
+			<span>@item.TextoPrincipal</span>  -  <span>@item.DecimalConSuma </span>  - <span>@item.ValorDecimal</span>
+			</RadzenCard>
+
+
+
+		}
+
+
+	}
+
+}
+ 
+
+
+
+
+@code{
+
+
+
+
+
+	decimal ValorDePrueba = 2;
+
+
+	InformesD.FuncionalidadD.InformeDePruebasJSONConPreguntasC Datos_InformeDePrueba = new(2);
+
+
+	async void ActualizarUI()
+	{
+
+		Datos_InformeDePrueba.Agregar_Respuesta("ValorASumar", ValorDePrueba);
+		await Datos_InformeDePrueba.ConsultarAsync(Dinaup_Sesion.DinaupUsuario, 1, 200);
+		this.StateHasChanged();
+
+	}
+
+
+
+	protected override Task OnInitializedAsync()
+	{
+
+
+		ActualizarUI();
+		return base.OnInitializedAsync();
+	}
+
+
+
+
+}

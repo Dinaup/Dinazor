@@ -4,30 +4,22 @@ Partial Public Class InformesD
       Public Class CamposRevisarRelacionesC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of CamposRevisarRelaciones_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of CamposRevisarRelaciones_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New CamposRevisarRelaciones_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new()
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("c822a1d0-f17f-48f6-adc3-62c4ca619720"))
               me.ID = new GUID("c822a1d0-f17f-48f6-adc3-62c4ca619720")
               me.Titulo  = "Campos > Revisar Relaciones"
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class CamposRevisarRelaciones_FilaC
-              Public Relacionesbase As Boolean
-              Public FechaAltaSistema As Date?
-              Public Seccionrelacionada As String
-              Public Seccion As String
-              Public FechaUltimaModificacion As Date?
-              Public ID As Guid
-              Public Etiqueta As String
-              Public CampoPR As String
+                <ProtoBuf.ProtoMember(100)>  Public Relacionesbase As Boolean
+                <ProtoBuf.ProtoMember(101)>  Public FechaAltaSistema As DateTime
+                <ProtoBuf.ProtoMember(102)>  Public Seccionrelacionada As String
+                <ProtoBuf.ProtoMember(103)>  Public Seccion As String
+                <ProtoBuf.ProtoMember(104)>  Public FechaUltimaModificacion As DateTime
+                <ProtoBuf.ProtoMember(105)>  Public ID As Guid
+                <ProtoBuf.ProtoMember(106)>  Public Etiqueta As String
+                <ProtoBuf.ProtoMember(107)>  Public CampoPR As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Relacionesbase = o("Relacionesbase").BOOL
               Me.FechaAltaSistema = o("FechaAltaSistema").ToDateTime_UTC
@@ -38,7 +30,21 @@ Partial Public Class InformesD
               Me.Etiqueta = o("Etiqueta").STR
               Me.CampoPR = o("CampoPR").STR
               End Sub
+              Sub new()
+              End Sub
           End Class
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_Filas As New List(Of CamposRevisarRelaciones_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New CamposRevisarRelaciones_FilaC(Actual)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class

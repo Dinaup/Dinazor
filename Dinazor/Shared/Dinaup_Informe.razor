@@ -25,7 +25,7 @@
 
 }else if(ModoScrollInfinito) {
 
-	<RadzenDataGrid  AllowColumnReorder="true" ColumnReordered="@OnColumnReordered"  Data="@data" Count="@count" LoadData="@LoadData" TItem="Dic<string, string>" AllowVirtualization="true" Style="height:400px"
+	<RadzenDataGrid   RowClick="@OnRowClick"   AllowColumnReorder="true" ColumnReordered="@OnColumnReordered"  Data="@data" Count="@count" LoadData="@LoadData" TItem="Dic<string, string>" AllowVirtualization="true" Style="height:400px"
 				AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.And" FilterMode="FilterMode.SimpleWithMenu" 
 				AllowSorting="true" AllowColumnPicking="@SelectorDeColumnasVisibles" AllowColumnResize="true" ColumnResized=@OnColumnResized>
 		<Columns>
@@ -48,7 +48,7 @@
 else
 {
 
-	<RadzenDataGrid AllowColumnReorder="true" ColumnReordered="@OnColumnReordered" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.SimpleWithMenu" AllowPaging="true"
+	<RadzenDataGrid  RowClick="@OnRowClick"  AllowColumnReorder="true" ColumnReordered="@OnColumnReordered" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.SimpleWithMenu" AllowPaging="true"
 				AllowSorting="true" Data="@data" TItem="Dic<string, string>"
 				IsLoading="@isLoading"  
 				Count="@count" AllowColumnPicking="@SelectorDeColumnasVisibles" LoadData="@LoadData" LogicalFilterOperator="LogicalFilterOperator.And" AllowColumnResize="true" ColumnResized=@OnColumnResized>
@@ -122,11 +122,17 @@ else
 
 							if (  !string.IsNullOrEmpty(context.get_HacerMagia(KeyFoto,"")) )
 							{
-								<RadzenImage Path="@context[KeyFoto]" style="width: 32px; height: 32px; border-radius: 16px; margin-right: 6px;" />
+
+								var DetallesArchivo = DinaupInformeRespuesta.Respuesta.Listado.Archivos.get_HacerMagia(context[KeyFoto]);
+								var URl = DinaPeticion.ControladorDeArchivos.FirmarURL_Archivo(DetallesArchivo);
+
+								<RadzenImage Path="@URl" style="width: 32px; height: 32px; border-radius: 16px; margin-right: 6px;" />
 
 							}else if (!string.IsNullOrEmpty(context.get_HacerMagia(KeyFoto2,null) )  ){
 
-								<RadzenImage Path="@context[KeyFoto2]" style="width: 32px; height: 32px; border-radius: 16px; margin-right: 6px;" />
+								var DetallesArchivo = DinaupInformeRespuesta.Respuesta.Listado.Archivos.get_HacerMagia(context[KeyFoto2]);
+								var URl = DinaPeticion.ControladorDeArchivos.FirmarURL_Archivo(DetallesArchivo);
+								<RadzenImage Path="@URl" style="width: 32px; height: 32px; border-radius: 16px; margin-right: 6px;" />
 
 
 
@@ -149,6 +155,14 @@ else
 
 
 @code {
+
+
+
+	
+
+	[Parameter]
+	public EventCallback<DataGridRowMouseEventArgs<Dic<string, string>>> ClickFila{ get; set; }
+
 
 	IEnumerable<Dic<string, string>> data;
 
@@ -180,6 +194,16 @@ else
 	
 
 	}
+
+	
+	void OnRowClick(DataGridRowMouseEventArgs<Dic<string, string>> Evento)
+	{
+
+		ClickFila.InvokeAsync(Evento);
+
+	}
+
+
 
 	void OnColumnResized(DataGridColumnResizedEventArgs<Dic<string, string>> args)
 	{
@@ -287,11 +311,7 @@ else
         //dbContext.SaveChanges();
     }
  
-}
-
-
-@code {
-
+ 
 
 	[Parameter]
 	public Boolean ModoScrollInfinito { get; set; } = false;
@@ -310,9 +330,6 @@ else
 
 	[Parameter]
 	public DinaNETCore.APID.APID_InformeC DinaupInformeRespuesta { get; set; }
-
-
-
 
 		
 	[Parameter]

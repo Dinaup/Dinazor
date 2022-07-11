@@ -4,16 +4,7 @@ Partial Public Class InformesD
       Public Class NominasRealizacionDeHorasExtraC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of NominasRealizacionDeHorasExtra_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of NominasRealizacionDeHorasExtra_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New NominasRealizacionDeHorasExtra_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new(Empleado As Guid, Fecha_Desde As Date, Fecha_Hasta As Date)
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("0baa399b-e54f-456b-a3d9-eab77884204c"))
               me.ID = new GUID("0baa399b-e54f-456b-a3d9-eab77884204c")
@@ -22,14 +13,15 @@ Partial Public Class InformesD
               Agregar_Respuesta("Fecha_Desde",Fecha_Desde)
               Agregar_Respuesta("Fecha_Hasta",Fecha_Hasta)
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class NominasRealizacionDeHorasExtra_FilaC
-              Public Fecha As Date?
-              Public Fuerzamayor As Boolean
-              Public Importe As Decimal
-              Public Horas As Decimal
-              Public RetHora As Decimal
-              Public RetTotal As Decimal
-              Public Estado As Integer
+                <ProtoBuf.ProtoMember(100)>  Public Fecha As Date?
+                <ProtoBuf.ProtoMember(101)>  Public Fuerzamayor As Boolean
+                <ProtoBuf.ProtoMember(102)>  Public Importe As Decimal
+                <ProtoBuf.ProtoMember(103)>  Public Horas As Decimal
+                <ProtoBuf.ProtoMember(104)>  Public RetHora As Decimal
+                <ProtoBuf.ProtoMember(105)>  Public RetTotal As Decimal
+                <ProtoBuf.ProtoMember(106)>  Public Estado As Integer
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Fecha = o("Fecha").ToDate
               Me.Fuerzamayor = o("Fuerzamayor").BOOL
@@ -37,9 +29,23 @@ Partial Public Class InformesD
               Me.Horas = o("Horas").DEC
               Me.RetHora = o("RetHora").DEC
               Me.RetTotal = o("RetTotal").DEC
-              Me.Estado = o("Estado").INT
+              Me.Estado = ctype(o("Estado").INT(0), EnumTipoDeRealizacionDeTurnoE)
+              End Sub
+              Sub new()
               End Sub
           End Class
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_Filas As New List(Of NominasRealizacionDeHorasExtra_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New NominasRealizacionDeHorasExtra_FilaC(Actual)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class

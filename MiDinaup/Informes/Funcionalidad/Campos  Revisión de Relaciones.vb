@@ -4,34 +4,26 @@ Partial Public Class InformesD
       Public Class CamposRevisionDeRelacionesC
           Inherits DinaNETCore.APID.APID_InformeC
           Public Filas As New List(Of CamposRevisionDeRelaciones_FilaC)
-          Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of CamposRevisionDeRelaciones_FilaC)
-                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
-                    For Each Actual In Respuesta.Listado.Filas
-                        If Actual Is Nothing Then Continue For
-                        Creando_Filas.Add(New CamposRevisionDeRelaciones_FilaC(Actual))
-                    Next
-                End If
-                Me.Filas = Creando_Filas
-            End Sub
+          Public TokenCambios As Guid
           Sub new()
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("9926b248-878c-462e-bfc0-4cd332352c52"))
               me.ID = new GUID("9926b248-878c-462e-bfc0-4cd332352c52")
               me.Titulo  = "Campos > Revisión de Relaciones"
           End sub
+          <ProtoBuf.ProtoContract>
           Public Class CamposRevisionDeRelaciones_FilaC
-              Public Funcionalidadnativadecampo As Decimal
-              Public Seccion As String
-              Public ID As Guid
-              Public FechaAltaSistema As Date?
-              Public EsBase As Boolean
-              Public Icono As Guid
-              Public RelacionID As Guid
-              Public Nombre As String
-              Public SeccionID As Guid
-              Public Formato As Decimal
-              Public FechaUltimaModificacion As Date?
-              Public Relacion As String
+                <ProtoBuf.ProtoMember(100)>  Public Funcionalidadnativadecampo As Decimal
+                <ProtoBuf.ProtoMember(101)>  Public Seccion As String
+                <ProtoBuf.ProtoMember(102)>  Public ID As Guid
+                <ProtoBuf.ProtoMember(103)>  Public FechaAltaSistema As DateTime
+                <ProtoBuf.ProtoMember(104)>  Public EsBase As Boolean
+                <ProtoBuf.ProtoMember(105)>  Public Icono As Guid
+                <ProtoBuf.ProtoMember(106)>  Public RelacionID As Guid
+                <ProtoBuf.ProtoMember(107)>  Public Nombre As String
+                <ProtoBuf.ProtoMember(108)>  Public SeccionID As Guid
+                <ProtoBuf.ProtoMember(109)>  Public Formato As Decimal
+                <ProtoBuf.ProtoMember(110)>  Public FechaUltimaModificacion As DateTime
+                <ProtoBuf.ProtoMember(111)>  Public Relacion As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Funcionalidadnativadecampo = o("Funcionalidadnativadecampo").DEC
               Me.Seccion = o("Seccion").STR
@@ -46,7 +38,21 @@ Partial Public Class InformesD
               Me.FechaUltimaModificacion = o("FechaUltimaModificacion").ToDateTime_UTC
               Me.Relacion = o("Relacion").STR
               End Sub
+              Sub new()
+              End Sub
           End Class
+          Public Overrides Sub CargarRespuesta()
+                Dim Creando_Filas As New List(Of CamposRevisionDeRelaciones_FilaC)
+                If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
+                    For Each Actual In Respuesta.Listado.Filas
+                        If Actual Is Nothing Then Continue For
+                        Dim N = New CamposRevisionDeRelaciones_FilaC(Actual)
+                        Creando_Filas.Add(N)
+                    Next
+                End If
+                Me.Filas = Creando_Filas
+                TokenCambios = Guid.NewGuid
+            End Sub
       End Class
   End Class
 End Class
