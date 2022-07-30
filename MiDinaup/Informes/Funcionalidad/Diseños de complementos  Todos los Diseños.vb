@@ -10,12 +10,12 @@ Partial Public Class InformesD
               me.ID = new GUID("eba79109-100a-4de7-9ffa-4fd01ccc864b")
               me.Titulo  = "Diseños de complementos > Todos los Diseños"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class DiseñosDeComplementosTodosLosDiseños_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(102)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(103)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(102)>  Public ID As Guid
+                <ProtoMember(103)>  Public FechaAltaSistema As DateTime
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.FechaUltimaModificacion = o("FechaUltimaModificacion").ToDateTime_UTC

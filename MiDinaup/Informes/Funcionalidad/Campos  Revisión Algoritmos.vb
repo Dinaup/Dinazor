@@ -10,16 +10,16 @@ Partial Public Class InformesD
               me.ID = new GUID("03b570c5-06e6-4faa-b39e-c6eb444bf210")
               me.Titulo  = "Campos > Revisión Algoritmos"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CamposRevisionAlgoritmos_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Etiqueta As String
-                <ProtoBuf.ProtoMember(101)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(102)>  Public Algoritmo As String
-                <ProtoBuf.ProtoMember(103)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(104)>  Public Formato As Decimal
-                <ProtoBuf.ProtoMember(105)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(106)>  Public SeccionID As Guid
-                <ProtoBuf.ProtoMember(107)>  Public Seccion As String
+                <ProtoMember(100)>  Public Etiqueta As String
+                <ProtoMember(101)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(102)>  Public Algoritmo As String
+                <ProtoMember(103)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(104)>  Public Formato As Decimal
+                <ProtoMember(105)>  Public ID As Guid
+                <ProtoMember(106)>  Public SeccionID As Guid
+                <ProtoMember(107)>  Public Seccion As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Etiqueta = o("Etiqueta").STR
               Me.FechaAltaSistema = o("FechaAltaSistema").ToDateTime_UTC

@@ -1,0 +1,61 @@
+﻿@inject DinaupConfiguracionC  Dinaup_Servidor
+@inject DatosCacheC  DatosCacheados
+@inject DialogService DialogService
+
+
+<style>
+  .miniatura {opacity: 0.8}
+  .miniatura:hover {opacity:1; cursor:pointer; border: 1px solid #ccc}
+</style>
+
+
+
+@if(ArchivoDetalles!= null){
+ 
+    <RadzenImage   Click=@Ampliar  Path=@Dinaup_Servidor.FirmadorURLArchivos.FirmarURL_Archivo(ArchivoDetalles.ID, ArchivoDetalles.Filename,TamanoE.Alto300px) Class="float-left mr-3 miniatura" Style="object-fit: cover; width: 150px; height: 150px;" />
+}
+
+
+
+
+
+
+@code {
+
+
+	MiDinaup.InformesD.FuncionalidadD.APIArchivosC.APIArchivos_FilaC? ArchivoDetalles = null;
+
+
+	[Parameter]
+	public string ArchivoID { get; set; } ="";
+
+
+	protected override void OnInitialized()
+	{
+		this.ArchivoDetalles = DatosCacheados.Cache_Archivos.RecibirPorID(ArchivoID);
+		base.OnInitialized();
+	}
+
+	void Ampliar(EventArgs evento)
+	{
+
+		var ImagenOriginal = Dinaup_Servidor.FirmadorURLArchivos.FirmarURL_Archivo(ArchivoDetalles.ID, ArchivoDetalles.Filename, TamanoE.Original);
+		if( ImagenOriginal != null) {
+
+
+			   DialogService.OpenAsync( "Vista previa de imagen", ds =>
+	@<div>
+											<div onmousemove="Galeria_Actualizar_Zoom(this,event)" onmouseover="Galeria_Actualizar_Zoom(this,event)" onmouseleave="Galeria_Desactivar_Zoom(this,event)" style="maring:auto;height: 500px; width: 500px; overflow: hidden;"> 
+												<img style="transform-origin: center center; object-fit: cover; height: 100%; width: 100%;" src=@ImagenOriginal   />
+											</div>
+	</div>, 
+								new DialogOptions() { CloseDialogOnOverlayClick = true });
+
+		}
+
+
+	}
+
+
+
+}

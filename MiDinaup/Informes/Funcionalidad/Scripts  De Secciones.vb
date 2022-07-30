@@ -10,16 +10,16 @@ Partial Public Class InformesD
               me.ID = new GUID("50f00cd4-cb75-47ff-af10-4105a68f5e92")
               me.Titulo  = "Scripts > De Secciones"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class ScriptsDeSecciones_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public SeccionID As Guid
-                <ProtoBuf.ProtoMember(101)>  Public Eliminado As Decimal
-                <ProtoBuf.ProtoMember(102)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(103)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(104)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(105)>  Public Script As String
-                <ProtoBuf.ProtoMember(106)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(107)>  Public Seccion As String
+                <ProtoMember(100)>  Public SeccionID As Guid
+                <ProtoMember(101)>  Public Eliminado As Decimal
+                <ProtoMember(102)>  Public ID As Guid
+                <ProtoMember(103)>  Public TextoPrincipal As String
+                <ProtoMember(104)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(105)>  Public Script As String
+                <ProtoMember(106)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(107)>  Public Seccion As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.SeccionID = o("SeccionID").ToGuid
               Me.Eliminado = o("Eliminado").DEC

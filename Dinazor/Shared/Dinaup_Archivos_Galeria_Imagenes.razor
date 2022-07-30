@@ -1,0 +1,28 @@
+﻿@*@inject DinaupConfiguracionC Dinaup_Servidor
+@inject DatosCacheC DatosCacheados
+
+*@
+
+
+
+<RadzenDataList WrapItems="true" AllowPaging="true" Data="@ArchivosID" TItem="String" PageSize="5" PagerHorizontalAlign="HorizontalAlign.Left"  ShowPagingSummary="true">
+	<Template Context="archivoid">
+		<Dinaup_Archivo_Tarjeta_Imagen ArchivoID=@archivoid></Dinaup_Archivo_Tarjeta_Imagen>
+	</Template>
+</RadzenDataList>
+ 
+ 
+
+@code {
+
+
+
+    [Parameter]
+    public List<string> ArchivosID { get; set; } = null;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+}
+ 

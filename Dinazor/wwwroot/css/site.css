@@ -3,6 +3,20 @@
 
 
 
+:root {
+    --bs-body-bg: #F6F6F6 !important
+}
+
+
+.rz-panel {
+    background-color: var(--bs-body-bg) !important;
+}
+
+
+
+body {
+    background: var(--bs-body-bg) !important
+}
 
 hr {
     border: 0;

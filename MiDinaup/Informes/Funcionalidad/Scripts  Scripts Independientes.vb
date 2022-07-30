@@ -10,11 +10,11 @@ Partial Public Class InformesD
               me.ID = new GUID("a8ff59ff-2052-4a2d-93b3-21c52321f72b")
               me.Titulo  = "Scripts > Scripts Independientes"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class ScriptsScriptsIndependientes_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public TituloLegible As String
-                <ProtoBuf.ProtoMember(102)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public TituloLegible As String
+                <ProtoMember(102)>  Public FechaUltimaModificacion As DateTime
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.TituloLegible = o("TituloLegible").STR

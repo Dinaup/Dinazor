@@ -10,21 +10,21 @@ Partial Public Class InformesD
               me.ID = new GUID("955fc3dc-aa37-49bd-a358-1568a66c38d2")
               me.Titulo  = "Imágenes > Todas las imágenes"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class ImagenesTodasLasImagenes_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public ComentariosArchivo As Decimal
-                <ProtoBuf.ProtoMember(101)>  Public Demodulo As Boolean
-                <ProtoBuf.ProtoMember(102)>  Public Alto As Decimal
-                <ProtoBuf.ProtoMember(103)>  Public Version As Decimal
-                <ProtoBuf.ProtoMember(104)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(105)>  Public Tamano As Decimal
-                <ProtoBuf.ProtoMember(106)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(107)>  Public Ancho As Decimal
-                <ProtoBuf.ProtoMember(108)>  Public Empleado As String
-                <ProtoBuf.ProtoMember(109)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(110)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(111)>  Public Extension As String
-                <ProtoBuf.ProtoMember(112)>  Public ComentariosVersion As Decimal
+                <ProtoMember(100)>  Public ComentariosArchivo As Decimal
+                <ProtoMember(101)>  Public Demodulo As Boolean
+                <ProtoMember(102)>  Public Alto As Decimal
+                <ProtoMember(103)>  Public Version As Decimal
+                <ProtoMember(104)>  Public ID As Guid
+                <ProtoMember(105)>  Public Tamano As Decimal
+                <ProtoMember(106)>  Public TextoPrincipal As String
+                <ProtoMember(107)>  Public Ancho As Decimal
+                <ProtoMember(108)>  Public Empleado As String
+                <ProtoMember(109)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(110)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(111)>  Public Extension As String
+                <ProtoMember(112)>  Public ComentariosVersion As Decimal
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.ComentariosArchivo = o("ComentariosArchivo").DEC
               Me.Demodulo = o("Demodulo").BOOL

@@ -1,28 +1,45 @@
-﻿@inject ControladorDeArchivosC  ControladorDeArchivos
+﻿@inject DinaupConfiguracionC  Dinaup_Servidor
 @inject DatosCacheC  DatosCacheados
 
 
+<div class="Galeria">
 
 
+	@if(Datos_Archivos.TieneDatos() == false){
 
-@foreach (var ArchivoActual in Datos_Archivos)
-{
-
-
-	<li>@ArchivoActual.Value.Filename</li>
-	<RadzenImage Path=@ControladorDeArchivos.FirmarURL_Archivo(ArchivoActual.Value)></RadzenImage>
+       <span>Sin foto</span>
+       
 
 
+	}else{ 
 
-}
 
+    	@if(ImagenPrincipal != null)
+    	{
+    		    
+           <div onmousemove="Galeria_Actualizar_Zoom(this,event)" onmouseover="Galeria_Actualizar_Zoom(this,event)" onmouseleave="Galeria_Desactivar_Zoom(this,event)" style="height: 500px; width: 500px; overflow: hidden;"> 
+              <img style="transform-origin: center center; object-fit: cover; height: 100%; width: 100%;" src=@Dinaup_Servidor.FirmadorURLArchivos.FirmarURL_Archivo(ImagenPrincipal.ID, ImagenPrincipal.Filename, TamanoE.Original) />
+           </div>
+    	}
+    
+    	<hr />
+    
+    	<div class="d-flex justify-content-center" id="my-gallery">
+    	@foreach (var ArchivoActual in Datos_Archivos.Values)
+    	{
+    		<img  activa=@(ArchivoActual  == ImagenPrincipal)  src=@Dinaup_Servidor.FirmadorURLArchivos.FirmarURL_Archivo(ArchivoActual.ID, ArchivoActual.Filename , TamanoE.Alto100px)  class="rounded mx-auto d-block Previa p-1" @onclick="@(()=> {ImagenPrincipal = ArchivoActual;})" />
+    	}
+    	</div>
 
+	}
+</div>
 
 
 @code {
 
 
 
+	InformesD.FuncionalidadD.APIArchivosC.APIArchivos_FilaC ImagenPrincipal = null;
 
 	[Parameter]
 	public string ArchivosSeparadosPorcomas { get; set; }
@@ -33,6 +50,9 @@
 	protected override Task OnInitializedAsync()
 	{
 		Datos_Archivos = DatosCacheados.Cache_Archivos.RecibirPorIDS_SeparadasPorComas(ArchivosSeparadosPorcomas);
+		if(Datos_Archivos.Count > 0){
+			ImagenPrincipal = Datos_Archivos.Values.First();
+		}
 		return base.OnInitializedAsync();
 	}
 

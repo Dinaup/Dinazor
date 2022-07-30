@@ -124,14 +124,14 @@ else
 							{
 
 								var DetallesArchivo = DinaupInformeRespuesta.Respuesta.Listado.Archivos.get_HacerMagia(context[KeyFoto]);
-								var URl = DinaPeticion.ControladorDeArchivos.FirmarURL_Archivo(DetallesArchivo);
+								var URl = DinaPeticion.Dinaup_Servidor.FirmadorURLArchivos.FirmarURL_Archivo(DetallesArchivo);
 
 								<RadzenImage Path="@URl" style="width: 32px; height: 32px; border-radius: 16px; margin-right: 6px;" />
 
 							}else if (!string.IsNullOrEmpty(context.get_HacerMagia(KeyFoto2,null) )  ){
 
 								var DetallesArchivo = DinaupInformeRespuesta.Respuesta.Listado.Archivos.get_HacerMagia(context[KeyFoto2]);
-								var URl = DinaPeticion.ControladorDeArchivos.FirmarURL_Archivo(DetallesArchivo);
+								var URl = DinaPeticion.Dinaup_Servidor.FirmadorURLArchivos.FirmarURL_Archivo(DetallesArchivo);
 								<RadzenImage Path="@URl" style="width: 32px; height: 32px; border-radius: 16px; margin-right: 6px;" />
 
 
@@ -329,7 +329,7 @@ else
 
 
 	[Parameter]
-	public DinaNETCore.APID.APID_InformeC DinaupInformeRespuesta { get; set; }
+	public DinaNetCore.APID.APID_InformeC DinaupInformeRespuesta { get; set; }
 
 		
 	[Parameter]

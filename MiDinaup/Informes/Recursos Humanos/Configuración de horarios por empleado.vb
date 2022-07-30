@@ -10,16 +10,16 @@ Partial Public Class InformesD
               me.ID = new GUID("a9411e2c-2f06-4f4d-816b-f7663d72f977")
               me.Titulo  = "Configuración de horarios por empleado"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class ConfiguracionDeHorariosPorEmpleado_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public Margeninicio As Integer
-                <ProtoBuf.ProtoMember(102)>  Public Horarios As String
-                <ProtoBuf.ProtoMember(103)>  Public Margenfin As Integer
-                <ProtoBuf.ProtoMember(104)>  Public Fueradehorario As Boolean
-                <ProtoBuf.ProtoMember(105)>  Public Horasextra As Decimal
-                <ProtoBuf.ProtoMember(106)>  Public Retrasos As Decimal
-                <ProtoBuf.ProtoMember(107)>  Public Turnosautomaticos As Boolean
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public Margeninicio As Integer
+                <ProtoMember(102)>  Public Horarios As String
+                <ProtoMember(103)>  Public Margenfin As Integer
+                <ProtoMember(104)>  Public Fueradehorario As Boolean
+                <ProtoMember(105)>  Public Horasextra As Decimal
+                <ProtoMember(106)>  Public Retrasos As Decimal
+                <ProtoMember(107)>  Public Turnosautomaticos As Boolean
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.Margeninicio = o("Margeninicio").INT

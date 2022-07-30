@@ -13,15 +13,15 @@ Partial Public Class InformesD
               Agregar_Respuesta("Fecha_Desde",Fecha_Desde)
               Agregar_Respuesta("Fecha_Hasta",Fecha_Hasta)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class HistorialDeAccesosASistemaPorEmpleado_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Empleado As String
-                <ProtoBuf.ProtoMember(101)>  Public Fecha As Date?
-                <ProtoBuf.ProtoMember(102)>  Public Tipo As Integer
-                <ProtoBuf.ProtoMember(103)>  Public Ubicacion As String
-                <ProtoBuf.ProtoMember(104)>  Public Equipo As String
-                <ProtoBuf.ProtoMember(105)>  Public DireccionIP As String
-                <ProtoBuf.ProtoMember(106)>  Public UsuariodeWindows As String
+                <ProtoMember(100)>  Public Empleado As String
+                <ProtoMember(101)>  Public Fecha As Date?
+                <ProtoMember(102)>  Public Tipo As Integer
+                <ProtoMember(103)>  Public Ubicacion As String
+                <ProtoMember(104)>  Public Equipo As String
+                <ProtoMember(105)>  Public DireccionIP As String
+                <ProtoMember(106)>  Public UsuariodeWindows As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Empleado = o("Empleado").STR
               Me.Fecha = o("Fecha").ToDateTime_UTC

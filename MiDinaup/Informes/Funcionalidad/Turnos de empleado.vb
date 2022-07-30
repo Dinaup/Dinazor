@@ -11,17 +11,17 @@ Partial Public Class InformesD
               me.Titulo  = "Turnos de empleado"
               Agregar_Respuesta("Empleado",Empleado)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class TurnosDeEmpleado_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Duracion As Integer
-                <ProtoBuf.ProtoMember(101)>  Public Estado As Integer
-                <ProtoBuf.ProtoMember(102)>  Public Inicio As Date?
-                <ProtoBuf.ProtoMember(103)>  Public Fin As Date?
-                <ProtoBuf.ProtoMember(104)>  Public Realizacion As Integer
-                <ProtoBuf.ProtoMember(105)>  Public Ubicacion As String
-                <ProtoBuf.ProtoMember(106)>  Public Empleado As String
-                <ProtoBuf.ProtoMember(107)>  Public Margeninicio As Date?
-                <ProtoBuf.ProtoMember(108)>  Public Descripcioncorta As String
+                <ProtoMember(100)>  Public Duracion As Integer
+                <ProtoMember(101)>  Public Estado As Integer
+                <ProtoMember(102)>  Public Inicio As Date?
+                <ProtoMember(103)>  Public Fin As Date?
+                <ProtoMember(104)>  Public Realizacion As Integer
+                <ProtoMember(105)>  Public Ubicacion As String
+                <ProtoMember(106)>  Public Empleado As String
+                <ProtoMember(107)>  Public Margeninicio As Date?
+                <ProtoMember(108)>  Public Descripcioncorta As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Duracion = o("Duracion").INT
               Me.Estado = ctype(o("Estado").INT(0), EnumTipoDeRealizacionDeTurnoE)

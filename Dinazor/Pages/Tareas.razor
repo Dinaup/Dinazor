@@ -1,107 +1,170 @@
 ﻿@page "/Tareas"
 @page "/Tareas/{id}"
 @inherits DinaupPage
- 
 
 
 
 
 
 
-
-@if ( Datos_TareaEditando != null)
+@if (Datos_Formulario_TareaEditando != null)
 {
 
-	<span>Editando</span>
 
+
+
+	<Dinaup_Formulario  TareaGuardar="Datos_Formulario_Guardando">
+
+
+
+		<RadzenTabs style="height: 504px; width: 700px; margin: 20px auto;" RenderMode="TabRenderMode.Client">
+			<Tabs>
+				<RadzenTabsItem Text="Tarea">
+					<div class="row">
+						<div class="col-4 p-2">
+							<DinaupControlU @bind-Valor_String=@Datos_Formulario_TareaEditando.TextoPrincipal Configuracion=@Datos_Formulario_TareaEditando.__TextoPrincipal></DinaupControlU>
+						</div>
+						<div class="col-4  p-2">
+							<DinaupControlU Valor_Relacion_DatosDesplegables=@DatosCacheados.Cache_TiposDeTareas.Values @bind-Valor_Relacion=@Datos_Formulario_TareaEditando.ReferenciaTipo Configuracion=@Datos_Formulario_TareaEditando.__ReferenciaTipo></DinaupControlU>
+						</div>
+						<div class="col-4  p-2">
+							<DinaupControlU Valor_Relacion_DatosDesplegables=@DatosCacheados.Cache_EstadosDeTareas.Values @bind-Valor_Relacion=@Datos_Formulario_TareaEditando.ReferenciaEstado Configuracion=@Datos_Formulario_TareaEditando.__ReferenciaEstado></DinaupControlU>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col p-2">
+							<br>Descripción
+							<br><RadzenCard>
+								@((MarkupString)Datos_Formulario_TareaEditando.Descripcion)
+							</RadzenCard>
+							<br>
+						</div>
+					</div>
+				</RadzenTabsItem>
+				<RadzenTabsItem Text="Galería Archivos">
+					<Dinaup_Archivos_Galeria_Generica ArchivosID="Datos_Formulario_TareaEditando.Dinaup_Anotaciones_GaleriaPublica_ArchivosIDs" />
+				</RadzenTabsItem>
+				<RadzenTabsItem Text="Galería Imagenes">
+					<Dinaup_Archivos_Galeria_Imagenes ArchivosID="Datos_Formulario_TareaEditando.Dinaup_Anotaciones_GaleriaPublica_ArchivosIDs" />
+				</RadzenTabsItem>
+			</Tabs>
+		</RadzenTabs>
+
+		<PieFormulario Evento_Guardar=Formulario_Guardar Evento_Cancelar=Formulario_Cancelar></PieFormulario>
+
+	</Dinaup_Formulario>
 
 }
-else if (Datos_ListaDeMisTareas != null && Datos_ListaDeMisTareas.DatosDisponibles)
+else if (Datos_Listado_DeMisTareas != null && Datos_Listado_DeMisTareas.DatosDisponibles)
 {
 
-	<RadzenCard>
-
-		<RadzenSwitch   Value=@MostrarEliminados  Change=@(async (args) =>{ MostrarEliminados= args; ActualizarUI();})  /> 
-        <RadzenLabel Text="Mostrar Eliminados" />
-	</RadzenCard>
-
-	<h1>Pendientes</h1>
-	@foreach (var item in Datos_ListaDeMisTareas.Filas.Where(x => !DinaupCont.TareasD.H_TareaCompletada(x.EstadoID)))
-	{
-
-		<RadzenCard @key=item.ID class="p-1">
 
 
 
 
-			<div class="row ">
 
-				<div class="col-auto align-self-center">
+	<RadzenPanel AllowCollapse="false" Style="width: 700px; margin: 40px auto;">
+		<HeaderTemplate>
+			<h4 class="m-0 d-flex align-items-center">
+				<RadzenIcon Icon="hourglass_empty" Class="mr-1" /><b>Pendientes</b>
+			</h4>
+		</HeaderTemplate>
+		<ChildContent>
 
-					<RadzenSwitch Value=@DinaupCont.TareasD.H_TareaCompletada(item.EstadoID)
-					              Change=@(async (args) => Change_EstadoTarea_Async(args, item)) Style="display:block"  />
-				</div>
+			<RadzenCard>
 
-				<div class="col align-self-center"> @item.TextoPrincipal  </div>
-				<div class="col-auto align-self-center">
-					<RadzenButton  Icon="open_in_news" ButtonStyle="ButtonStyle.Secondary" />
-				</div>
-			</div>
-			<div class="row">
+				@foreach (var item in Datos_Listado_DeMisTareas.Filas.Where(x => !DinaupCont.TareasD.H_TareaCompletada(x.EstadoID)))
+				{
 
-				<Dinaup_GaleriaDeImagenesU ArchivosSeparadosPorcomas="@item.Imagenes"></Dinaup_GaleriaDeImagenesU>
+					<div @key=item.ID class="p-1">
+						<div class="row ">
+							<div class="col-auto align-self-center">
+								<RadzenSwitch Value=@DinaupCont.TareasD.H_TareaCompletada(item.EstadoID) Change=@(async (args) => Change_EstadoTarea_Async(args, item)) Style="display:block" />
+							</div>
+							<div class="col align-self-center"> @item.TextoPrincipal  </div>
+							<div class="col-auto align-self-center">
+								<RadzenButton Icon="open_in_news" ButtonStyle="ButtonStyle.Secondary" Click=@(async (args) => AbrirTarea(item)) />
+							</div>
+						</div>
+					</div>
 
-			</div>
+				}
+
+
+
+
+				<hr />
+
+				@code { string NuevaTarea_Descripcion = ""; }
+			<RadzenTextBox Placeholder="Nueva tarea...." @bind-Value="NuevaTarea_Descripcion" @onkeyup="OnKeyUp_AgregarTarea"> </RadzenTextBox>
+
 
 		</RadzenCard>
 
-	}
+	</ChildContent>
+</RadzenPanel>
+
+
+
+
+
+
+
+
+	<RadzenPanel AllowCollapse="false" Style="width: 700px; margin: 40px auto;">
+		<HeaderTemplate>
+			<h4 class="m-0 d-flex align-items-center">
+				<RadzenIcon Icon="task_alt" Class="mr-1" /><b>Completadas</b>
+			</h4>
+		</HeaderTemplate>
+		<ChildContent>
+			<RadzenCard>
+				@foreach (var item in Datos_Listado_DeMisTareas.Filas.Where(x => DinaupCont.TareasD.H_TareaCompletada(x.EstadoID)))
+				{
+
+					<div @key=item.ID class="p-1">
+
+						<div class="row ">
+
+							<div class="col-auto align-self-center">
+
+
+
+								<RadzenSwitch Value=@DinaupCont.TareasD.H_TareaCompletada(item.EstadoID)
+									  Change=@(async (args) => Change_EstadoTarea_Async(args, item)) Style="display:block" />
+
+
+							</div>
+
+							<div class="col align-self-center">
+
+								@item.TextoPrincipal
+							</div>
+
+
+							<div class="col-auto align-self-center">
+								@*<RadzenButton Icon="open_in_news" ButtonStyle="ButtonStyle.Secondary" Click=@(async (args) => AbrirTarea(item)) />*@
+
+							</div>
+
+
+						</div>
+
+					</div>
+
+				}
+
+			</RadzenCard>
+		</ChildContent>
+	</RadzenPanel>
 
 	<RadzenCard>
-		@code {
-		string NuevaTarea_Descripcion = "";
-	}
-		<RadzenTextBox Name="cafexde" Placeholder="Nueva tarea...." @bind-Value="NuevaTarea_Descripcion" @onkeyup="OnKeyUp_AgregarTarea"> </RadzenTextBox>
+		<RadzenSwitch Value=@MostrarEliminados Change=@(async (args) =>{ MostrarEliminados= args; ActualizarUI();}) />
+		<RadzenLabel Text="Mostrar Eliminados" />
 	</RadzenCard>
-
-	<h1>Completadas</h1>
-	@foreach (var item in Datos_ListaDeMisTareas.Filas.Where(x => DinaupCont.TareasD.H_TareaCompletada(x.EstadoID)))
-	{
-
-		<RadzenCard @key=item.ID class="p-1">
-
-			<div class="row ">
-
-				<div class="col-auto align-self-center">
-
-
-
-					<RadzenSwitch Value=@DinaupCont.TareasD.H_TareaCompletada(item.EstadoID)
-					              Change=@(async (args) => Change_EstadoTarea_Async(args, item)) Style="display:block"  />
-
-
-				</div>
-
-				<div class="col align-self-center">
-
-					@item.TextoPrincipal
-				</div>
-
-
-				<div class="col-auto align-self-center">
-					<RadzenButton  Icon="open_in_news" ButtonStyle="ButtonStyle.Secondary" />
-
-				</div>
-
-
-			</div>
-
-		</RadzenCard>
-
-	}
-
-
-}else{
+}
+else
+{
 
 
 	<span>Cargando...</span>

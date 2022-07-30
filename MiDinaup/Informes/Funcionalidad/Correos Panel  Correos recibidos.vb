@@ -10,14 +10,14 @@ Partial Public Class InformesD
               me.ID = new GUID("29a7080c-3969-4c53-97f9-6b3782a403ba")
               me.Titulo  = "Correos Panel > Correos recibidos"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CorreosPanelCorreosRecibidos_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public EstadoIcono As Integer
-                <ProtoBuf.ProtoMember(101)>  Public Recibido As Date?
-                <ProtoBuf.ProtoMember(102)>  Public Asunto As String
-                <ProtoBuf.ProtoMember(103)>  Public Estado As String
-                <ProtoBuf.ProtoMember(104)>  Public Buzon As String
-                <ProtoBuf.ProtoMember(105)>  Public Autor As String
+                <ProtoMember(100)>  Public EstadoIcono As Integer
+                <ProtoMember(101)>  Public Recibido As Date?
+                <ProtoMember(102)>  Public Asunto As String
+                <ProtoMember(103)>  Public Estado As String
+                <ProtoMember(104)>  Public Buzon As String
+                <ProtoMember(105)>  Public Autor As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.EstadoIcono = ctype(o("EstadoIcono").INT(0), EnumEstadoDeTramiteE)
               Me.Recibido = o("Recibido").ToDateTime_UTC

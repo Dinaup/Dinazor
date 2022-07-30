@@ -10,26 +10,26 @@ Partial Public Class InformesD
               me.ID = new GUID("c0966773-c4b3-4474-b7a4-3c40c9614a83")
               me.Titulo  = "Secciones > Todas las secciones"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class SeccionesTodasLasSecciones_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public EtiquetaTextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public Femenina As Boolean
-                <ProtoBuf.ProtoMember(102)>  Public SeccionBase As String
-                <ProtoBuf.ProtoMember(103)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(104)>  Public IconocolorAlto As Decimal
-                <ProtoBuf.ProtoMember(105)>  Public EtiquetaSingular As String
-                <ProtoBuf.ProtoMember(106)>  Public Obsoleto As Boolean
-                <ProtoBuf.ProtoMember(107)>  Public Iconoalto As Decimal
-                <ProtoBuf.ProtoMember(108)>  Public Titulo As String
-                <ProtoBuf.ProtoMember(109)>  Public IconoID As Guid
-                <ProtoBuf.ProtoMember(110)>  Public Motordealmacenamiento As Decimal
-                <ProtoBuf.ProtoMember(111)>  Public IconocolorID As Guid
-                <ProtoBuf.ProtoMember(112)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(113)>  Public Exportable As Boolean
-                <ProtoBuf.ProtoMember(114)>  Public Etiquetaautomatica As Boolean
-                <ProtoBuf.ProtoMember(115)>  Public Derivable As Boolean
-                <ProtoBuf.ProtoMember(116)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(117)>  Public EtiquetaPlural As String
+                <ProtoMember(100)>  Public EtiquetaTextoPrincipal As String
+                <ProtoMember(101)>  Public Femenina As Boolean
+                <ProtoMember(102)>  Public SeccionBase As String
+                <ProtoMember(103)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(104)>  Public IconocolorAlto As Decimal
+                <ProtoMember(105)>  Public EtiquetaSingular As String
+                <ProtoMember(106)>  Public Obsoleto As Boolean
+                <ProtoMember(107)>  Public Iconoalto As Decimal
+                <ProtoMember(108)>  Public Titulo As String
+                <ProtoMember(109)>  Public IconoID As Guid
+                <ProtoMember(110)>  Public Motordealmacenamiento As Decimal
+                <ProtoMember(111)>  Public IconocolorID As Guid
+                <ProtoMember(112)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(113)>  Public Exportable As Boolean
+                <ProtoMember(114)>  Public Etiquetaautomatica As Boolean
+                <ProtoMember(115)>  Public Derivable As Boolean
+                <ProtoMember(116)>  Public ID As Guid
+                <ProtoMember(117)>  Public EtiquetaPlural As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.EtiquetaTextoPrincipal = o("EtiquetaTextoPrincipal").STR
               Me.Femenina = o("Femenina").BOOL

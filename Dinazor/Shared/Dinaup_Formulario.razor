@@ -1,1 +1,68 @@
-﻿hola
+﻿
+
+
+
+@if ( TareaGuardar != null && TareaGuardar.IsCompleted == false )
+{
+
+
+
+    <div class="spinner-border" role="status"  @onclick="this.StateHasChanged">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+
+}
+else
+{
+    
+
+    @if(TareaGuardar != null && TareaGuardar.IsCompleted ){
+       <Dinaup_Avisos avisoserrores=@TareaGuardar.Result.avisoserror  avisosoks=@TareaGuardar.Result.avisosok ></Dinaup_Avisos>
+    }
+
+
+    @ChildContent
+
+
+}
+
+
+
+
+
+
+
+@code {
+
+
+
+
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+
+
+    private Task<APID.HTTPRespuestaAPIC_Formualario_GuardarC> mTareaGuardar;
+
+
+    [Parameter]
+    public Task<APID.HTTPRespuestaAPIC_Formualario_GuardarC> TareaGuardar
+    {
+        get { return mTareaGuardar; }
+        set {
+
+             mTareaGuardar = value;
+            if(value != null){
+                value.ContinueWith((x) => { try { InvokeAsync( this.StateHasChanged); } catch { } });
+            }
+
+         
+       }
+   }
+
+
+
+
+}

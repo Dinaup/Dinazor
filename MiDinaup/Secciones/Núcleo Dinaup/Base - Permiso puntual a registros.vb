@@ -13,28 +13,30 @@ Partial Public Class SeccionesD
       End Class
       Public Shared _SeccionID As String = "d1737cfb-e597-46b1-b14f-d93493a1ad45"
       Public Shared _SeccionIDGUID As New Guid("d1737cfb-e597-46b1-b14f-d93493a1ad45")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of PermisoPuntualARegistrosBaseC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of PermisoPuntualARegistrosBaseC )) 
           Dim R As New List(Of PermisoPuntualARegistrosBaseC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, PermisoPuntualARegistrosBaseES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(PermisoPuntualARegistrosBaseES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New PermisoPuntualARegistrosBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 
           Return R 
       End Function 
-      Public Shared Async Function ConsultarDatos_ConLista_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of  PermisoPuntualARegistrosBase_ConListaC)) 
+      Public Shared Async Function ConsultarDatos_ConLista_Async(  Parametros As SeccionConsultaParametrosC ) As Task(Of List(Of  PermisoPuntualARegistrosBase_ConListaC)) 
           Dim R As New List(Of PermisoPuntualARegistrosBase_ConListaC )  
-          Dim d =  Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, PermisoPuntualARegistrosBaseES._SeccionID, True, Campo, Valor) 
+          Dim d =  Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(PermisoPuntualARegistrosBaseES._SeccionID, True, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Valores_Lista = Actual.Value.Item2
                   Dim Obj_Listador As New PermisoPuntualARegistrosBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   Dim Objs_Listas As New List(Of PermisoPuntualARegistrosBaseListaD.PermisoPuntualARegistrosBaseListaC) 
                   If Valores_Lista.TieneDatos Then  
                       For Each ValoresLista In Valores_Lista 

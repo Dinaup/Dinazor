@@ -11,11 +11,11 @@ Partial Public Class InformesD
               me.Titulo  = "Cuentas de Correo electrónico > Buzones"
               Agregar_Respuesta("Correo",Correo)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CuentasDeCorreoElectronicoBuzones_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public Etiqueta As String
-                <ProtoBuf.ProtoMember(102)>  Public Correo As String
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public Etiqueta As String
+                <ProtoMember(102)>  Public Correo As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.Etiqueta = o("Etiqueta").STR

@@ -10,15 +10,15 @@ Partial Public Class InformesD
               me.ID = new GUID("acd19d19-a4cc-4e0b-8235-3dd5cc0689d1")
               me.Titulo  = "Documentos Dinámicos > Todos los Documentos Dinámicos"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class DocumentosDinamicosTodosLosDocumentosDinamicos_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(101)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(102)>  Public Subcategoria As String
-                <ProtoBuf.ProtoMember(103)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(104)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(105)>  Public Categoria As String
-                <ProtoBuf.ProtoMember(106)>  Public Eliminado As Boolean
+                <ProtoMember(100)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(101)>  Public TextoPrincipal As String
+                <ProtoMember(102)>  Public Subcategoria As String
+                <ProtoMember(103)>  Public ID As Guid
+                <ProtoMember(104)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(105)>  Public Categoria As String
+                <ProtoMember(106)>  Public Eliminado As Boolean
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.FechaAltaSistema = o("FechaAltaSistema").ToDateTime_UTC
               Me.TextoPrincipal = o("TextoPrincipal").STR

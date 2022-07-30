@@ -10,24 +10,24 @@ Partial Public Class InformesD
               me.ID = new GUID("3475cb8a-117d-4d10-bd6a-7a66e401000c")
               me.Titulo  = "Campos > Todos los campos"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CamposTodosLosCampos_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public SeccionAgrupada As String
-                <ProtoBuf.ProtoMember(101)>  Public Formato As Decimal
-                <ProtoBuf.ProtoMember(102)>  Public Titulo As String
-                <ProtoBuf.ProtoMember(103)>  Public EtiquetaAbreviada As String
-                <ProtoBuf.ProtoMember(104)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(105)>  Public Rolespecialdefuncionalidad As Decimal
-                <ProtoBuf.ProtoMember(106)>  Public Copiarnombrealagregarrelacion As Boolean
-                <ProtoBuf.ProtoMember(107)>  Public SeccionrelacionadaID As Guid
-                <ProtoBuf.ProtoMember(108)>  Public Eliminado As Boolean
-                <ProtoBuf.ProtoMember(109)>  Public Indexado As Boolean
-                <ProtoBuf.ProtoMember(110)>  Public EsBase As Boolean
-                <ProtoBuf.ProtoMember(111)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(112)>  Public Etiqueta As String
-                <ProtoBuf.ProtoMember(113)>  Public VisibleRI As Boolean
-                <ProtoBuf.ProtoMember(114)>  Public Seccion As String
-                <ProtoBuf.ProtoMember(115)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(100)>  Public SeccionAgrupada As String
+                <ProtoMember(101)>  Public Formato As Decimal
+                <ProtoMember(102)>  Public Titulo As String
+                <ProtoMember(103)>  Public EtiquetaAbreviada As String
+                <ProtoMember(104)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(105)>  Public Rolespecialdefuncionalidad As Decimal
+                <ProtoMember(106)>  Public Copiarnombrealagregarrelacion As Boolean
+                <ProtoMember(107)>  Public SeccionrelacionadaID As Guid
+                <ProtoMember(108)>  Public Eliminado As Boolean
+                <ProtoMember(109)>  Public Indexado As Boolean
+                <ProtoMember(110)>  Public EsBase As Boolean
+                <ProtoMember(111)>  Public ID As Guid
+                <ProtoMember(112)>  Public Etiqueta As String
+                <ProtoMember(113)>  Public VisibleRI As Boolean
+                <ProtoMember(114)>  Public Seccion As String
+                <ProtoMember(115)>  Public FechaUltimaModificacion As DateTime
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.SeccionAgrupada = o("SeccionAgrupada").STR
               Me.Formato = o("Formato").DEC

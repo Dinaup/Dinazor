@@ -10,19 +10,19 @@ Partial Public Class InformesD
               me.ID = new GUID("eeb28c83-c158-4226-8496-1bb53b7aa671")
               me.Titulo  = "Informes > Todos los informes"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class InformesTodosLosInformes_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Ambito As Boolean
-                <ProtoBuf.ProtoMember(101)>  Public Categoria As String
-                <ProtoBuf.ProtoMember(102)>  Public FechaSincronizacion As DateTime
-                <ProtoBuf.ProtoMember(103)>  Public Subcategoria As String
-                <ProtoBuf.ProtoMember(104)>  Public FechaIA As DateTime
-                <ProtoBuf.ProtoMember(105)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(106)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(107)>  Public Eliminado As Boolean
-                <ProtoBuf.ProtoMember(108)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(109)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(110)>  Public Seccion As String
+                <ProtoMember(100)>  Public Ambito As Boolean
+                <ProtoMember(101)>  Public Categoria As String
+                <ProtoMember(102)>  Public FechaSincronizacion As DateTime
+                <ProtoMember(103)>  Public Subcategoria As String
+                <ProtoMember(104)>  Public FechaIA As DateTime
+                <ProtoMember(105)>  Public TextoPrincipal As String
+                <ProtoMember(106)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(107)>  Public Eliminado As Boolean
+                <ProtoMember(108)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(109)>  Public ID As Guid
+                <ProtoMember(110)>  Public Seccion As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Ambito = o("Ambito").BOOL
               Me.Categoria = o("Categoria").STR

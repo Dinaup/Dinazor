@@ -10,14 +10,14 @@ Partial Public Class InformesD
               me.ID = new GUID("da22e1f1-2143-49a5-a089-7af47da79016")
               me.Titulo  = "Informes > Revisar algoritmos de filtrado"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class InformesRevisarAlgoritmosDeFiltrado_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Campodesplegable As String
-                <ProtoBuf.ProtoMember(101)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(102)>  Public Filtrado As String
-                <ProtoBuf.ProtoMember(103)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(104)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(105)>  Public SeccionDesplegable As String
+                <ProtoMember(100)>  Public Campodesplegable As String
+                <ProtoMember(101)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(102)>  Public Filtrado As String
+                <ProtoMember(103)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(104)>  Public ID As Guid
+                <ProtoMember(105)>  Public SeccionDesplegable As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Campodesplegable = o("Campodesplegable").STR
               Me.FechaAltaSistema = o("FechaAltaSistema").ToDateTime_UTC

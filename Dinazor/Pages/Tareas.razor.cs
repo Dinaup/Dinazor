@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using DinaNETCore;
-using static DinaNETCore.ExtensionesM;
+using DinaNetCore;
+using static DinaNetCore.ExtensionesM;
 using Radzen;
 
 namespace Dinazor.Pages
@@ -14,26 +14,65 @@ namespace Dinazor.Pages
         public string ID { get; set; }
 
 
+
+        //@@  Listado 
         /// <summary>Listado de mis tareas. Sin eliminadadas, Sin Canceladas, Sin revisadas.  </summary>
-        public MiDinaup.InformesD.FuncionalidadD.APIMisTareasC Datos_ListaDeMisTareas = null;
+        public MiDinaup.InformesD.FuncionalidadD.APIMisTareasC Datos_Listado_DeMisTareas = null;
+        public bool MostrarEliminados = false;
 
+
+
+
+        //@@  Formulario 
         /// <summary>Cuando esta variable está instanciada, se muestra el formulario de editar en lugar de la lista. </summary>
-        public MiDinaup.SeccionesD.TareasD.TareasC Datos_TareaEditando = null;
+        public MiDinaup.SeccionesD.TareasD.TareasC Datos_Formulario_TareaEditando = null;
+        public Task<APID.HTTPRespuestaAPIC_Formualario_GuardarC> Datos_Formulario_Guardando = null;
 
 
 
 
 
-        public bool  MostrarEliminados = false;
-        
-        
-
-        object RecibirArchivos()
+        async Task Formulario_Cancelar(EventArgs e)
         {
-            return null;
+            Datos_Formulario_TareaEditando = null;
+            Datos_Formulario_Guardando = null;
+            this.ID = "";
+            NavigationManager.NavigateTo($"/Tareas", false, true);
+            ActualizarUI();
         }
-        
-        
+
+
+
+
+        async Task Formulario_Guardar(EventArgs e)
+        {
+            if (Datos_Formulario_TareaEditando != null)
+            {
+                Datos_Formulario_Guardando = MiDinaup.SeccionesD.TareasD.DatosGuardar_Async(Dinaup_Sesion.DinaupUsuario, Datos_Formulario_TareaEditando);
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+        async Task AbrirTarea(MiDinaup.InformesD.FuncionalidadD.APIMisTareasC.APIMisTareas_FilaC _Tarea)
+        {
+            this.ID = _Tarea.ID.ToString();
+            NavigationManager.NavigateTo($"/Tareas/{this.ID}", false, true);
+            ActualizarUI();
+        }
+
+
+
+
         async void Change_EstadoTarea_Async(bool? valor, MiDinaup.InformesD.FuncionalidadD.APIMisTareasC.APIMisTareas_FilaC Item)
         {
             BusyDialog("Procesando...");
@@ -68,18 +107,41 @@ namespace Dinazor.Pages
 
         async void ActualizarUI()
         {
-            Datos_ListaDeMisTareas = new();
-            if (MostrarEliminados)
+
+
+            if (this.ID.EsGUID() == false)
             {
-                // Muestra eliminados
-                Datos_ListaDeMisTareas.Agregar_Filtro("eliminado", "=", "1");
-               //// Muestra todos, eliminados y no 
-               //Datos_ListaDeMisTareas.Agregar_Filtro("eliminado","<>", "3");
+
+
+                Datos_Listado_DeMisTareas = new();
+                if (MostrarEliminados)
+                {
+                    // Muestra eliminados
+                    Datos_Listado_DeMisTareas.Agregar_Filtro("eliminado", "=", "1");
+                    //// Muestra todos, eliminados y no 
+                    //Datos_ListaDeMisTareas.Agregar_Filtro("eliminado","<>", "3");
+                }
+
+                Datos_Listado_DeMisTareas.Agregar_Filtro(MiDinaup.SeccionesD.TareasD.TareasES.ReferenciaEmpleadoPrincipal, "=", Dinaup_Sesion.DinaupUsuario.DatosSesion.Usuarios.Item1.STR());
+                await Datos_Listado_DeMisTareas.ConsultarAsync(Dinaup_Sesion.DinaupUsuario, 1, 200);
+                this.StateHasChanged();
+
+
+            } else {
+
+
+                BusyDialog("Procesando...");
+                await Task.Delay(300);
+
+                var param_Tareas = new SeccionConsultaParametrosC(Dinaup_Servidor.Conexion , new string[] { "id", "=", this.ID.ToString() } );
+                param_Tareas.dinaup_incluir_archivosid_galeria = true;
+                var Tareas = await MiDinaup.SeccionesD.TareasD.ConsultarDatos_Async(param_Tareas);
+                Datos_Formulario_TareaEditando = Tareas.FirstOrDefault();
+                this.StateHasChanged();
+                DialogService.Close();
+
             }
 
-            Datos_ListaDeMisTareas.Agregar_Filtro(MiDinaup.SeccionesD.TareasD.TareasES.ReferenciaEmpleadoPrincipal, "=", Dinaup_Sesion.DinaupUsuario.DatosSesion.Usuarios.Item1.STR());
-            await Datos_ListaDeMisTareas.ConsultarAsync(Dinaup_Sesion.DinaupUsuario, 1, 200);
-            this.StateHasChanged();
         }
 
         protected override Task OnInitializedAsync()

@@ -11,9 +11,9 @@ Partial Public Class InformesD
               me.Titulo  = "Empresas administradas > Empleados con acceso a empresa"
               Agregar_Respuesta("Empresa",Empresa)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class EmpresasAdministradasEmpleadosConAccesoAEmpresa_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(100)>  Public TextoPrincipal As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               End Sub

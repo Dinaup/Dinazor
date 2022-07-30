@@ -13,28 +13,30 @@ Partial Public Class SeccionesD
       End Class
       Public Shared _SeccionID As String = "03e347ac-c694-4d4a-a81f-e577ba014d1d"
       Public Shared _SeccionIDGUID As New Guid("03e347ac-c694-4d4a-a81f-e577ba014d1d")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of DatosFiscalesBaseC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of DatosFiscalesBaseC )) 
           Dim R As New List(Of DatosFiscalesBaseC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, DatosFiscalesBaseES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DatosFiscalesBaseES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New DatosFiscalesBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 
           Return R 
       End Function 
-      Public Shared Async Function ConsultarDatos_ConLista_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of  DatosFiscalesBase_ConListaC)) 
+      Public Shared Async Function ConsultarDatos_ConLista_Async(  Parametros As SeccionConsultaParametrosC ) As Task(Of List(Of  DatosFiscalesBase_ConListaC)) 
           Dim R As New List(Of DatosFiscalesBase_ConListaC )  
-          Dim d =  Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, DatosFiscalesBaseES._SeccionID, True, Campo, Valor) 
+          Dim d =  Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DatosFiscalesBaseES._SeccionID, True, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Valores_Lista = Actual.Value.Item2
                   Dim Obj_Listador As New DatosFiscalesBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   Dim Objs_Listas As New List(Of DatosFiscalesBaseListaD.DatosFiscalesBaseListaC) 
                   If Valores_Lista.TieneDatos Then  
                       For Each ValoresLista In Valores_Lista 
@@ -60,12 +62,10 @@ Partial Public Class SeccionesD
       Public Shared EmpleadoTieneAccesoWeb$ = "pr_200401387928"
       Public Shared ApellidosYNombreORazonSocial$ = "pr_30040138791"
       Public Shared NIF$ = "pr_30040138792"
-      Public Shared Pais$ = "pr_30040138793"
       Public Shared Municipio$ = "pr_30040138794"
       Public Shared CodigoPostal$ = "pr_30040138795"
       Public Shared ReferenciaEntidad$ = "pr_30040138796"
       Public Shared EntidadTieneAccesoWeb$ = "pr_30040138797"
-      Public Shared Provincia$ = "pr_40040138791"
       Public Shared DireccionCompleta$ = "pr_40040138792"
       Public Shared Telefono$ = "pr_50040138793"
       Public Shared ReferenciaUbicacion$ = "pr_50040138795"
@@ -87,6 +87,8 @@ Partial Public Class SeccionesD
       Public Shared EsUnaPersonaFisica$ = "pr_50040254941"
       Public Shared Tipo$ = "pr_40040254952"
       Public Shared CodigoMunicipio$ = "pr_20040275833"
+      Public Shared Pais$ = "pr_30040138793"
+      Public Shared Provincia$ = "pr_40040138791"
       Public Shared ID$ = "id"
       Public Shared TextoPrincipal$ = "nombre"
       Public Shared FechaAltaDato_UTC$ = "fecha"
@@ -126,12 +128,7 @@ Partial Public Class SeccionesD
           Public Property EmpleadoTieneAccesoWeb As Boolean
           Public Shared ___EmpleadoTieneAccesoWeb As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""EmpleadoTieneAccesoWeb"",""etiqueta"": ""Empleado Tiene Acceso web"",""oculta"": false,""formato"": 1,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Empleado Tiene Acceso web"",""descripcion"": """",""keyword"": ""EmpleadoTieneAccesoWeb"",""formato"": 1,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __EmpleadoTieneAccesoWeb As DinaNETCore.APID.DinaupAPI_CampoC = ___EmpleadoTieneAccesoWeb
-          <Description("Si es una persona física se consignará el primer apellido, un
-espacio, el segundo apellido, un espacio y el nombre
-completo, necesariamente en este orden.
-Para personas jurídicas y entidades sin personalidad jurídica,
-se consignará la razón social completa o denominación, sin
-anagrama.")>
+          <Description("Si es una persona física se consignará el primer apellido, un" & vbCrLf & "espacio, el segundo apellido, un espacio y el nombre" & vbCrLf & "completo, necesariamente en este orden." & vbCrLf & "Para personas jurídicas y entidades sin personalidad jurídica," & vbCrLf & "se consignará la razón social completa o denominación, sin" & vbCrLf & "anagrama.")>
           <DisplayName("Apellidos y Nombre o Razón social")>
           Public Property ApellidosYNombreORazonSocial As String
           Public Shared ___ApellidosYNombreORazonSocial As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ApellidosYNombreORazonSocial"",""etiqueta"": ""Apellidos y Nombre o Razón social"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Apellidos y Nombre o Razón social"",""descripcion"": """",""keyword"": ""ApellidosYNombreORazonSocial"",""formato"": 5,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
@@ -140,10 +137,6 @@ anagrama.")>
           Public Property NIF As String
           Public Shared ___NIF As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""NIF"",""etiqueta"": ""NIF"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 79,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""NIF"",""descripcion"": """",""keyword"": ""NIF"",""formato"": 5,""rol"": 79,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __NIF As DinaNETCore.APID.DinaupAPI_CampoC = ___NIF
-          <DisplayName("País")>
-          Public Property Pais As String
-          Public Shared ___Pais As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""Pais"",""etiqueta"": ""País"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 83,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""País"",""descripcion"": """",""keyword"": ""Pais"",""formato"": 5,""rol"": 83,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
-          Public  __Pais As DinaNETCore.APID.DinaupAPI_CampoC = ___Pais
           <DisplayName("Municipio")>
           Public Property Municipio As String
           Public Shared ___Municipio As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""Municipio"",""etiqueta"": ""Municipio"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Municipio"",""descripcion"": """",""keyword"": ""Municipio"",""formato"": 5,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
@@ -160,10 +153,6 @@ anagrama.")>
           Public Property EntidadTieneAccesoWeb As Boolean
           Public Shared ___EntidadTieneAccesoWeb As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""EntidadTieneAccesoWeb"",""etiqueta"": ""Entidad Tiene Acceso web"",""oculta"": false,""formato"": 1,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Entidad Tiene Acceso web"",""descripcion"": """",""keyword"": ""EntidadTieneAccesoWeb"",""formato"": 1,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __EntidadTieneAccesoWeb As DinaNETCore.APID.DinaupAPI_CampoC = ___EntidadTieneAccesoWeb
-          <DisplayName("Provincia")>
-          Public Property Provincia As String
-          Public Shared ___Provincia As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""Provincia"",""etiqueta"": ""Provincia"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 84,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Provincia"",""descripcion"": """",""keyword"": ""Provincia"",""formato"": 5,""rol"": 84,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
-          Public  __Provincia As DinaNETCore.APID.DinaupAPI_CampoC = ___Provincia
           <DisplayName("Dirección Completa")>
           Public Property DireccionCompleta As String
           Public Shared ___DireccionCompleta As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""DireccionCompleta"",""etiqueta"": ""Dirección Completa"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 16,""decimales"": ""0"",""multilinea"": true,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Dirección Completa"",""descripcion"": """",""keyword"": ""DireccionCompleta"",""formato"": 5,""rol"": 16,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
@@ -248,6 +237,14 @@ anagrama.")>
           Public Property CodigoMunicipio As String
           Public Shared ___CodigoMunicipio As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""CodigoMunicipio"",""etiqueta"": ""Código Municipio"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Código Municipio"",""descripcion"": """",""keyword"": ""CodigoMunicipio"",""formato"": 5,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __CodigoMunicipio As DinaNETCore.APID.DinaupAPI_CampoC = ___CodigoMunicipio
+          <DisplayName("País")>
+          Public Property Pais As String
+          Public Shared ___Pais As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""Pais"",""etiqueta"": ""País"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 83,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""País"",""descripcion"": """",""keyword"": ""Pais"",""formato"": 5,""rol"": 83,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __Pais As DinaNETCore.APID.DinaupAPI_CampoC = ___Pais
+          <DisplayName("Provincia")>
+          Public Property Provincia As String
+          Public Shared ___Provincia As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""Provincia"",""etiqueta"": ""Provincia"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 84,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Provincia"",""descripcion"": """",""keyword"": ""Provincia"",""formato"": 5,""rol"": 84,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __Provincia As DinaNETCore.APID.DinaupAPI_CampoC = ___Provincia
           <ReadOnlyAttribute(True)>
           <DisplayName("ID")>
           Public Property ID As Guid
@@ -314,12 +311,10 @@ anagrama.")>
           me.EmpleadoTieneAccesoWeb = _Datos.Leer_Boolean("pr_200401387928")
           me.ApellidosYNombreORazonSocial = _Datos.Leer_String("pr_30040138791")
           me.NIF = _Datos.Leer_String("pr_30040138792")
-          me.Pais = _Datos.Leer_String("pr_30040138793")
           me.Municipio = _Datos.Leer_String("pr_30040138794")
           me.CodigoPostal = _Datos.Leer_String("pr_30040138795")
           me.ReferenciaEntidad = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_30040138796"), _Datos.Leer_String("pr_30040138796.nombre"))
           me.EntidadTieneAccesoWeb = _Datos.Leer_Boolean("pr_30040138797")
-          me.Provincia = _Datos.Leer_String("pr_40040138791")
           me.DireccionCompleta = _Datos.Leer_String("pr_40040138792")
           me.Telefono = _Datos.Leer_String("pr_50040138793")
           me.ReferenciaUbicacion = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_50040138795"), _Datos.Leer_String("pr_50040138795.nombre"))
@@ -341,6 +336,8 @@ anagrama.")>
           me.EsUnaPersonaFisica = _Datos.Leer_Boolean("pr_50040254941")
           me.Tipo = _Datos.Leer_EnumTipoIdentificacionFiscalE("pr_40040254952")
           me.CodigoMunicipio = _Datos.Leer_String("pr_20040275833")
+          me.Pais = _Datos.Leer_String("pr_30040138793")
+          me.Provincia = _Datos.Leer_String("pr_40040138791")
           me.ID = _Datos.Leer_Guid("id")
           me.TextoPrincipal = _Datos.Leer_String("nombre")
           me.FechaAltaDato_UTC = _Datos.Leer_DateTime("fecha")
@@ -372,7 +369,6 @@ anagrama.")>
          R.add("pr_200401387928", me.EmpleadoTieneAccesoWeb.AdaptarMySQL_Boolean())
          R.add("pr_30040138791", me.ApellidosYNombreORazonSocial.AdaptarMySQL_String())
          R.add("pr_30040138792", me.NIF.AdaptarMySQL_String())
-         R.add("pr_30040138793", me.Pais.AdaptarMySQL_String())
          R.add("pr_30040138794", me.Municipio.AdaptarMySQL_String())
          R.add("pr_30040138795", me.CodigoPostal.AdaptarMySQL_String())
          If Me.ReferenciaEntidad IsNot nothing then
@@ -381,7 +377,6 @@ anagrama.")>
            R.add("pr_30040138796","")
          End if
          R.add("pr_30040138797", me.EntidadTieneAccesoWeb.AdaptarMySQL_Boolean())
-         R.add("pr_40040138791", me.Provincia.AdaptarMySQL_String())
          R.add("pr_40040138792", me.DireccionCompleta.AdaptarMySQL_String())
          R.add("pr_50040138793", me.Telefono.AdaptarMySQL_String())
          If Me.ReferenciaUbicacion IsNot nothing then
@@ -407,6 +402,8 @@ anagrama.")>
          R.add("pr_50040254941", me.EsUnaPersonaFisica.AdaptarMySQL_Boolean())
          R.add("pr_40040254952", me.Tipo.AdaptarMySQL_EnumTipoIdentificacionFiscalE())
          R.add("pr_20040275833", me.CodigoMunicipio.AdaptarMySQL_String())
+         R.add("pr_30040138793", me.Pais.AdaptarMySQL_String())
+         R.add("pr_40040138791", me.Provincia.AdaptarMySQL_String())
          R.add("id", me.ID.AdaptarMySQL_Guid())
          R.add("nombre", me.TextoPrincipal.AdaptarMySQL_String())
          R.add("fecha", me.FechaAltaDato_UTC.AdaptarMySQL_DateTime())

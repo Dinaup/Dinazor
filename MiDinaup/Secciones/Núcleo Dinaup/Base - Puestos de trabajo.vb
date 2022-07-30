@@ -5,14 +5,15 @@ Partial Public Class SeccionesD
   Public Class PuestosDeTrabajoBaseD
       Public Shared _SeccionID As String = "f777486d-e709-41be-9211-d9c6b4bb05d6"
       Public Shared _SeccionIDGUID As New Guid("f777486d-e709-41be-9211-d9c6b4bb05d6")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of PuestosDeTrabajoBaseC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of PuestosDeTrabajoBaseC )) 
           Dim R As New List(Of PuestosDeTrabajoBaseC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, PuestosDeTrabajoBaseES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(PuestosDeTrabajoBaseES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New PuestosDeTrabajoBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 
@@ -50,6 +51,7 @@ Partial Public Class SeccionesD
       Public Shared Procesador$ = "pr_148785a0c9x18ewd"
       Public Shared VersionEnUltimaConexion$ = "pr_14727a6962x397wd"
       Public Shared TokenDeIdentificacion$ = "pr_1472584b9ax2a0wd"
+      Public Shared ReferenciaDepositoMonetario$ = "pr_442fd80xa2wc"
       Public Shared ID$ = "id"
       Public Shared TextoPrincipal$ = "nombre"
       Public Shared FechaAltaDato_UTC$ = "fecha"
@@ -179,6 +181,10 @@ Partial Public Class SeccionesD
           Public Property TokenDeIdentificacion As String
           Public Shared ___TokenDeIdentificacion As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""TokenDeIdentificacion"",""etiqueta"": ""Token de identificación"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 10,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Token de identificación"",""descripcion"": """",""keyword"": ""TokenDeIdentificacion"",""formato"": 5,""rol"": 10,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __TokenDeIdentificacion As DinaNETCore.APID.DinaupAPI_CampoC = ___TokenDeIdentificacion
+          <DisplayName("Depósito monetario")>
+          Public Property ReferenciaDepositoMonetario As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaDepositoMonetario As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaDepositoMonetario"",""etiqueta"": ""Depósito monetario"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""cab2cf42-3cf6-4aa6-9930-c7ee704650bc"",""titulo"": ""Base - Depósitos monetarios"",""iconoid"": ""f037928c-b088-47e4-a79e-3d217109403b"",""etiquetasingular"": ""Depósito monetario"",""etiquetaplural"": ""Depósitos monetarios"",""etiquetaesfemenino"": true,""contienelista"": false,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""cab2cf42-3cf6-4aa6-9930-c7ee704650bc"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Depósito monetario"",""descripcion"": """",""keyword"": ""ReferenciaDepositoMonetario"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaDepositoMonetario As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaDepositoMonetario
           <ReadOnlyAttribute(True)>
           <DisplayName("ID")>
           Public Property ID As Guid
@@ -265,6 +271,7 @@ Partial Public Class SeccionesD
           me.Procesador = _Datos.Leer_String("pr_148785a0c9x18ewd")
           me.VersionEnUltimaConexion = _Datos.Leer_String("pr_14727a6962x397wd")
           me.TokenDeIdentificacion = _Datos.Leer_String("pr_1472584b9ax2a0wd")
+          me.ReferenciaDepositoMonetario = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_442fd80xa2wc"), _Datos.Leer_String("pr_442fd80xa2wc.nombre"))
           me.ID = _Datos.Leer_Guid("id")
           me.TextoPrincipal = _Datos.Leer_String("nombre")
           me.FechaAltaDato_UTC = _Datos.Leer_DateTime("fecha")
@@ -324,6 +331,11 @@ Partial Public Class SeccionesD
          R.add("pr_148785a0c9x18ewd", me.Procesador.AdaptarMySQL_String())
          R.add("pr_14727a6962x397wd", me.VersionEnUltimaConexion.AdaptarMySQL_String())
          R.add("pr_1472584b9ax2a0wd", me.TokenDeIdentificacion.AdaptarMySQL_String())
+         If Me.ReferenciaDepositoMonetario IsNot nothing then
+           R.add("pr_442fd80xa2wc",me.ReferenciaDepositoMonetario.ID.STR())
+         Else
+           R.add("pr_442fd80xa2wc","")
+         End if
          R.add("id", me.ID.AdaptarMySQL_Guid())
          R.add("nombre", me.TextoPrincipal.AdaptarMySQL_String())
          R.add("fecha", me.FechaAltaDato_UTC.AdaptarMySQL_DateTime())

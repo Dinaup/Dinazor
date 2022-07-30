@@ -5,14 +5,15 @@ Partial Public Class SeccionesD
   Public Class CriteriosParaMostrarNotificacionesD
       Public Shared _SeccionID As String = "81252896-77f9-47b6-a720-2a8c71516800"
       Public Shared _SeccionIDGUID As New Guid("81252896-77f9-47b6-a720-2a8c71516800")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of CriteriosParaMostrarNotificacionesC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of CriteriosParaMostrarNotificacionesC )) 
           Dim R As New List(Of CriteriosParaMostrarNotificacionesC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, CriteriosParaMostrarNotificacionesES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(CriteriosParaMostrarNotificacionesES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New CriteriosParaMostrarNotificacionesC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 

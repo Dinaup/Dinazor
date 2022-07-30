@@ -10,15 +10,15 @@ Partial Public Class InformesD
               me.ID = new GUID("91b61de7-ee0e-4c40-8a63-f01894ecfff1")
               me.Titulo  = "Panel Control de Horarios > Turnos Concluidos"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class PanelControlDeHorariosTurnosConcluidos_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Empleado As String
-                <ProtoBuf.ProtoMember(101)>  Public EmpleadoIcono As Guid
-                <ProtoBuf.ProtoMember(102)>  Public Ubicacion As String
-                <ProtoBuf.ProtoMember(103)>  Public Turno As String
-                <ProtoBuf.ProtoMember(104)>  Public Estado As Integer
-                <ProtoBuf.ProtoMember(105)>  Public Diferencia As Integer
-                <ProtoBuf.ProtoMember(106)>  Public Inicio As Date?
+                <ProtoMember(100)>  Public Empleado As String
+                <ProtoMember(101)>  Public EmpleadoIcono As Guid
+                <ProtoMember(102)>  Public Ubicacion As String
+                <ProtoMember(103)>  Public Turno As String
+                <ProtoMember(104)>  Public Estado As Integer
+                <ProtoMember(105)>  Public Diferencia As Integer
+                <ProtoMember(106)>  Public Inicio As Date?
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Empleado = o("Empleado").STR
               Me.EmpleadoIcono = o("EmpleadoIcono").ToGuid

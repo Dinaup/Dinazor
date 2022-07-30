@@ -1,0 +1,43 @@
+﻿@inject DinaupConfiguracionC  Dinaup_Servidor
+@inject DatosCacheC DatosCacheados
+
+
+
+
+
+<RadzenDataList WrapItems="true" AllowPaging="true" Data="@ArchivosID" TItem="String" PageSize="5" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
+	<Template Context="archivoid">
+		<Dinaup_Archivo_Tarjeta_Generica ArchivoID=@archivoid></Dinaup_Archivo_Tarjeta_Generica>
+	</Template>
+</RadzenDataList>
+
+
+@code {
+
+
+
+
+	[Parameter]
+	public List<string> ArchivosID { get; set; } = null;
+	protected override void OnInitialized()
+	{
+
+		if (ArchivosID.TieneDatos())
+		{
+			@foreach (var ArchivoIDActual in ArchivosID.ToList())
+			{
+				var InstanciaArchivo = DatosCacheados.Cache_Archivos.RecibirPorID(ArchivoIDActual);
+				if(InstanciaArchivo == null || NombreDeArchivoEsImagen(InstanciaArchivo.Filename) == false )
+				{
+					ArchivosID.Remove(ArchivoIDActual);
+				}
+			}
+
+		}
+
+
+		base.OnInitialized();
+	}
+
+
+}

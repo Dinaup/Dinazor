@@ -10,11 +10,11 @@ Partial Public Class InformesD
               me.ID = new GUID("c021d070-73d7-4200-833e-d2df0668a733")
               me.Titulo  = "Configuraciones de notificaciones"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class ConfiguracionesDeNotificaciones_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public Tipo As Integer
-                <ProtoBuf.ProtoMember(102)>  Public Titulonotificacion As String
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public Tipo As Integer
+                <ProtoMember(102)>  Public Titulonotificacion As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.Tipo = ctype(o("Tipo").INT(0), EnumEventoAgendaE)

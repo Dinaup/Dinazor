@@ -10,16 +10,16 @@ Partial Public Class InformesD
               me.ID = new GUID("da9d6090-5d9d-42a2-a91b-e410e1e0d61a")
               me.Titulo  = "Campos > Identificación de campos"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CamposIdentificacionDeCampos_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Seccion As String
-                <ProtoBuf.ProtoMember(101)>  Public Etiqueta As String
-                <ProtoBuf.ProtoMember(102)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(103)>  Public EtiquetaAbreviada As String
-                <ProtoBuf.ProtoMember(104)>  Public Pestana As String
-                <ProtoBuf.ProtoMember(105)>  Public NombrePR As String
-                <ProtoBuf.ProtoMember(106)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(107)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(100)>  Public Seccion As String
+                <ProtoMember(101)>  Public Etiqueta As String
+                <ProtoMember(102)>  Public ID As Guid
+                <ProtoMember(103)>  Public EtiquetaAbreviada As String
+                <ProtoMember(104)>  Public Pestana As String
+                <ProtoMember(105)>  Public NombrePR As String
+                <ProtoMember(106)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(107)>  Public FechaAltaSistema As DateTime
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Seccion = o("Seccion").STR
               Me.Etiqueta = o("Etiqueta").STR

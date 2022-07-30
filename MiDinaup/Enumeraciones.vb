@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports System.Reflection
-Imports DinaNETCore.ExtensionesM
+Imports DinaNetCore.ExtensionesM
 Public Enum EnumEventoAgendaE
    <Description("Indefinido")>
    Indefinido = 0
@@ -97,6 +97,14 @@ Public Enum EnumGeneroE
    Masculino = 1
    <Description("Femenino")>
    Femenino = 2
+End enum
+Public Enum EnumConfiguracionImpuestosIncluidosE
+   <Description("Automático")>
+   Automatico = 0
+   <Description("Incluidos")>
+   Incluidos = 1
+   <Description("No incluidos")>
+   NoIncluidos = 2
 End enum
 Public Enum EnumCriterioEvaluacionAgendaE
    <Description("Indefinido")>
@@ -430,6 +438,214 @@ Public Enum PrioridadE
    <Description("Urgente")>
    Urgente = 7
 End enum
+Public Enum EnumTipoMovimientoE
+   <Description("Indefinido")>
+   Indefinido = 0
+   <Description("Ordinario")>
+   Ordinario = 1
+   <Description("Rectificativo")>
+   Rectificativo = 3
+End enum
+Public Enum EnumEstadoTransporteE
+   <Description("Indefinido")>
+   Indefinido = 0
+   <Description("Programado")>
+   Programado = 1
+   <Description("Transportando")>
+   Transportando = 2
+   <Description("Completado")>
+   Completado = 3
+   <Description("Cancelado")>
+   Cancelado = 4
+   <Description("Incidencia")>
+   Incidencia = 5
+End enum
+Public Enum EnumAsientoE
+   <Description("Indefinido")>
+   Indefinido = 0
+   <Description("Operativo")>
+   Operativo = 1
+   <Description("Ajuste")>
+   Ajuste = 2
+   <Description("Apertura")>
+   Apertura = 3
+   <Description("Regularización")>
+   Regularizacion = 4
+   <Description("Cierre")>
+   Cierre = 5
+End enum
+Public Enum EnumNivelCuentaContableE
+   <Description("Indefinido")>
+   Indefinido = 0
+   <Description("Grupo nivel 1")>
+   GrupoNivel1 = 1
+   <Description("(x) Subgrupo nivel 2")>
+   xSubgrupoNivel2 = 2
+   <Description("(x) Subgrupo nivel 3")>
+   xSubgrupoNivel3 = 3
+   <Description("Cuenta")>
+   Cuenta = 4
+   <Description("(x) Subcuenta 1")>
+   xSubcuenta1 = 5
+   <Description("(x) Subcuenta 2")>
+   xSubcuenta2 = 6
+   <Description("Subcuenta")>
+   Subcuenta = 7
+End enum
+Public Enum EnumNaturalezaDeCuentaE
+   <Description("Indefinido")>
+   Indefinido = 0
+   <Description("Deudora")>
+   Deudora = 1
+   <Description("Acreedora")>
+   Acreedora = 2
+End enum
+Public Enum EnumInmovilizadoEstadoAdquisicionEE
+   <Description("")>
+   Indefinido = 0
+   <Description("Nuevo")>
+   Nuevo = 1
+   <Description("Usado")>
+   Usado = 2
+End enum
+Public Enum EnumInmovilizadoNaturalezaEE
+   <Description("")>
+   Indefinido = 0
+   <Description("Inmovilizado Material")>
+   InmovilizadoMaterial = 1
+   <Description("Inmovilizado Intangible")>
+   InmovilizadoIntangible = 2
+   <Description("Inversión Inmobiliaria")>
+   InversionInmobiliaria = 3
+End enum
+Public Enum EnumIntervaloContablePeriodosE
+   <Description("Indefinido")>
+   Indefinido = 0
+   <Description("Año")>
+   Año = 1
+   <Description("Mes 1")>
+   Mes1 = 2
+   <Description("Mes 2")>
+   Mes2 = 3
+   <Description("Mes 3")>
+   Mes3 = 4
+   <Description("Mes 4")>
+   Mes4 = 5
+   <Description("Mes 5")>
+   Mes5 = 6
+   <Description("Mes 6")>
+   Mes6 = 7
+   <Description("Mes 7")>
+   Mes7 = 8
+   <Description("Mes 8")>
+   Mes8 = 9
+   <Description("Mes 9")>
+   Mes9 = 10
+   <Description("Mes 10")>
+   Mes10 = 11
+   <Description("Mes 11")>
+   Mes11 = 12
+   <Description("Mes 12")>
+   Mes12 = 13
+   <Description("Bimestre 1")>
+   Bimestre1 = 14
+   <Description("Bimestre 2")>
+   Bimestre2 = 15
+   <Description("Bimestre 3")>
+   Bimestre3 = 16
+   <Description("Bimestre 4")>
+   Bimestre4 = 17
+   <Description("Bimestre 5")>
+   Bimestre5 = 18
+   <Description("Bimestre 6")>
+   Bimestre6 = 19
+   <Description("Trimestre 1")>
+   Trimestre1 = 20
+   <Description("Trimestre 2")>
+   Trimestre2 = 21
+   <Description("Trimestre 3")>
+   Trimestre3 = 22
+   <Description("Trimestre 4")>
+   Trimestre4 = 23
+   <Description("Semestre 1")>
+   Semestre1 = 24
+   <Description("Semestre 2")>
+   Semestre2 = 25
+End enum
+Public Enum EnumIntervaloContableE
+   <Description("Indefinido")>
+   Indefinido = 0
+   <Description("Mes completo")>
+   MesCompleto = 1
+   <Description("Bimestre completo")>
+   BimestreCompleto = 2
+   <Description("Trimestre completo")>
+   TrimestreCompleto = 3
+   <Description("Semestre completo")>
+   SemestreCompleto = 4
+   <Description("Año completo")>
+   AñoCompleto = 5
+   <Description("Mes 1")>
+   Mes1 = 6
+   <Description("Mes 2")>
+   Mes2 = 7
+   <Description("Mes 3")>
+   Mes3 = 8
+   <Description("Mes 4")>
+   Mes4 = 9
+   <Description("Mes 5")>
+   Mes5 = 10
+   <Description("Mes 6")>
+   Mes6 = 11
+   <Description("Mes 7")>
+   Mes7 = 12
+   <Description("Mes 8")>
+   Mes8 = 13
+   <Description("Mes 9")>
+   Mes9 = 14
+   <Description("Mes 10")>
+   Mes10 = 15
+   <Description("Mes 11")>
+   Mes11 = 16
+   <Description("Mes 12")>
+   Mes12 = 17
+   <Description("Bimestre 1")>
+   Bimestre1 = 18
+   <Description("Bimestre 2")>
+   Bimestre2 = 19
+   <Description("Bimestre 3")>
+   Bimestre3 = 20
+   <Description("Bimestre 4")>
+   Bimestre4 = 21
+   <Description("Bimestre 5")>
+   Bimestre5 = 22
+   <Description("Bimestre 6")>
+   Bimestre6 = 23
+   <Description("Trimestre 1")>
+   Trimestre1 = 24
+   <Description("Trimestre 2")>
+   Trimestre2 = 25
+   <Description("Trimestre 3")>
+   Trimestre3 = 26
+   <Description("Trimestre 4")>
+   Trimestre4 = 27
+   <Description("Intervalo preguntado")>
+   IntervaloPreguntado = 28
+   <Description("Semestre 2")>
+   Semestre2 = 29
+   <Description("Semestre 1")>
+   Semestre1 = 30
+End enum
+Public Enum EnumTipoActividadE
+   <Description("")>
+   Indefinido = 0
+   <Description("Empresarial")>
+   Empresarial = 1
+   <Description("Profesional")>
+   Profesional = 2
+   <Description("Agrícola")>
+   Agricola = 3
+End enum
 Public Module Ext
   <Extension>
     Public Function STR(v As EnumEventoAgendaE) As String
@@ -644,6 +860,37 @@ Public Module Ext
     <Extension>
     Public Function Leer_EnumGeneroE(ElSTR As Dic(Of String, String), key$) As EnumGeneroE
         Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumGeneroE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumConfiguracionImpuestosIncluidosE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumConfiguracionImpuestosIncluidosE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumConfiguracionImpuestosIncluidosE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumConfiguracionImpuestosIncluidosE(v As EnumConfiguracionImpuestosIncluidosE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumConfiguracionImpuestosIncluidosE(ElSTR As Dic(Of String, String), key$) As EnumConfiguracionImpuestosIncluidosE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumConfiguracionImpuestosIncluidosE)
     End Function
 
 
@@ -1326,6 +1573,316 @@ Public Module Ext
     <Extension>
     Public Function Leer_PrioridadE(ElSTR As Dic(Of String, String), key$) As PrioridadE
         Return Ctype( ElSTR.HacerMagia(key).int(0),  PrioridadE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumTipoMovimientoE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumTipoMovimientoE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumTipoMovimientoE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumTipoMovimientoE(v As EnumTipoMovimientoE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumTipoMovimientoE(ElSTR As Dic(Of String, String), key$) As EnumTipoMovimientoE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumTipoMovimientoE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumEstadoTransporteE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumEstadoTransporteE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumEstadoTransporteE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumEstadoTransporteE(v As EnumEstadoTransporteE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumEstadoTransporteE(ElSTR As Dic(Of String, String), key$) As EnumEstadoTransporteE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumEstadoTransporteE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumAsientoE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumAsientoE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumAsientoE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumAsientoE(v As EnumAsientoE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumAsientoE(ElSTR As Dic(Of String, String), key$) As EnumAsientoE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumAsientoE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumNivelCuentaContableE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumNivelCuentaContableE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumNivelCuentaContableE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumNivelCuentaContableE(v As EnumNivelCuentaContableE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumNivelCuentaContableE(ElSTR As Dic(Of String, String), key$) As EnumNivelCuentaContableE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumNivelCuentaContableE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumNaturalezaDeCuentaE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumNaturalezaDeCuentaE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumNaturalezaDeCuentaE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumNaturalezaDeCuentaE(v As EnumNaturalezaDeCuentaE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumNaturalezaDeCuentaE(ElSTR As Dic(Of String, String), key$) As EnumNaturalezaDeCuentaE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumNaturalezaDeCuentaE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumInmovilizadoEstadoAdquisicionEE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumInmovilizadoEstadoAdquisicionEE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumInmovilizadoEstadoAdquisicionEE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumInmovilizadoEstadoAdquisicionEE(v As EnumInmovilizadoEstadoAdquisicionEE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumInmovilizadoEstadoAdquisicionEE(ElSTR As Dic(Of String, String), key$) As EnumInmovilizadoEstadoAdquisicionEE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumInmovilizadoEstadoAdquisicionEE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumInmovilizadoNaturalezaEE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumInmovilizadoNaturalezaEE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumInmovilizadoNaturalezaEE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumInmovilizadoNaturalezaEE(v As EnumInmovilizadoNaturalezaEE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumInmovilizadoNaturalezaEE(ElSTR As Dic(Of String, String), key$) As EnumInmovilizadoNaturalezaEE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumInmovilizadoNaturalezaEE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumIntervaloContablePeriodosE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumIntervaloContablePeriodosE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumIntervaloContablePeriodosE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumIntervaloContablePeriodosE(v As EnumIntervaloContablePeriodosE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumIntervaloContablePeriodosE(ElSTR As Dic(Of String, String), key$) As EnumIntervaloContablePeriodosE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumIntervaloContablePeriodosE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumIntervaloContableE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumIntervaloContableE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumIntervaloContableE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumIntervaloContableE(v As EnumIntervaloContableE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumIntervaloContableE(ElSTR As Dic(Of String, String), key$) As EnumIntervaloContableE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumIntervaloContableE)
+    End Function
+
+
+
+  <Extension>
+    Public Function STR(v As EnumTipoActividadE) As String
+        Return GetEnumDescription(v)
+    End Function
+
+    <Extension>
+    Public Function INT(v As EnumTipoActividadE) As Integer
+        Return CInt(v)
+    End Function
+      
+    
+    <Extension>
+    Public Function AdaptarMySQL_Integer(v As EnumTipoActividadE) As String
+        Return CInt(v).ToString()
+    End Function
+
+        
+    <Extension>
+    Public Function AdaptarMySQL_EnumTipoActividadE(v As EnumTipoActividadE) As String
+        Return CInt(v).ToString()
+    End Function
+
+    
+    
+    <Extension>
+    Public Function Leer_EnumTipoActividadE(ElSTR As Dic(Of String, String), key$) As EnumTipoActividadE
+        Return Ctype( ElSTR.HacerMagia(key).int(0),  EnumTipoActividadE)
     End Function
 
 

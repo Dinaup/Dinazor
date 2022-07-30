@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Components.Web
 @namespace Dinazor.Pages
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,7 +19,7 @@
     <link href="css/uicons-solid-rounded/css/uicons-solid-rounded.css" rel="stylesheet" />
     <link href="Dinazor.styles.css" rel="stylesheet" />
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
-    <link rel="stylesheet" href="_content/Radzen.Blazor/css/default-base.css">
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/standard.css">
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
 
     
@@ -25,9 +28,37 @@
 <body>
 
 
+
+    
     @RenderBody()
 
- 
+
+     
+     
+     
+
+ <script type="text/javascript"> 
+
+   window.DescargarArchivo = (fileName, url) => {
+    const anchorElement = document.createElement('a');
+    anchorElement.href = url;
+    anchorElement.download = fileName ?? '';
+    anchorElement.click();
+    anchorElement.remove();
+  }
+
+    function Galeria_Actualizar_Zoom(obj, event) {
+        const x = event.offsetX ;
+        const y = event.offsetY;
+        obj.querySelector("img").style.transformOrigin = `${x}px ${y}px`;
+        obj.querySelector("img").style.transform = "scale(2.5)";
+    }
+    function Galeria_Desactivar_Zoom(e) {
+         e.querySelector("img").style.transformOrigin = `center center`;
+         e.querySelector("img").style.transform = "scale(1)";
+    }
+</script>
+
      
 <div id="blazor-error-ui">
         <environment include="Staging,Production">

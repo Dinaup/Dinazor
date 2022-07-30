@@ -10,14 +10,14 @@ Partial Public Class InformesD
               me.ID = new GUID("1a409397-01d3-4e4c-afae-aa1809753daa")
               me.Titulo  = "Paneles > Todos los paneles"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class PanelesTodosLosPaneles_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Tipo As Boolean
-                <ProtoBuf.ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(102)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(103)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(104)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(105)>  Public Eliminado As Boolean
+                <ProtoMember(100)>  Public Tipo As Boolean
+                <ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(102)>  Public TextoPrincipal As String
+                <ProtoMember(103)>  Public ID As Guid
+                <ProtoMember(104)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(105)>  Public Eliminado As Boolean
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Tipo = o("Tipo").BOOL
               Me.FechaUltimaModificacion = o("FechaUltimaModificacion").ToDateTime_UTC

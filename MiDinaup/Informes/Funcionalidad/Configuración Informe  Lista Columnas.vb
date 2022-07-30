@@ -10,15 +10,15 @@ Partial Public Class InformesD
               me.ID = new GUID("447d7dbb-efa6-4f76-af52-910a1ade836e")
               me.Titulo  = "Configuración Informe > Lista Columnas"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class ConfiguracionInformeListaColumnas_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public PosicionOrden As Decimal
-                <ProtoBuf.ProtoMember(101)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(102)>  Public IconoID As Guid
-                <ProtoBuf.ProtoMember(103)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(104)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(105)>  Public Titulo As String
-                <ProtoBuf.ProtoMember(106)>  Public Eliminado As Boolean
+                <ProtoMember(100)>  Public PosicionOrden As Decimal
+                <ProtoMember(101)>  Public ID As Guid
+                <ProtoMember(102)>  Public IconoID As Guid
+                <ProtoMember(103)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(104)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(105)>  Public Titulo As String
+                <ProtoMember(106)>  Public Eliminado As Boolean
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.PosicionOrden = o("PosicionOrden").DEC
               Me.ID = o("ID").ToGuid

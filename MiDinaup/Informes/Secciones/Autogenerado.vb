@@ -1,36 +1,42 @@
 ﻿Imports DinaNETCore
 Partial Public Class InformesD
   Partial Public Class PrincipalesD
-      Public Class DefinicionesDePacksC
+      Public Class ImpuestosC
           Inherits DinaNETCore.APID.APID_InformeC
-          Public Filas As New List(Of DefinicionesDePacks_FilaC)
+          Public Filas As New List(Of Impuestos_FilaC)
           Public TokenCambios As Guid
           Sub new()
-              Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("ac5f4b04-dbdd-0162-2d18-b925bcc484ca"))
-              me.ID = new GUID("ac5f4b04-dbdd-0162-2d18-b925bcc484ca")
-              me.Titulo  = "Definiciones de pack"
+              Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("4bb6c67a-c3cd-025e-0589-414ec79c8ca3"))
+              me.ID = new GUID("4bb6c67a-c3cd-025e-0589-414ec79c8ca3")
+              me.Titulo  = "Impuestos"
           End sub
-          <ProtoBuf.ProtoContract>
-          Public Class DefinicionesDePacks_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Contenido As String
-                <ProtoBuf.ProtoMember(101)>  Public Fecha As Date?
-                <ProtoBuf.ProtoMember(102)>  Public Unidadesenpack As Integer
-                <ProtoBuf.ProtoMember(103)>  Public TextoPrincipal As String
+          <ProtoContract>
+          Public Class Impuestos_FilaC
+                <ProtoMember(100)>  Public Compras As String
+                <ProtoMember(101)>  Public Ventas As String
+                <ProtoMember(102)>  Public Valor As Decimal
+                <ProtoMember(103)>  Public Etiqueta As String
+                <ProtoMember(104)>  Public Activo As Boolean
+                <ProtoMember(105)>  Public RecargoEquivalencia As Decimal
+                <ProtoMember(106)>  Public TextoPrincipal As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
-              Me.Contenido = o("Contenido").STR
-              Me.Fecha = o("Fecha").ToDateTime_UTC
-              Me.Unidadesenpack = o("Unidadesenpack").INT
+              Me.Compras = o("Compras").STR
+              Me.Ventas = o("Ventas").STR
+              Me.Valor = o("Valor").DEC
+              Me.Etiqueta = o("Etiqueta").STR
+              Me.Activo = o("Activo").BOOL
+              Me.RecargoEquivalencia = o("RecargoEquivalencia").DEC
               Me.TextoPrincipal = o("TextoPrincipal").STR
               End Sub
               Sub new()
               End Sub
           End Class
           Public Overrides Sub CargarRespuesta()
-                Dim Creando_Filas As New List(Of DefinicionesDePacks_FilaC)
+                Dim Creando_Filas As New List(Of Impuestos_FilaC)
                 If Respuesta IsNot Nothing AndAlso Respuesta.Listado IsNot Nothing AndAlso Respuesta.Listado.Filas IsNot Nothing Then
                     For Each Actual In Respuesta.Listado.Filas
                         If Actual Is Nothing Then Continue For
-                        Dim N = New DefinicionesDePacks_FilaC(Actual)
+                        Dim N = New Impuestos_FilaC(Actual)
                         Creando_Filas.Add(N)
                     Next
                 End If

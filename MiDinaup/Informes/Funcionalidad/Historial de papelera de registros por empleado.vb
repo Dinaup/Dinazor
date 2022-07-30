@@ -13,14 +13,14 @@ Partial Public Class InformesD
               Agregar_Respuesta("Fecha_Desde",Fecha_Desde)
               Agregar_Respuesta("Fecha_Hasta",Fecha_Hasta)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class HistorialDePapeleraDeRegistrosPorEmpleado_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Empleado As String
-                <ProtoBuf.ProtoMember(101)>  Public Tipodeaccion As Integer
-                <ProtoBuf.ProtoMember(102)>  Public Dato As String
-                <ProtoBuf.ProtoMember(103)>  Public Fecha As Date?
-                <ProtoBuf.ProtoMember(104)>  Public DatoIcono As Guid
-                <ProtoBuf.ProtoMember(105)>  Public Seccion As String
+                <ProtoMember(100)>  Public Empleado As String
+                <ProtoMember(101)>  Public Tipodeaccion As Integer
+                <ProtoMember(102)>  Public Dato As String
+                <ProtoMember(103)>  Public Fecha As Date?
+                <ProtoMember(104)>  Public DatoIcono As Guid
+                <ProtoMember(105)>  Public Seccion As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Empleado = o("Empleado").STR
               Me.Tipodeaccion = ctype(o("Tipodeaccion").INT(0), EnumRAAccionPapeleraE)

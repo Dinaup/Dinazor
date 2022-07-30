@@ -1,0 +1,105 @@
+﻿@inject Dinazor.Services.DinaupConfiguracionC Dinaup_Servidor
+
+
+@code {
+
+	[Parameter]
+	public int NumeroMaximoDeArchivos { get; set; } = 1;
+
+	[Parameter]
+	public bool SubidaAutomatica { get; set; } = false;
+
+
+	[Parameter]
+	public decimal TamanoMaximoPorArchivoenMB { get; set; } = 30;
+
+	/// <summary>
+	/// Extensiones separadas por comas, ejemplo "png,jpg,pdf"
+	/// El valor * indica que cualquier extensión.
+	/// </summary>
+	[Parameter]
+	public string Extensiones { get; set; } = "*";
+
+
+}
+
+
+	<RadzenUpload @ref="upload" Auto=@SubidaAutomatica  Icon="upload" 
+		Multiple=@(NumeroMaximoDeArchivos > 1) Url=@Dinaup_Servidor.FirmadorURLArchivos.FirmarURL_SubirArchivo(TamanoMaximoPorArchivoenMB, "*", NumeroMaximoDeArchivos) 
+		Progress=@TrackProgress Complete=@OnComplete class="w-100">
+	</RadzenUpload>
+	<RadzenProgressBar Value=@progress class="mt-4" Visible=@showProgress />
+	<RadzenLabel Visible=@showComplete class="mt-4" Text="Upload Complete!" />
+	@if(SubidaAutomatica == false){
+		<RadzenButton Text="Subir" Click=@(args => upload.Upload()) class="d-block mt-4" />
+	}
+
+
+
+ 
+@code {
+
+
+
+
+	RadzenUpload upload;
+
+
+
+
+	int progress;
+	bool showProgress;
+	bool showComplete;
+
+	void CompleteUpload()
+	{
+		showProgress = false;
+		showComplete = true;
+	}
+
+	void TrackProgress(UploadProgressArgs args)
+	{
+		showProgress = true;
+		showComplete = false;
+		progress = args.Progress;
+	}
+
+	int customParameter = 1;
+
+	void OnChange(UploadChangeEventArgs args, string name)
+	{
+		//foreach (var file in args.Files)
+		//{
+		//	Console.Write($"File: {file.Name} / {file.Size} bytes");
+		//}
+
+		//Console.Write($"{name} changed");
+	}
+
+	void OnProgress(UploadProgressArgs args, string name)
+	{
+		//Console.Write($"{args.Progress}% '{name}' / {args.Loaded} of {args.Total} bytes.");
+
+		//if (args.Progress == 100)
+		//{
+		//	foreach (var file in args.Files)
+		//	{
+		//		Console.Write($"Uploaded: {file.Name} / {file.Size} bytes");
+		//	}
+		//}
+	}
+
+	void OnComplete(UploadCompleteEventArgs args)
+	{
+		var	RawResponse = args.RawResponse;
+
+		var Respuesta = new RespuestaSubidaC(RawResponse);
+
+		if (Respuesta != null && string.IsNullOrEmpty(Respuesta.UnError ) == false )
+		{
+			showComplete = true;
+		}
+
+
+	}
+}

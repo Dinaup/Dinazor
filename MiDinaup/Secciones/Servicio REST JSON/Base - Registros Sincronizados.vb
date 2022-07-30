@@ -13,28 +13,30 @@ Partial Public Class SeccionesD
       End Class
       Public Shared _SeccionID As String = "5c9b88b7-f8be-46fe-b2a5-5d64f9711d65"
       Public Shared _SeccionIDGUID As New Guid("5c9b88b7-f8be-46fe-b2a5-5d64f9711d65")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of RegistrosSincronizadosBaseC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of RegistrosSincronizadosBaseC )) 
           Dim R As New List(Of RegistrosSincronizadosBaseC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, RegistrosSincronizadosBaseES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(RegistrosSincronizadosBaseES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New RegistrosSincronizadosBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 
           Return R 
       End Function 
-      Public Shared Async Function ConsultarDatos_ConLista_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of  RegistrosSincronizadosBase_ConListaC)) 
+      Public Shared Async Function ConsultarDatos_ConLista_Async(  Parametros As SeccionConsultaParametrosC ) As Task(Of List(Of  RegistrosSincronizadosBase_ConListaC)) 
           Dim R As New List(Of RegistrosSincronizadosBase_ConListaC )  
-          Dim d =  Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, RegistrosSincronizadosBaseES._SeccionID, True, Campo, Valor) 
+          Dim d =  Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(RegistrosSincronizadosBaseES._SeccionID, True, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Valores_Lista = Actual.Value.Item2
                   Dim Obj_Listador As New RegistrosSincronizadosBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   Dim Objs_Listas As New List(Of RegistrosSincronizadosBaseListaD.RegistrosSincronizadosBaseListaC) 
                   If Valores_Lista.TieneDatos Then  
                       For Each ValoresLista In Valores_Lista 

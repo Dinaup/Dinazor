@@ -10,13 +10,13 @@ Partial Public Class InformesD
                 Me.ID = New Guid("23039356-c15f-499c-98f1-c91dbd467ab7")
                 Me.Titulo = "API - Archivos"
             End Sub
-            <ProtoBuf.ProtoContract>
+            <ProtoContract>
             Public Class APIArchivos_FilaC
-                <ProtoBuf.ProtoMember(100)> Public ID As Guid
-                <ProtoBuf.ProtoMember(101)> Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(102)> Public Filename As String
-                <ProtoBuf.ProtoMember(103)> Public Tamano As Decimal
-                <ProtoBuf.ProtoMember(104)> Public FechaIA As DateTime
+                <ProtoMember(100)> Public ID As Guid
+                <ProtoMember(101)> Public TextoPrincipal As String
+                <ProtoMember(102)> Public Filename As String
+                <ProtoMember(103)> Public Tamano As Decimal
+                <ProtoMember(104)> Public FechaIA As DateTime
                 Sub New(O As Newtonsoft.Json.Linq.JToken)
                     Me.ID = O("ID").ToGUID
                     Me.TextoPrincipal = O("TextoPrincipal").STR

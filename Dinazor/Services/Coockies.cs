@@ -4,7 +4,7 @@ namespace Dinazor.Services
 {
 
 
-    public class Cookie : DinaNETCore.ICookie 
+    public class Cookie : DinaNetCore.ICookie 
     {
         readonly IJSRuntime JSRuntime;
         string expires = "";

@@ -13,15 +13,15 @@ Partial Public Class InformesD
               Agregar_Respuesta("Fecha_Desde",Fecha_Desde)
               Agregar_Respuesta("Fecha_Hasta",Fecha_Hasta)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class NominasRealizacionDeHorasExtra_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Fecha As Date?
-                <ProtoBuf.ProtoMember(101)>  Public Fuerzamayor As Boolean
-                <ProtoBuf.ProtoMember(102)>  Public Importe As Decimal
-                <ProtoBuf.ProtoMember(103)>  Public Horas As Decimal
-                <ProtoBuf.ProtoMember(104)>  Public RetHora As Decimal
-                <ProtoBuf.ProtoMember(105)>  Public RetTotal As Decimal
-                <ProtoBuf.ProtoMember(106)>  Public Estado As Integer
+                <ProtoMember(100)>  Public Fecha As Date?
+                <ProtoMember(101)>  Public Fuerzamayor As Boolean
+                <ProtoMember(102)>  Public Importe As Decimal
+                <ProtoMember(103)>  Public Horas As Decimal
+                <ProtoMember(104)>  Public RetHora As Decimal
+                <ProtoMember(105)>  Public RetTotal As Decimal
+                <ProtoMember(106)>  Public Estado As Integer
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Fecha = o("Fecha").ToDate
               Me.Fuerzamayor = o("Fuerzamayor").BOOL

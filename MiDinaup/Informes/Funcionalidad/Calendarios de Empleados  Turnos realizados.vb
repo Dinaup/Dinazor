@@ -13,16 +13,16 @@ Partial Public Class InformesD
               Agregar_Respuesta("Fecha_Desde",Fecha_Desde)
               Agregar_Respuesta("Fecha_Hasta",Fecha_Hasta)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CalendariosDeEmpleadosTurnosRealizados_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Fecha As Date?
-                <ProtoBuf.ProtoMember(101)>  Public Tipo As Integer
-                <ProtoBuf.ProtoMember(102)>  Public Duracion As Integer
-                <ProtoBuf.ProtoMember(103)>  Public Realizacion As Integer
-                <ProtoBuf.ProtoMember(104)>  Public Estado As Integer
-                <ProtoBuf.ProtoMember(105)>  Public Fuerzamayor As Boolean
-                <ProtoBuf.ProtoMember(106)>  Public HExtraNomina As Decimal
-                <ProtoBuf.ProtoMember(107)>  Public AusenciaNomina As Decimal
+                <ProtoMember(100)>  Public Fecha As Date?
+                <ProtoMember(101)>  Public Tipo As Integer
+                <ProtoMember(102)>  Public Duracion As Integer
+                <ProtoMember(103)>  Public Realizacion As Integer
+                <ProtoMember(104)>  Public Estado As Integer
+                <ProtoMember(105)>  Public Fuerzamayor As Boolean
+                <ProtoMember(106)>  Public HExtraNomina As Decimal
+                <ProtoMember(107)>  Public AusenciaNomina As Decimal
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Fecha = o("Fecha").ToDate
               Me.Tipo = ctype(o("Tipo").INT(0), EnumTipoDeTurnoE)

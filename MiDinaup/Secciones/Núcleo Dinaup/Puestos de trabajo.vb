@@ -5,14 +5,15 @@ Partial Public Class SeccionesD
   Public Class PuestosDeTrabajoD
       Public Shared _SeccionID As String = "a150171e-6bcc-47dd-a235-918b9883154e"
       Public Shared _SeccionIDGUID As New Guid("a150171e-6bcc-47dd-a235-918b9883154e")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of PuestosDeTrabajoC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of PuestosDeTrabajoC )) 
           Dim R As New List(Of PuestosDeTrabajoC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, PuestosDeTrabajoES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(PuestosDeTrabajoES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New PuestosDeTrabajoC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 
@@ -72,6 +73,7 @@ Partial Public Class SeccionesD
       Public Shared ReferenciaDestinador$ = "pr_1463108555x208wd"
       Public Shared EmpleadoQueProcesoLaVinculacionTieneAccesoWeb$ = "pr_1472617b07xb2wd"
       Public Shared ReferenciaUbicacionPrincipal$ = "pr_1464b42b99h1dawd"
+      Public Shared ReferenciaDepositoMonetario$ = "pr_442fd80xa2wc"
       Public Shared ID$ = "id"
       Public Shared TextoPrincipal$ = "nombre"
       Public Shared FechaAltaDato_UTC$ = "fecha"
@@ -197,6 +199,10 @@ Partial Public Class SeccionesD
           Public Property ReferenciaUbicacionPrincipal As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
           Public Shared ___ReferenciaUbicacionPrincipal As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaUbicacionPrincipal"",""etiqueta"": ""Ubicación Principal"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""b9adbfbf-a81a-45fb-861c-90502902c982"",""titulo"": ""Ubicaciones"",""iconoid"": ""b985b58f-7275-46b8-9b66-2c54346b0185"",""etiquetasingular"": ""Ubicación"",""etiquetaplural"": ""Ubicaciones"",""etiquetaesfemenino"": true,""contienelista"": false,""eslista"": false,""esbase"": false,""puedeagregar"": false},""seccionrelacionadaid"": ""b9adbfbf-a81a-45fb-861c-90502902c982"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": true,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Ubicación Principal"",""descripcion"": """",""keyword"": ""ReferenciaUbicacionPrincipal"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __ReferenciaUbicacionPrincipal As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaUbicacionPrincipal
+          <DisplayName("Depósito monetario")>
+          Public Property ReferenciaDepositoMonetario As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaDepositoMonetario As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaDepositoMonetario"",""etiqueta"": ""Depósito monetario"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""cab2cf42-3cf6-4aa6-9930-c7ee704650bc"",""titulo"": ""Base - Depósitos monetarios"",""iconoid"": ""f037928c-b088-47e4-a79e-3d217109403b"",""etiquetasingular"": ""Depósito monetario"",""etiquetaplural"": ""Depósitos monetarios"",""etiquetaesfemenino"": true,""contienelista"": false,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""cab2cf42-3cf6-4aa6-9930-c7ee704650bc"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Depósito monetario"",""descripcion"": """",""keyword"": ""ReferenciaDepositoMonetario"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaDepositoMonetario As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaDepositoMonetario
           <ReadOnlyAttribute(True)>
           <DisplayName("ID")>
           Public Property ID As Guid
@@ -282,6 +288,7 @@ Partial Public Class SeccionesD
           me.ReferenciaDestinador = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_1463108555x208wd"), _Datos.Leer_String("pr_1463108555x208wd.nombre"))
           me.EmpleadoQueProcesoLaVinculacionTieneAccesoWeb = _Datos.Leer_Boolean("pr_1472617b07xb2wd")
           me.ReferenciaUbicacionPrincipal = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_1464b42b99h1dawd"), _Datos.Leer_String("pr_1464b42b99h1dawd.nombre"))
+          me.ReferenciaDepositoMonetario = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_442fd80xa2wc"), _Datos.Leer_String("pr_442fd80xa2wc.nombre"))
           me.ID = _Datos.Leer_Guid("id")
           me.TextoPrincipal = _Datos.Leer_String("nombre")
           me.FechaAltaDato_UTC = _Datos.Leer_DateTime("fecha")
@@ -339,6 +346,11 @@ Partial Public Class SeccionesD
            R.add("pr_1464b42b99h1dawd",me.ReferenciaUbicacionPrincipal.ID.STR())
          Else
            R.add("pr_1464b42b99h1dawd","")
+         End if
+         If Me.ReferenciaDepositoMonetario IsNot nothing then
+           R.add("pr_442fd80xa2wc",me.ReferenciaDepositoMonetario.ID.STR())
+         Else
+           R.add("pr_442fd80xa2wc","")
          End if
          R.add("id", me.ID.AdaptarMySQL_Guid())
          R.add("nombre", me.TextoPrincipal.AdaptarMySQL_String())
@@ -530,6 +542,14 @@ Partial Public Class SeccionesD
             End Get
             Set(value As Guid)
                 me.SetValue_Guid("pr_1464b42b99h1dawd", value)
+            End Set
+          End Property
+          Public property ReferenciaDepositoMonetario As Guid
+            get
+                return me.GetValue_Guid("pr_442fd80xa2wc")
+            End Get
+            Set(value As Guid)
+                me.SetValue_Guid("pr_442fd80xa2wc", value)
             End Set
           End Property
         Public ReadOnly property ID As Guid

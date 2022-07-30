@@ -11,10 +11,10 @@ Partial Public Class InformesD
               me.Titulo  = "Empleados > Ubicaciones con acceso"
               Agregar_Respuesta("Empleado",Empleado)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class EmpleadosUbicacionesConAcceso_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public AccesoTodos As Boolean
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public AccesoTodos As Boolean
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.AccesoTodos = o("AccesoTodos").BOOL

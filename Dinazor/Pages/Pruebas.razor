@@ -60,30 +60,30 @@ Se ha utiliza el API en modo directo, es decir, que carga los datos de la secci√
 
 		<h1>@Abierto_Dato.Listador.TextoPrincipal</h1>
 
-		<DinaupControlU @bind-Valor_Relacion=Abierto_Dato.Listador.ReferenciaAutorDelAlta Configuracion=Abierto_Dato.Listador.__ReferenciaAutorDelAlta ></DinaupControlU>
+		<DinaupControlU @bind-Valor_Relacion=Abierto_Dato.Listador.ReferenciaAutorDelAlta Configuracion=Abierto_Dato.Listador.__ReferenciaAutorDelAlta></DinaupControlU>
 
 
 
-		
-		@code{ /* Al ser de tipo ENUM. No se hace bind-value. Se controla el cambio manualmente para hacer la conversion. */ }
-		<DinaupControlU Valor_Int=@Abierto_Dato.Listador.CampoDeTipoEnumeracionMeses.INT()
-						Valor_IntChanged="@((int v) => Abierto_Dato.Listador.CampoDeTipoEnumeracionMeses = (EnumMesE)v)"
-					Configuracion=Abierto_Dato.Listador.__CampoDeTipoEnumeracionMeses ></DinaupControlU>
-		
-		
-		<DinaupControlU @bind-Valor_String=Abierto_Dato.Listador.TextoDePrueba Configuracion="Abierto_Dato.Listador.__TextoDePrueba"></DinaupControlU>
-		<DinaupControlU @bind-Valor_Decimal=Abierto_Dato.Listador.CampoDecimal Configuracion="Abierto_Dato.Listador.__CampoDecimal"></DinaupControlU>
-		<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.FechaDePrueba Configuracion="Abierto_Dato.Listador.__FechaDePrueba"></DinaupControlU>
-		<DinaupControlU @bind-Valor_Boolean=Abierto_Dato.Listador.CasillaSiNoDePrueba Configuracion="Abierto_Dato.Listador.__CasillaSiNoDePrueba"></DinaupControlU>
-		<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.FechaYHoraConSegundos_UTC Configuracion="Abierto_Dato.Listador.__FechaYHoraConSegundos_UTC"></DinaupControlU>
-		<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.FechaYHoraSinSegundos_UTC Configuracion="Abierto_Dato.Listador.__FechaYHoraSinSegundos_UTC"></DinaupControlU>
-		<DinaupControlU @bind-Valor_String=Abierto_Dato.Listador.TextoMultilinea Configuracion="Abierto_Dato.Listador.__TextoMultilinea"></DinaupControlU>
-		<DinaupControlU @bind-Valor_String=Abierto_Dato.Listador.TextoDePrueba Configuracion="Abierto_Dato.Listador.__TextoDePrueba"></DinaupControlU>
-		<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.HoraConSegundos Configuracion="Abierto_Dato.Listador.__HoraConSegundos"></DinaupControlU>
-		<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.HoraSinSegundos Configuracion="Abierto_Dato.Listador.__HoraSinSegundos"></DinaupControlU>
 
-	</RadzenCard>
- 
+		@code { /* Al ser de tipo ENUM. No se hace bind-value. Se controla el cambio manualmente para hacer la conversion. */ }
+	<DinaupControlU Valor_Int=@Abierto_Dato.Listador.CampoDeTipoEnumeracionMeses.INT()
+					Valor_IntChanged="@((int v) => Abierto_Dato.Listador.CampoDeTipoEnumeracionMeses = (EnumMesE)v)"
+					Configuracion=Abierto_Dato.Listador.__CampoDeTipoEnumeracionMeses></DinaupControlU>
+
+
+	<DinaupControlU @bind-Valor_String=Abierto_Dato.Listador.TextoDePrueba Configuracion="Abierto_Dato.Listador.__TextoDePrueba"></DinaupControlU>
+	<DinaupControlU @bind-Valor_Decimal=Abierto_Dato.Listador.CampoDecimal Configuracion="Abierto_Dato.Listador.__CampoDecimal"></DinaupControlU>
+	<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.FechaDePrueba Configuracion="Abierto_Dato.Listador.__FechaDePrueba"></DinaupControlU>
+	<DinaupControlU @bind-Valor_Boolean=Abierto_Dato.Listador.CasillaSiNoDePrueba Configuracion="Abierto_Dato.Listador.__CasillaSiNoDePrueba"></DinaupControlU>
+	<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.FechaYHoraConSegundos_UTC Configuracion="Abierto_Dato.Listador.__FechaYHoraConSegundos_UTC"></DinaupControlU>
+	<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.FechaYHoraSinSegundos_UTC Configuracion="Abierto_Dato.Listador.__FechaYHoraSinSegundos_UTC"></DinaupControlU>
+	<DinaupControlU @bind-Valor_String=Abierto_Dato.Listador.TextoMultilinea Configuracion="Abierto_Dato.Listador.__TextoMultilinea"></DinaupControlU>
+	<DinaupControlU @bind-Valor_String=Abierto_Dato.Listador.TextoDePrueba Configuracion="Abierto_Dato.Listador.__TextoDePrueba"></DinaupControlU>
+	<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.HoraConSegundos Configuracion="Abierto_Dato.Listador.__HoraConSegundos"></DinaupControlU>
+	<DinaupControlU @bind-Valor_DateTimeNulable=Abierto_Dato.Listador.HoraSinSegundos Configuracion="Abierto_Dato.Listador.__HoraSinSegundos"></DinaupControlU>
+
+</RadzenCard>
+
 
 	<hr>
 	<h2>Elementos de prueba</h2>
@@ -94,19 +94,19 @@ Se ha utiliza el API en modo directo, es decir, que carga los datos de la secci√
 		@foreach (MiDinaup.SeccionesD.SeccionDePruebasJSONListaD.SeccionDePruebasJSONListaC ElementoActual in Abierto_Dato.Lista)
 		{
 			<RadzenCard>
-				
+
 				@if (!ElementoActual.Eliminado)
 				{
-					<DinaupControlU @bind-Valor_String=ElementoActual.ValorDePrueba Configuracion=ElementoActual.__ValorDePrueba ></DinaupControlU>
-					<DinaupControlU @bind-Valor_String=ElementoActual.TextoPrincipal Configuracion=ElementoActual.__TextoPrincipal ></DinaupControlU>
-					<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Eliminar" Click="(() => ElementoActual.Eliminado = true)"/>
+					<DinaupControlU @bind-Valor_String=ElementoActual.ValorDePrueba Configuracion=ElementoActual.__ValorDePrueba></DinaupControlU>
+					<DinaupControlU @bind-Valor_String=ElementoActual.TextoPrincipal Configuracion=ElementoActual.__TextoPrincipal></DinaupControlU>
+					<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Eliminar" Click="(() => ElementoActual.Eliminado = true)" />
 				}
 				else
-				{	
-					<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Restaurar" Click="(() => ElementoActual.Eliminado = false)"/>
-		
+				{
+					<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Restaurar" Click="(() => ElementoActual.Eliminado = false)" />
+
 				}
-				
+
 			</RadzenCard>
 		}
 	}
@@ -116,7 +116,7 @@ Se ha utiliza el API en modo directo, es decir, que carga los datos de la secci√
 
 
 
-	<PieFormulario  Evento_AgregarFila="AgregarFila" Evento_Cancelar="Cancelar" Evento_Guardar="Guardar" ></PieFormulario>
+	<PieFormulario Evento_AgregarFila="AgregarFila" Evento_Cancelar="Cancelar" Evento_Guardar="Guardar"></PieFormulario>
 
 }
 else if (Lista_Datos != null)
@@ -183,7 +183,7 @@ else
 	async Task Guardar()
 	{
 		if (Abierto_Dato == null) return;
-		var respuesta = await MiDinaup.SeccionesD.SeccionDePruebasJSOND.DatosGuardar_Async( Dinaup_Sesion.DinaupUsuario, Abierto_Dato);
+		var respuesta = await MiDinaup.SeccionesD.SeccionDePruebasJSOND.DatosGuardar_Async(Dinaup_Sesion.DinaupUsuario, Abierto_Dato);
 
 
 	}
@@ -192,7 +192,11 @@ else
 
 	async Task AbrirRegistro(System.Guid id)
 	{
-		var Dato = await MiDinaup.SeccionesD.SeccionDePruebasJSOND.ConsultarDatos_ConLista_Async(Dinaup_Sesion.DinaupUsuario, "id", id.ToString());
+
+
+		string[] Condicion = new string[] { "id", "=", id.ToString() };
+
+		var Dato = await MiDinaup.SeccionesD.SeccionDePruebasJSOND.ConsultarDatos_ConLista_Async(new SeccionConsultaParametrosC(Dinaup_Servidor.Conexion, Condicion));
 
 
 
@@ -211,7 +215,8 @@ else
 
 	async void ActualizarUI()
 	{
-		Lista_Datos = await MiDinaup.SeccionesD.SeccionDePruebasJSOND.ConsultarDatos_ConLista_Async(Dinaup_Sesion.DinaupUsuario, "eliminado", "0");
+		string[] Condicion = new string[] { "eliminado", "=", "0" };
+		Lista_Datos = await MiDinaup.SeccionesD.SeccionDePruebasJSOND.ConsultarDatos_ConLista_Async(new SeccionConsultaParametrosC(Dinaup_Servidor.Conexion, Condicion));
 		this.StateHasChanged();
 	}
 

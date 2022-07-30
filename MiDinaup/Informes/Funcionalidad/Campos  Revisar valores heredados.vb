@@ -10,15 +10,15 @@ Partial Public Class InformesD
               me.ID = new GUID("7feedc93-2be4-4c71-92ad-acd074a1e6ec")
               me.Titulo  = "Campos > Revisar valores heredados"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CamposRevisarValoresHeredados_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(102)>  Public CampoHerencia As String
-                <ProtoBuf.ProtoMember(103)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(104)>  Public Seccion As String
-                <ProtoBuf.ProtoMember(105)>  Public SeccionHerencia As String
-                <ProtoBuf.ProtoMember(106)>  Public Etiqueta As String
+                <ProtoMember(100)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(102)>  Public CampoHerencia As String
+                <ProtoMember(103)>  Public ID As Guid
+                <ProtoMember(104)>  Public Seccion As String
+                <ProtoMember(105)>  Public SeccionHerencia As String
+                <ProtoMember(106)>  Public Etiqueta As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.FechaAltaSistema = o("FechaAltaSistema").ToDateTime_UTC
               Me.FechaUltimaModificacion = o("FechaUltimaModificacion").ToDateTime_UTC

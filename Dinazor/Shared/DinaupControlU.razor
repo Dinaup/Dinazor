@@ -1,7 +1,4 @@
-﻿ 
-
-
-@if (Configuracion==null)
+﻿@if (Configuracion == null)
 {
 
 	<span>Cargando..</span>
@@ -10,44 +7,46 @@
 else if (Configuracion.Formato == TipoCamposSQLServerE.Bool)
 {
 
-	<label> 
-	<RadzenCheckBox   TValue="bool"   @bind-Value=@Valor_Boolean  /> @Configuracion.Etiqueta
+	<label>
+		<RadzenCheckBox TValue="bool" @bind-Value=@Valor_Boolean /> @Configuracion.Etiqueta
 	</label>
 
 }
 else if (Configuracion.Formato == TipoCamposSQLServerE.Doble)
 {
 
-	<label>@Configuracion.Etiqueta<br>
-	  <RadzenNumeric TValue="decimal"  @bind-Value=@Valor_Decimal   />
+	<label>
+		@Configuracion.Etiqueta<br>
+		<RadzenNumeric TValue="decimal" @bind-Value=@Valor_Decimal />
 	</label>
 
 }
 else if (Configuracion.Formato == TipoCamposSQLServerE.Entero)
 {
 
-	<label  >@Configuracion.Etiqueta<br>
+	<label>
+		@Configuracion.Etiqueta<br>
 
 
-	@if (Configuracion.ItemsDesplegable.TieneDatos())
-	{
-	
-		<RadzenDropDown Value="@Configuracion.ItemsDesplegable.HacerMagiaArray(this.Valor_Int)" AllowClear="true" AllowFiltering="false"  TValue="DesplegableItemC"   Placeholder="Seleccione..."
-		                Data=@Configuracion.ItemsDesplegable ValueProperty="ID"   Change=@(args => OnChange(args as DesplegableItemC)) >
-			<Template>
-				@((context as DesplegableItemC).Texto )
-			</Template>
-		</RadzenDropDown>
+		@if (Configuracion.ItemsDesplegable.TieneDatos())
+		{
 
- 
+			<RadzenDropDown Value="@Configuracion.ItemsDesplegable.HacerMagiaArray(this.Valor_Int)" AllowClear="true" AllowFiltering="false" TValue="DesplegableItemC" Placeholder="Seleccione..."
+					Data=@Configuracion.ItemsDesplegable ValueProperty="ID" Change=@(args => OnChange(args as DesplegableItemC))>
+				<Template>
+					@((context as DesplegableItemC).Texto )
+				</Template>
+			</RadzenDropDown>
 
-	}
-	else
-	{
-	
-		<RadzenNumeric   TValue="int"  @bind-Value=@Valor_Int />
 
-	}
+
+		}
+		else
+		{
+
+			<RadzenNumeric TValue="int" @bind-Value=@Valor_Int />
+
+		}
 	</label>
 
 
@@ -57,8 +56,9 @@ else if (Configuracion.Formato == TipoCamposSQLServerE.Fecha)
 
 
 
-	<label>@Configuracion.Etiqueta<br>
-	   <RadzenDatePicker  @bind-Value=@Valor_DateTimeNulable DateFormat="d"  TValue="DateTime?"  />
+	<label>
+		@Configuracion.Etiqueta<br>
+		<RadzenDatePicker @bind-Value=@Valor_DateTimeNulable DateFormat="d" TValue="DateTime?" />
 	</label>
 
 }
@@ -67,35 +67,37 @@ else if (Configuracion.Formato == TipoCamposSQLServerE.FechaYHora)
 
 
 
-	 
 
-	<label>@Configuracion.Etiqueta<br>
 
-	 @if (Configuracion.RolCampo == RolCampoE.SinSegundos)
-	 {
-	 	<RadzenDatePicker Value=@Valor_DateTimeNulable.ToLocalTime_PN()   Change=@(args => OnChange(args   ))  TValue="DateTime?" ShowTime="true" ShowSeconds="false" DateFormat="dd/MM/yyyy HH:mm"   />
-	 }
-	 else
-	 {
-	 	<RadzenDatePicker Value=@Valor_DateTimeNulable.ToLocalTime_PN()   Change=@(args => OnChange(args  ))  TValue="DateTime?" ShowTime="true" ShowSeconds="true" DateFormat="dd/MM/yyyy HH:mm:ss"  />
-	 }
-         
+	<label>
+		@Configuracion.Etiqueta<br>
+
+		@if (Configuracion.RolCampo == RolCampoE.SinSegundos)
+		{
+			<RadzenDatePicker Value=@Valor_DateTimeNulable.ToLocalTime_PN() Change=@(args => OnChange(args )) TValue="DateTime?" ShowTime="true" ShowSeconds="false" DateFormat="dd/MM/yyyy HH:mm" />
+		}
+		else
+		{
+			<RadzenDatePicker Value=@Valor_DateTimeNulable.ToLocalTime_PN() Change=@(args => OnChange(args )) TValue="DateTime?" ShowTime="true" ShowSeconds="true" DateFormat="dd/MM/yyyy HH:mm:ss" />
+		}
+
 	</label>
 
 }
 else if (Configuracion.Formato == TipoCamposSQLServerE.Hora)
 {
-	<label >@Configuracion.Etiqueta<br>
+	<label>
+		@Configuracion.Etiqueta<br>
 
 
-	@if (Configuracion.RolCampo == RolCampoE.SinSegundos)
-	{
-		<RadzenDatePicker @bind-Value=@Valor_DateTimeNulable   TValue="DateTime?" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"  />
-	}
-	else
-	{
-		<RadzenDatePicker @bind-Value=@Valor_DateTimeNulable    TValue="DateTime?" ShowTime="true" TimeOnly="true" ShowSeconds="true" DateFormat="HH:mm:ss"  />
-	}
+		@if (Configuracion.RolCampo == RolCampoE.SinSegundos)
+		{
+			<RadzenDatePicker @bind-Value=@Valor_DateTimeNulable TValue="DateTime?" ShowTime="true" TimeOnly="true" DateFormat="HH:mm" />
+		}
+		else
+		{
+			<RadzenDatePicker @bind-Value=@Valor_DateTimeNulable TValue="DateTime?" ShowTime="true" TimeOnly="true" ShowSeconds="true" DateFormat="HH:mm:ss" />
+		}
 
 	</label>
 
@@ -106,15 +108,17 @@ else if (Configuracion.Formato == TipoCamposSQLServerE.Texto)
 
 	@if (Configuracion.EsMultilinea)
 	{
-		<label class="w-100">@Configuracion.Etiqueta<br>
-		   <RadzenTextArea  @bind-Value=@Valor_String  class="w-100"  Style="height:100px"/>
+		<label class="w-100">
+			@Configuracion.Etiqueta<br>
+			<RadzenTextArea @bind-Value=@Valor_String class="w-100" Style="height:100px" />
 		</label>
 	}
 	else
 	{
 
-		<label class="w-100">@Configuracion.Etiqueta<br>
-			<RadzenTextBox @bind-Value=@Valor_String   class="w-100" />
+		<label class="w-100">
+			@Configuracion.Etiqueta<br>
+			<RadzenTextBox @bind-Value=@Valor_String class="w-100" />
 		</label>
 	}
 
@@ -123,7 +127,23 @@ else if (Configuracion.Formato == TipoCamposSQLServerE.Guid)
 {
 
 
-	<label class="w-100">@Configuracion.Etiqueta<br>
+	<label class="w-100">
+		@Configuracion.Etiqueta<br>
+
+
+		@if(Valor_Relacion_DatosDesplegables != null){
+
+			<RadzenDropDownDataGrid 
+						 TValue="IdentificadorRegistro"  
+						 Data  =@(Valor_Relacion_DatosDesplegables.ToList())  
+						 Value =@Valor_Relacion
+						 ValueChanged=@((arg) => Valor_Relacion = new(arg))
+						 TextProperty=@Configuracion.Etiqueta
+						 AllowFiltering="true" AllowClear="true" Style="width: 100%" />
+
+
+		}
+
 	</label>
 
 }
@@ -137,9 +157,9 @@ else
 
 @code {
 
-	
+
 	[Parameter]
-	public DinaNETCore.APID.DinaupAPI_CampoC? Configuracion { get; set; }
+	public DinaNetCore.APID.DinaupAPI_CampoC? Configuracion { get; set; }
 
 
 
@@ -169,9 +189,9 @@ else
 		}
 	}
 
-	
 
-	
+
+
 
 	[Parameter]
 	public int Valor_Int
@@ -196,7 +216,7 @@ else
 			Valor_DecimalChanged.InvokeAsync(value);
 		}
 	}
-	
+
 	[Parameter]
 	public DateTime Valor_DateTime
 	{
@@ -223,12 +243,25 @@ else
 	}
 
 
+
 	[Parameter]
-	public DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC Valor_Relacion
+	public IEnumerable<IdentificadorRegistro> Valor_Relacion_DatosDesplegables { get; set; }
+
+
+
+	[Parameter]
+	public DinaNetCore.APID.DinaupAPI_IdentificacionRegistroC Valor_Relacion
 	{
 		get => _Valor_Relacion;
 		set
 		{
+
+			if(value != null){
+				if(value.ID == Guid.Empty){
+					/// Importante, porque si se pone la clase vacía. No se despliega el desplegble.
+					value = null;
+				}
+			}
 			if (_Valor_Relacion == value) return;
 			_Valor_Relacion = value;
 			Valor_RelacionChanged.InvokeAsync(value);
@@ -237,11 +270,11 @@ else
 
 
 
-	private DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC  _Valor_Relacion;
+	private DinaNetCore.APID.DinaupAPI_IdentificacionRegistroC _Valor_Relacion;
 
 
 
-	[Parameter] public EventCallback<DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC > Valor_RelacionChanged { get; set; }
+	[Parameter] public EventCallback<DinaNetCore.APID.DinaupAPI_IdentificacionRegistroC> Valor_RelacionChanged { get; set; }
 	[Parameter] public EventCallback<string> Valor_StringChanged { get; set; }
 	[Parameter] public EventCallback<Boolean> Valor_BooleanChanged { get; set; }
 	[Parameter] public EventCallback<decimal> Valor_DecimalChanged { get; set; }
@@ -249,7 +282,7 @@ else
 	[Parameter] public EventCallback<DateTime> Valor_DateTimeChanged { get; set; }
 	[Parameter] public EventCallback<DateTime?> Valor_DateTimeNulableChanged { get; set; }
 
-	private string _valor_String ="";
+	private string _valor_String = "";
 	private Boolean _valor_Boolean;
 	private decimal _valor_Decimal;
 	private int _valor_Int;
@@ -258,7 +291,7 @@ else
 
 
 
- 
+
 	void OnChange(DesplegableItemC item)
 	{
 
@@ -275,16 +308,16 @@ else
 
 
 
-	
 
- 
- 
+
+
+
 	void OnChange(DateTime? item)
 	{
 
 		if (item != null)
 		{
-			this.Valor_DateTimeNulable  = item.Value.ToUniversalTime();
+			this.Valor_DateTimeNulable = item.Value.ToUniversalTime();
 		}
 		else
 		{

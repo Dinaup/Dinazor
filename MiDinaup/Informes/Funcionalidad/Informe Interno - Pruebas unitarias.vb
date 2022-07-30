@@ -10,10 +10,10 @@ Partial Public Class InformesD
               me.ID = new GUID("f3cfa812-2699-400a-a3ec-347ae7a7b7dc")
               me.Titulo  = "Informe Interno - Pruebas unitarias"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class InformeInternoPruebasUnitarias_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public Eliminado As Boolean
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public Eliminado As Boolean
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.Eliminado = o("Eliminado").BOOL

@@ -5,14 +5,15 @@ Partial Public Class SeccionesD
   Public Class EnviosProgramadosDeCorreosListaD
       Public Shared _SeccionID As String = "0d42d4e7-1f57-46e7-af37-f9e63fc554e0"
       Public Shared _SeccionIDGUID As New Guid("0d42d4e7-1f57-46e7-af37-f9e63fc554e0")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of EnviosProgramadosDeCorreosListaC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of EnviosProgramadosDeCorreosListaC )) 
           Dim R As New List(Of EnviosProgramadosDeCorreosListaC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, EnviosProgramadosDeCorreosListaES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(EnviosProgramadosDeCorreosListaES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New EnviosProgramadosDeCorreosListaC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 

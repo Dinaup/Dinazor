@@ -10,16 +10,16 @@ Partial Public Class InformesD
               me.ID = new GUID("402fa3cd-2cfd-4e9d-b7a5-49469ecf638b")
               me.Titulo  = "API - Mis Tareas"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class APIMisTareas_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public Estado As String
-                <ProtoBuf.ProtoMember(102)>  Public Empleado As String
-                <ProtoBuf.ProtoMember(103)>  Public EstadoID As Guid
-                <ProtoBuf.ProtoMember(104)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(105)>  Public PosicionOrden As Decimal
-                <ProtoBuf.ProtoMember(106)>  Public Prioridad As Integer
-                <ProtoBuf.ProtoMember(107)>  Public Imagenes As String
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public Estado As String
+                <ProtoMember(102)>  Public Empleado As String
+                <ProtoMember(103)>  Public EstadoID As Guid
+                <ProtoMember(104)>  Public ID As Guid
+                <ProtoMember(105)>  Public PosicionOrden As Decimal
+                <ProtoMember(106)>  Public Prioridad As Integer
+                <ProtoMember(107)>  Public Imagenes As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.Estado = o("Estado").STR

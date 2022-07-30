@@ -10,10 +10,10 @@ Partial Public Class InformesD
               me.ID = new GUID("66170b32-99eb-45cd-a19b-5493232963bb")
               me.Titulo  = "Mis contadores"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class MisContadores_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Seccion As String
-                <ProtoBuf.ProtoMember(101)>  Public Dato As String
+                <ProtoMember(100)>  Public Seccion As String
+                <ProtoMember(101)>  Public Dato As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Seccion = o("Seccion").STR
               Me.Dato = o("Dato").STR

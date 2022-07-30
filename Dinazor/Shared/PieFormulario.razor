@@ -1,8 +1,19 @@
 ﻿<div class="row justify-content-center">
 	<div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
-		<RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" Click="( async  ()=>  _Gardar())" />
+
+
+
+		@if(Evento_Guardar.HasDelegate ){
+			<RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" Click="( async  ()=>  _Gardar())" />
+		}
+		@if(Evento_Cancelar.HasDelegate ){
 		<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel"  Click="( async  ()=>  _Cancelar())"  />
+		}
+		@if(Evento_AgregarFila.HasDelegate ){
 		<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Agregar dato a lista"  Click="( async  ()=>  _AgregarFila())"  />
+		}
+
+
 	</div>
 </div>
 

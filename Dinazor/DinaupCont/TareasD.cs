@@ -8,7 +8,7 @@
 
 
 
-using APID = DinaNETCore.APID;
+using APID = DinaNetCore.APID;
 
 namespace Dinazor.DinaupCont
 {

@@ -10,17 +10,17 @@ Partial Public Class InformesD
               me.ID = new GUID("6f3d56a0-0a46-422f-b1dc-ee9cd433cc82")
               me.Titulo  = "Eventos de agendas"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class EventosDeAgendas_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Tipodeevento As String
-                <ProtoBuf.ProtoMember(101)>  Public Desde As Date?
-                <ProtoBuf.ProtoMember(102)>  Public Hasta As Date?
-                <ProtoBuf.ProtoMember(103)>  Public Ocupa As Boolean
-                <ProtoBuf.ProtoMember(104)>  Public TipodeAgenda As String
-                <ProtoBuf.ProtoMember(105)>  Public Agenda As String
-                <ProtoBuf.ProtoMember(106)>  Public EventoseccionID As Guid
-                <ProtoBuf.ProtoMember(107)>  Public TipodeAgendaID As Guid
-                <ProtoBuf.ProtoMember(108)>  Public Evento As String
+                <ProtoMember(100)>  Public Tipodeevento As String
+                <ProtoMember(101)>  Public Desde As Date?
+                <ProtoMember(102)>  Public Hasta As Date?
+                <ProtoMember(103)>  Public Ocupa As Boolean
+                <ProtoMember(104)>  Public TipodeAgenda As String
+                <ProtoMember(105)>  Public Agenda As String
+                <ProtoMember(106)>  Public EventoseccionID As Guid
+                <ProtoMember(107)>  Public TipodeAgendaID As Guid
+                <ProtoMember(108)>  Public Evento As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Tipodeevento = o("Tipodeevento").STR
               Me.Desde = o("Desde").ToDateTime_UTC

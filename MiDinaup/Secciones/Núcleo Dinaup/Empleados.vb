@@ -5,14 +5,15 @@ Partial Public Class SeccionesD
   Public Class EmpleadosD
       Public Shared _SeccionID As String = "c6e071c7-776f-4300-aa55-c711fd1da916"
       Public Shared _SeccionIDGUID As New Guid("c6e071c7-776f-4300-aa55-c711fd1da916")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of EmpleadosC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of EmpleadosC )) 
           Dim R As New List(Of EmpleadosC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, EmpleadosES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(EmpleadosES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New EmpleadosC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 
@@ -104,6 +105,20 @@ Partial Public Class SeccionesD
       Public Shared FirmaDeCorreo$ = "pr_20040425825"
       Public Shared PuedeAdministrarTodasLasEmpresas$ = "pr_40040291891"
       Public Shared PuedeConectarATodasLasUbicaciones$ = "pr_20040480317"
+      Public Shared ReferenciaDepositoPreferente$ = "pr_40040114841"
+      Public Shared DescuentoVentaPorciento$ = "pr_654454e9"
+      Public Shared VenderConRecargoDeEquivalencia$ = "pr_15n"
+      Public Shared ComprarConRecargoDeEquivalencia$ = "pr_41b6976x20cwc"
+      Public Shared ImporteModificadorSaldoAjustes$ = "pr_17e4513d83x360wd"
+      Public Shared DescuentoComprasPorciento$ = "pr_41b69c1x2a9wc"
+      Public Shared ReferenciaTipoDeCliente$ = "pr_17f93d5e2exe8wd"
+      Public Shared ReferenciaSubcuentaDeProveedor$ = "pr_60040136501"
+      Public Shared ReferenciaSubcuentaDeCliente$ = "pr_10040133033"
+      Public Shared ReferenciaSubcuentaPagoPendienteDeNominas$ = "pr_50040142261"
+      Public Shared ReferenciaSubcuentaSueldosYSalarios$ = "pr_60040142383"
+      Public Shared ReferenciaSubcuentaAdelantosDeNomina$ = "pr_30040146561"
+      Public Shared ReferenciaSubcuentaSuplidos$ = "pr_40040256643"
+      Public Shared EsChofer$ = "pr_20010421782"
       Public Shared ID$ = "id"
       Public Shared TextoPrincipal$ = "nombre"
       Public Shared FechaAltaDato_UTC$ = "fecha"
@@ -329,8 +344,7 @@ Partial Public Class SeccionesD
           Public Property ReferenciaServidor As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
           Public Shared ___ReferenciaServidor As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaServidor"",""etiqueta"": ""Servidor"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""eadd8f25-d9e0-46ef-89a7-e95efe769df1"",""titulo"": ""Base - Servidores"",""iconoid"": ""35aab678-4c97-4349-9cad-b4e5b4d301a3"",""etiquetasingular"": ""Servidor"",""etiquetaplural"": ""Servidores"",""etiquetaesfemenino"": false,""contienelista"": true,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""eadd8f25-d9e0-46ef-89a7-e95efe769df1"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Servidor"",""descripcion"": """",""keyword"": ""ReferenciaServidor"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __ReferenciaServidor As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaServidor
-          <Description("Indicar en aquellas personas o entidades que ostenten cargos de consejero, gestor, director, administrador general y otros análogos que supongan la
-dirección, administración o control de la empresa como entidad.")>
+          <Description("Indicar en aquellas personas o entidades que ostenten cargos de consejero, gestor, director, administrador general y otros análogos que supongan la" & vbCrLf & "dirección, administración o control de la empresa como entidad.")>
           <DisplayName("Es administrador de la empresa")>
           Public Property EsAdministradorDeLaEmpresa As Boolean
           Public Shared ___EsAdministradorDeLaEmpresa As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""EsAdministradorDeLaEmpresa"",""etiqueta"": ""Es administrador de la empresa"",""oculta"": false,""formato"": 1,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Es administrador de la empresa"",""descripcion"": """",""keyword"": ""EsAdministradorDeLaEmpresa"",""formato"": 1,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
@@ -363,6 +377,63 @@ dirección, administración o control de la empresa como entidad.")>
           Public Property PuedeConectarATodasLasUbicaciones As Boolean
           Public Shared ___PuedeConectarATodasLasUbicaciones As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""PuedeConectarATodasLasUbicaciones"",""etiqueta"": ""Puede conectar a todas las ubicaciones"",""oculta"": false,""formato"": 1,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Puede conectar a todas las ubicaciones"",""descripcion"": """",""keyword"": ""PuedeConectarATodasLasUbicaciones"",""formato"": 1,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __PuedeConectarATodasLasUbicaciones As DinaNETCore.APID.DinaupAPI_CampoC = ___PuedeConectarATodasLasUbicaciones
+          <Description("Depósito de empleado, este tendrá preferencia sobre el depósito de puesto de trabajo.")>
+          <DisplayName("Depósito preferente")>
+          Public Property ReferenciaDepositoPreferente As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaDepositoPreferente As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaDepositoPreferente"",""etiqueta"": ""Depósito preferente"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""cab2cf42-3cf6-4aa6-9930-c7ee704650bc"",""titulo"": ""Base - Depósitos monetarios"",""iconoid"": ""f037928c-b088-47e4-a79e-3d217109403b"",""etiquetasingular"": ""Depósito monetario"",""etiquetaplural"": ""Depósitos monetarios"",""etiquetaesfemenino"": true,""contienelista"": false,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""cab2cf42-3cf6-4aa6-9930-c7ee704650bc"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Depósito preferente"",""descripcion"": """",""keyword"": ""ReferenciaDepositoPreferente"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaDepositoPreferente As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaDepositoPreferente
+          <DisplayName("Descuento % (Venta)")>
+          Public Property DescuentoVentaPorciento As Decimal
+          Public Shared ___DescuentoVentaPorciento As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""DescuentoVentaPorciento"",""etiqueta"": ""Descuento % (Venta)"",""oculta"": false,""formato"": 3,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 6,""decimales"": ""2"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": false,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Descuento % (Venta)"",""descripcion"": """",""keyword"": ""DescuentoVentaPorciento"",""formato"": 3,""rol"": 6,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __DescuentoVentaPorciento As DinaNETCore.APID.DinaupAPI_CampoC = ___DescuentoVentaPorciento
+          <DisplayName("Vender con Recargo de Equivalencia")>
+          Public Property VenderConRecargoDeEquivalencia As Boolean
+          Public Shared ___VenderConRecargoDeEquivalencia As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""VenderConRecargoDeEquivalencia"",""etiqueta"": ""Vender con Recargo de Equivalencia"",""oculta"": false,""formato"": 1,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Vender con Recargo de Equivalencia"",""descripcion"": """",""keyword"": ""VenderConRecargoDeEquivalencia"",""formato"": 1,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __VenderConRecargoDeEquivalencia As DinaNETCore.APID.DinaupAPI_CampoC = ___VenderConRecargoDeEquivalencia
+          <DisplayName("Comprar con recargo de equivalencia")>
+          Public Property ComprarConRecargoDeEquivalencia As Boolean
+          Public Shared ___ComprarConRecargoDeEquivalencia As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ComprarConRecargoDeEquivalencia"",""etiqueta"": ""Comprar con recargo de equivalencia"",""oculta"": false,""formato"": 1,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Comprar con recargo de equivalencia"",""descripcion"": """",""keyword"": ""ComprarConRecargoDeEquivalencia"",""formato"": 1,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ComprarConRecargoDeEquivalencia As DinaNETCore.APID.DinaupAPI_CampoC = ___ComprarConRecargoDeEquivalencia
+          <DisplayName("Modificador Saldo Ajustes")>
+          Public Property ImporteModificadorSaldoAjustes As Decimal
+          Public Shared ___ImporteModificadorSaldoAjustes As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ImporteModificadorSaldoAjustes"",""etiqueta"": ""Modificador Saldo Ajustes"",""oculta"": false,""formato"": 3,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 5,""decimales"": ""2"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Modificador Saldo Ajustes"",""descripcion"": """",""keyword"": ""ImporteModificadorSaldoAjustes"",""formato"": 3,""rol"": 5,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ImporteModificadorSaldoAjustes As DinaNETCore.APID.DinaupAPI_CampoC = ___ImporteModificadorSaldoAjustes
+          <DisplayName("Descuento % (Compras)")>
+          Public Property DescuentoComprasPorciento As Decimal
+          Public Shared ___DescuentoComprasPorciento As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""DescuentoComprasPorciento"",""etiqueta"": ""Descuento % (Compras)"",""oculta"": false,""formato"": 3,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 6,""decimales"": ""2"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": false,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Descuento % (Compras)"",""descripcion"": """",""keyword"": ""DescuentoComprasPorciento"",""formato"": 3,""rol"": 6,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __DescuentoComprasPorciento As DinaNETCore.APID.DinaupAPI_CampoC = ___DescuentoComprasPorciento
+          <DisplayName("Tipo de Cliente")>
+          Public Property ReferenciaTipoDeCliente As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaTipoDeCliente As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaTipoDeCliente"",""etiqueta"": ""Tipo de Cliente"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""8b1fa053-5abe-406e-9760-584ed34a3b97"",""titulo"": ""Base - Tipos de entidad"",""iconoid"": ""48978f8a-f2bd-4695-a897-3a0e7bfdc979"",""etiquetasingular"": ""Tipo de entidad"",""etiquetaplural"": ""Tipos de entidad"",""etiquetaesfemenino"": false,""contienelista"": true,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""8b1fa053-5abe-406e-9760-584ed34a3b97"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Tipo de Cliente"",""descripcion"": """",""keyword"": ""ReferenciaTipoDeCliente"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaTipoDeCliente As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaTipoDeCliente
+          <DisplayName("Subcuenta de Proveedor")>
+          Public Property ReferenciaSubcuentaDeProveedor As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaSubcuentaDeProveedor As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaSubcuentaDeProveedor"",""etiqueta"": ""Subcuenta de Proveedor"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""titulo"": ""Base - Cuadro de cuentas"",""iconoid"": ""56e95fca-1432-4283-b4a2-1336964a155f"",""etiquetasingular"": ""Cuadro de cuenta"",""etiquetaplural"": ""Cuadro de cuentas"",""etiquetaesfemenino"": true,""contienelista"": true,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Subcuenta de Proveedor"",""descripcion"": """",""keyword"": ""ReferenciaSubcuentaDeProveedor"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaSubcuentaDeProveedor As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaSubcuentaDeProveedor
+          <DisplayName("Subcuenta de Cliente")>
+          Public Property ReferenciaSubcuentaDeCliente As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaSubcuentaDeCliente As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaSubcuentaDeCliente"",""etiqueta"": ""Subcuenta de Cliente"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""titulo"": ""Base - Cuadro de cuentas"",""iconoid"": ""56e95fca-1432-4283-b4a2-1336964a155f"",""etiquetasingular"": ""Cuadro de cuenta"",""etiquetaplural"": ""Cuadro de cuentas"",""etiquetaesfemenino"": true,""contienelista"": true,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Subcuenta de Cliente"",""descripcion"": """",""keyword"": ""ReferenciaSubcuentaDeCliente"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaSubcuentaDeCliente As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaSubcuentaDeCliente
+          <DisplayName("Subcuenta (Pago pendiente de nóminas)")>
+          Public Property ReferenciaSubcuentaPagoPendienteDeNominas As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaSubcuentaPagoPendienteDeNominas As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaSubcuentaPagoPendienteDeNominas"",""etiqueta"": ""Subcuenta (Pago pendiente de nóminas)"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""titulo"": ""Base - Cuadro de cuentas"",""iconoid"": ""56e95fca-1432-4283-b4a2-1336964a155f"",""etiquetasingular"": ""Cuadro de cuenta"",""etiquetaplural"": ""Cuadro de cuentas"",""etiquetaesfemenino"": true,""contienelista"": true,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Subcuenta (Pago pendiente de nóminas)"",""descripcion"": """",""keyword"": ""ReferenciaSubcuentaPagoPendienteDeNominas"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaSubcuentaPagoPendienteDeNominas As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaSubcuentaPagoPendienteDeNominas
+          <DisplayName("Subcuenta (Sueldos y salarios)")>
+          Public Property ReferenciaSubcuentaSueldosYSalarios As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaSubcuentaSueldosYSalarios As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaSubcuentaSueldosYSalarios"",""etiqueta"": ""Subcuenta (Sueldos y salarios)"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""titulo"": ""Base - Cuadro de cuentas"",""iconoid"": ""56e95fca-1432-4283-b4a2-1336964a155f"",""etiquetasingular"": ""Cuadro de cuenta"",""etiquetaplural"": ""Cuadro de cuentas"",""etiquetaesfemenino"": true,""contienelista"": true,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Subcuenta (Sueldos y salarios)"",""descripcion"": """",""keyword"": ""ReferenciaSubcuentaSueldosYSalarios"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaSubcuentaSueldosYSalarios As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaSubcuentaSueldosYSalarios
+          <DisplayName("Subcuenta (Adelantos de nómina)")>
+          Public Property ReferenciaSubcuentaAdelantosDeNomina As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaSubcuentaAdelantosDeNomina As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaSubcuentaAdelantosDeNomina"",""etiqueta"": ""Subcuenta (Adelantos de nómina)"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""titulo"": ""Base - Cuadro de cuentas"",""iconoid"": ""56e95fca-1432-4283-b4a2-1336964a155f"",""etiquetasingular"": ""Cuadro de cuenta"",""etiquetaplural"": ""Cuadro de cuentas"",""etiquetaesfemenino"": true,""contienelista"": true,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Subcuenta (Adelantos de nómina)"",""descripcion"": """",""keyword"": ""ReferenciaSubcuentaAdelantosDeNomina"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaSubcuentaAdelantosDeNomina As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaSubcuentaAdelantosDeNomina
+          <DisplayName("Subcuenta (Suplidos)")>
+          Public Property ReferenciaSubcuentaSuplidos As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaSubcuentaSuplidos As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaSubcuentaSuplidos"",""etiqueta"": ""Subcuenta (Suplidos)"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""titulo"": ""Base - Cuadro de cuentas"",""iconoid"": ""56e95fca-1432-4283-b4a2-1336964a155f"",""etiquetasingular"": ""Cuadro de cuenta"",""etiquetaplural"": ""Cuadro de cuentas"",""etiquetaesfemenino"": true,""contienelista"": true,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""c1578f25-c397-4882-a252-52b5fe65731c"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Subcuenta (Suplidos)"",""descripcion"": """",""keyword"": ""ReferenciaSubcuentaSuplidos"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaSubcuentaSuplidos As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaSubcuentaSuplidos
+          <DisplayName("Es chofer")>
+          Public Property EsChofer As Boolean
+          Public Shared ___EsChofer As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""EsChofer"",""etiqueta"": ""Es chofer"",""oculta"": false,""formato"": 1,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Es chofer"",""descripcion"": """",""keyword"": ""EsChofer"",""formato"": 1,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __EsChofer As DinaNETCore.APID.DinaupAPI_CampoC = ___EsChofer
           <ReadOnlyAttribute(True)>
           <DisplayName("ID")>
           Public Property ID As Guid
@@ -480,6 +551,20 @@ dirección, administración o control de la empresa como entidad.")>
           me.FirmaDeCorreo = _Datos.Leer_String("pr_20040425825")
           me.PuedeAdministrarTodasLasEmpresas = _Datos.Leer_Boolean("pr_40040291891")
           me.PuedeConectarATodasLasUbicaciones = _Datos.Leer_Boolean("pr_20040480317")
+          me.ReferenciaDepositoPreferente = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_40040114841"), _Datos.Leer_String("pr_40040114841.nombre"))
+          me.DescuentoVentaPorciento = _Datos.Leer_Decimal("pr_654454e9")
+          me.VenderConRecargoDeEquivalencia = _Datos.Leer_Boolean("pr_15n")
+          me.ComprarConRecargoDeEquivalencia = _Datos.Leer_Boolean("pr_41b6976x20cwc")
+          me.ImporteModificadorSaldoAjustes = _Datos.Leer_Decimal("pr_17e4513d83x360wd")
+          me.DescuentoComprasPorciento = _Datos.Leer_Decimal("pr_41b69c1x2a9wc")
+          me.ReferenciaTipoDeCliente = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_17f93d5e2exe8wd"), _Datos.Leer_String("pr_17f93d5e2exe8wd.nombre"))
+          me.ReferenciaSubcuentaDeProveedor = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_60040136501"), _Datos.Leer_String("pr_60040136501.nombre"))
+          me.ReferenciaSubcuentaDeCliente = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_10040133033"), _Datos.Leer_String("pr_10040133033.nombre"))
+          me.ReferenciaSubcuentaPagoPendienteDeNominas = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_50040142261"), _Datos.Leer_String("pr_50040142261.nombre"))
+          me.ReferenciaSubcuentaSueldosYSalarios = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_60040142383"), _Datos.Leer_String("pr_60040142383.nombre"))
+          me.ReferenciaSubcuentaAdelantosDeNomina = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_30040146561"), _Datos.Leer_String("pr_30040146561.nombre"))
+          me.ReferenciaSubcuentaSuplidos = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_40040256643"), _Datos.Leer_String("pr_40040256643.nombre"))
+          me.EsChofer = _Datos.Leer_Boolean("pr_20010421782")
           me.ID = _Datos.Leer_Guid("id")
           me.TextoPrincipal = _Datos.Leer_String("nombre")
           me.FechaAltaDato_UTC = _Datos.Leer_DateTime("fecha")
@@ -606,6 +691,52 @@ dirección, administración o control de la empresa como entidad.")>
          R.add("pr_20040425825", me.FirmaDeCorreo.AdaptarMySQL_String())
          R.add("pr_40040291891", me.PuedeAdministrarTodasLasEmpresas.AdaptarMySQL_Boolean())
          R.add("pr_20040480317", me.PuedeConectarATodasLasUbicaciones.AdaptarMySQL_Boolean())
+         If Me.ReferenciaDepositoPreferente IsNot nothing then
+           R.add("pr_40040114841",me.ReferenciaDepositoPreferente.ID.STR())
+         Else
+           R.add("pr_40040114841","")
+         End if
+         R.add("pr_654454e9", me.DescuentoVentaPorciento.AdaptarMySQL_Decimal())
+         R.add("pr_15n", me.VenderConRecargoDeEquivalencia.AdaptarMySQL_Boolean())
+         R.add("pr_41b6976x20cwc", me.ComprarConRecargoDeEquivalencia.AdaptarMySQL_Boolean())
+         R.add("pr_17e4513d83x360wd", me.ImporteModificadorSaldoAjustes.AdaptarMySQL_Decimal())
+         R.add("pr_41b69c1x2a9wc", me.DescuentoComprasPorciento.AdaptarMySQL_Decimal())
+         If Me.ReferenciaTipoDeCliente IsNot nothing then
+           R.add("pr_17f93d5e2exe8wd",me.ReferenciaTipoDeCliente.ID.STR())
+         Else
+           R.add("pr_17f93d5e2exe8wd","")
+         End if
+         If Me.ReferenciaSubcuentaDeProveedor IsNot nothing then
+           R.add("pr_60040136501",me.ReferenciaSubcuentaDeProveedor.ID.STR())
+         Else
+           R.add("pr_60040136501","")
+         End if
+         If Me.ReferenciaSubcuentaDeCliente IsNot nothing then
+           R.add("pr_10040133033",me.ReferenciaSubcuentaDeCliente.ID.STR())
+         Else
+           R.add("pr_10040133033","")
+         End if
+         If Me.ReferenciaSubcuentaPagoPendienteDeNominas IsNot nothing then
+           R.add("pr_50040142261",me.ReferenciaSubcuentaPagoPendienteDeNominas.ID.STR())
+         Else
+           R.add("pr_50040142261","")
+         End if
+         If Me.ReferenciaSubcuentaSueldosYSalarios IsNot nothing then
+           R.add("pr_60040142383",me.ReferenciaSubcuentaSueldosYSalarios.ID.STR())
+         Else
+           R.add("pr_60040142383","")
+         End if
+         If Me.ReferenciaSubcuentaAdelantosDeNomina IsNot nothing then
+           R.add("pr_30040146561",me.ReferenciaSubcuentaAdelantosDeNomina.ID.STR())
+         Else
+           R.add("pr_30040146561","")
+         End if
+         If Me.ReferenciaSubcuentaSuplidos IsNot nothing then
+           R.add("pr_40040256643",me.ReferenciaSubcuentaSuplidos.ID.STR())
+         Else
+           R.add("pr_40040256643","")
+         End if
+         R.add("pr_20010421782", me.EsChofer.AdaptarMySQL_Boolean())
          R.add("id", me.ID.AdaptarMySQL_Guid())
          R.add("nombre", me.TextoPrincipal.AdaptarMySQL_String())
          R.add("fecha", me.FechaAltaDato_UTC.AdaptarMySQL_DateTime())
@@ -1078,6 +1209,115 @@ dirección, administración o control de la empresa como entidad.")>
             End Get
             Set(value As Boolean)
                 me.SetValue_Boolean("pr_20040480317", value)
+            End Set
+          End Property
+          Public property ReferenciaDepositoPreferente As Guid
+            get
+                return me.GetValue_Guid("pr_40040114841")
+            End Get
+            Set(value As Guid)
+                me.SetValue_Guid("pr_40040114841", value)
+            End Set
+          End Property
+          Public property DescuentoVentaPorciento As Decimal
+            get
+                return me.GetValue_Decimal("pr_654454e9")
+            End Get
+            Set(value As Decimal)
+                me.SetValue_Decimal("pr_654454e9", value)
+            End Set
+          End Property
+          Public property VenderConRecargoDeEquivalencia As Boolean
+            get
+                return me.GetValue_Boolean("pr_15n")
+            End Get
+            Set(value As Boolean)
+                me.SetValue_Boolean("pr_15n", value)
+            End Set
+          End Property
+          Public property ComprarConRecargoDeEquivalencia As Boolean
+            get
+                return me.GetValue_Boolean("pr_41b6976x20cwc")
+            End Get
+            Set(value As Boolean)
+                me.SetValue_Boolean("pr_41b6976x20cwc", value)
+            End Set
+          End Property
+        Public ReadOnly property ImporteModificadorSaldoAjustes As Decimal
+            get
+                return me.GetValue_Decimal("pr_17e4513d83x360wd")
+            End Get   
+        End Property
+          Public property DescuentoComprasPorciento As Decimal
+            get
+                return me.GetValue_Decimal("pr_41b69c1x2a9wc")
+            End Get
+            Set(value As Decimal)
+                me.SetValue_Decimal("pr_41b69c1x2a9wc", value)
+            End Set
+          End Property
+          Public property ReferenciaTipoDeCliente As Guid
+            get
+                return me.GetValue_Guid("pr_17f93d5e2exe8wd")
+            End Get
+            Set(value As Guid)
+                me.SetValue_Guid("pr_17f93d5e2exe8wd", value)
+            End Set
+          End Property
+          Public property ReferenciaSubcuentaDeProveedor As Guid
+            get
+                return me.GetValue_Guid("pr_60040136501")
+            End Get
+            Set(value As Guid)
+                me.SetValue_Guid("pr_60040136501", value)
+            End Set
+          End Property
+          Public property ReferenciaSubcuentaDeCliente As Guid
+            get
+                return me.GetValue_Guid("pr_10040133033")
+            End Get
+            Set(value As Guid)
+                me.SetValue_Guid("pr_10040133033", value)
+            End Set
+          End Property
+          Public property ReferenciaSubcuentaPagoPendienteDeNominas As Guid
+            get
+                return me.GetValue_Guid("pr_50040142261")
+            End Get
+            Set(value As Guid)
+                me.SetValue_Guid("pr_50040142261", value)
+            End Set
+          End Property
+          Public property ReferenciaSubcuentaSueldosYSalarios As Guid
+            get
+                return me.GetValue_Guid("pr_60040142383")
+            End Get
+            Set(value As Guid)
+                me.SetValue_Guid("pr_60040142383", value)
+            End Set
+          End Property
+          Public property ReferenciaSubcuentaAdelantosDeNomina As Guid
+            get
+                return me.GetValue_Guid("pr_30040146561")
+            End Get
+            Set(value As Guid)
+                me.SetValue_Guid("pr_30040146561", value)
+            End Set
+          End Property
+          Public property ReferenciaSubcuentaSuplidos As Guid
+            get
+                return me.GetValue_Guid("pr_40040256643")
+            End Get
+            Set(value As Guid)
+                me.SetValue_Guid("pr_40040256643", value)
+            End Set
+          End Property
+          Public property EsChofer As Boolean
+            get
+                return me.GetValue_Boolean("pr_20010421782")
+            End Get
+            Set(value As Boolean)
+                me.SetValue_Boolean("pr_20010421782", value)
             End Set
           End Property
         Public ReadOnly property ID As Guid

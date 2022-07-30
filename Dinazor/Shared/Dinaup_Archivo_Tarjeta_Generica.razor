@@ -1,0 +1,65 @@
+﻿@inject DinaupConfiguracionC  Dinaup_Servidor
+@inject DatosCacheC  DatosCacheados
+@inject IJSRuntime JS
+
+
+
+
+
+
+
+
+@if(ArchivoDetalles!= null){
+
+     <RadzenCard Style="width: 250px;">
+         <div class="row">
+             <div class="col text-truncate">
+                 <RadzenBadge BadgeStyle="BadgeStyle.Light" Text="Archivo" Class="mr-1" />
+                 <b>@ArchivoDetalles.Filename</b>
+             </div>
+         </div>
+         <hr style="border: none; background-color: rgba(0,0,0,.08); height: 1px; margin: 1rem 0;" />
+         <div class="d-flex flex-row align-items-center">
+
+             @if(NombreDeArchivoEsImagen(ArchivoDetalles.Filename)){
+               <RadzenImage Path=@Dinaup_Servidor.FirmadorURLArchivos.FirmarURL_Archivo(ArchivoDetalles.ID, ArchivoDetalles.Filename, TamanoE.Alto300px) Class="float-left mr-3" Style="object-fit: cover;width: 80px; height: 80px;" />
+             }
+             <div>
+                 <RadzenButton  Text="Descargar" Click="Descargar" Icon="download" ButtonStyle="ButtonStyle.Light"  Style="margin:auto" />
+             </div>
+         </div>
+     </RadzenCard>
+     
+
+}
+ 
+
+
+
+@code {
+
+
+    MiDinaup.InformesD.FuncionalidadD.APIArchivosC.APIArchivos_FilaC? ArchivoDetalles = null;
+
+
+	[Parameter]
+	public string ArchivoID { get; set; } ="";
+
+
+	protected override void OnInitialized()
+	{
+        this.ArchivoDetalles = DatosCacheados.Cache_Archivos.RecibirPorID(ArchivoID);
+		base.OnInitialized();
+	}
+
+	protected async void Descargar(MouseEventArgs evento)
+	{
+        if(ArchivoDetalles != null){
+            var fileName = ArchivoDetalles.Filename;
+            var fileURL = Dinaup_Servidor.FirmadorURLArchivos.FirmarURL_Archivo(ArchivoDetalles.ID, ArchivoDetalles.Filename,TamanoE.NoRecibir);
+            await JS.InvokeVoidAsync("DescargarArchivo", fileName, fileURL);
+        }
+
+	}
+
+}

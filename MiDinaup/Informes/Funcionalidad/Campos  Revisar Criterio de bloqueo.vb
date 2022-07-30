@@ -9,17 +9,17 @@ Partial Public Class InformesD
               Parametros = New APID.Funcion_Informe_Consultar_ParametrosC( ("dddd5afb-ecc2-4dbe-a250-fc130101dd56"))
               me.ID = new GUID("dddd5afb-ecc2-4dbe-a250-fc130101dd56")
               me.Titulo  = "Campos > Revisar Criterio de bloqueo"
-          End sub
-          <ProtoBuf.ProtoContract>
-          Public Class CamposRevisarCriterioDeBloqueo_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Seccion As String
-                <ProtoBuf.ProtoMember(101)>  Public BloqueodeServidor As Decimal
-                <ProtoBuf.ProtoMember(102)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(103)>  Public Etiqueta As String
-                <ProtoBuf.ProtoMember(104)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(105)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(106)>  Public BloquedeTerminal As Decimal
-              Sub new(O As Newtonsoft.Json.Linq.JToken)
+          End Sub
+            '<Protobuff.>
+            Public Class CamposRevisarCriterioDeBloqueo_FilaC
+                <ProtoMember(100)> Public Seccion As String
+                <ProtoMember(101)> Public BloqueodeServidor As Decimal
+                <ProtoMember(102)> Public FechaUltimaModificacion As DateTime
+                <ProtoMember(103)> Public Etiqueta As String
+                <ProtoMember(104)> Public FechaAltaSistema As DateTime
+                <ProtoMember(105)> Public ID As Guid
+                <ProtoMember(106)> Public BloquedeTerminal As Decimal
+                Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Seccion = o("Seccion").STR
               Me.BloqueodeServidor = o("BloqueodeServidor").DEC
               Me.FechaUltimaModificacion = o("FechaUltimaModificacion").ToDateTime_UTC

@@ -10,20 +10,20 @@ Partial Public Class InformesD
               me.ID = new GUID("9926b248-878c-462e-bfc0-4cd332352c52")
               me.Titulo  = "Campos > Revisión de Relaciones"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CamposRevisionDeRelaciones_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Funcionalidadnativadecampo As Decimal
-                <ProtoBuf.ProtoMember(101)>  Public Seccion As String
-                <ProtoBuf.ProtoMember(102)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(103)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(104)>  Public EsBase As Boolean
-                <ProtoBuf.ProtoMember(105)>  Public Icono As Guid
-                <ProtoBuf.ProtoMember(106)>  Public RelacionID As Guid
-                <ProtoBuf.ProtoMember(107)>  Public Nombre As String
-                <ProtoBuf.ProtoMember(108)>  Public SeccionID As Guid
-                <ProtoBuf.ProtoMember(109)>  Public Formato As Decimal
-                <ProtoBuf.ProtoMember(110)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(111)>  Public Relacion As String
+                <ProtoMember(100)>  Public Funcionalidadnativadecampo As Decimal
+                <ProtoMember(101)>  Public Seccion As String
+                <ProtoMember(102)>  Public ID As Guid
+                <ProtoMember(103)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(104)>  Public EsBase As Boolean
+                <ProtoMember(105)>  Public Icono As Guid
+                <ProtoMember(106)>  Public RelacionID As Guid
+                <ProtoMember(107)>  Public Nombre As String
+                <ProtoMember(108)>  Public SeccionID As Guid
+                <ProtoMember(109)>  Public Formato As Decimal
+                <ProtoMember(110)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(111)>  Public Relacion As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Funcionalidadnativadecampo = o("Funcionalidadnativadecampo").DEC
               Me.Seccion = o("Seccion").STR

@@ -10,23 +10,23 @@ Partial Public Class InformesD
               me.ID = new GUID("6289a491-c9fd-4682-8e97-91409988c5e7")
               me.Titulo  = "Algoritmos > Todos los Algoritmos"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class AlgoritmosTodosLosAlgoritmos_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Eliminado As Decimal
-                <ProtoBuf.ProtoMember(101)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(102)>  Public Seccion As String
-                <ProtoBuf.ProtoMember(103)>  Public Tipodedato As Decimal
-                <ProtoBuf.ProtoMember(104)>  Public DatosSecundariosRelacionID As Guid
-                <ProtoBuf.ProtoMember(105)>  Public SeccionRelacion As String
-                <ProtoBuf.ProtoMember(106)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(107)>  Public Publico As Boolean
-                <ProtoBuf.ProtoMember(108)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(109)>  Public SeccionID As Guid
-                <ProtoBuf.ProtoMember(110)>  Public Categoria As String
-                <ProtoBuf.ProtoMember(111)>  Public Tipodealgoritmo As Decimal
-                <ProtoBuf.ProtoMember(112)>  Public Subcategoria As String
-                <ProtoBuf.ProtoMember(113)>  Public NombreIcono As Guid
-                <ProtoBuf.ProtoMember(114)>  Public Obsoleto As Boolean
+                <ProtoMember(100)>  Public Eliminado As Decimal
+                <ProtoMember(101)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(102)>  Public Seccion As String
+                <ProtoMember(103)>  Public Tipodedato As Decimal
+                <ProtoMember(104)>  Public DatosSecundariosRelacionID As Guid
+                <ProtoMember(105)>  Public SeccionRelacion As String
+                <ProtoMember(106)>  Public TextoPrincipal As String
+                <ProtoMember(107)>  Public Publico As Boolean
+                <ProtoMember(108)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(109)>  Public SeccionID As Guid
+                <ProtoMember(110)>  Public Categoria As String
+                <ProtoMember(111)>  Public Tipodealgoritmo As Decimal
+                <ProtoMember(112)>  Public Subcategoria As String
+                <ProtoMember(113)>  Public NombreIcono As Guid
+                <ProtoMember(114)>  Public Obsoleto As Boolean
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Eliminado = o("Eliminado").DEC
               Me.FechaAltaSistema = o("FechaAltaSistema").ToDateTime_UTC

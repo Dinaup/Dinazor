@@ -13,28 +13,30 @@ Partial Public Class SeccionesD
       End Class
       Public Shared _SeccionID As String = "74a1dad6-642c-4e4a-b396-55c7cf5a2689"
       Public Shared _SeccionIDGUID As New Guid("74a1dad6-642c-4e4a-b396-55c7cf5a2689")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of AreasDeAccesoWebBaseC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of AreasDeAccesoWebBaseC )) 
           Dim R As New List(Of AreasDeAccesoWebBaseC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, AreasDeAccesoWebBaseES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(AreasDeAccesoWebBaseES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New AreasDeAccesoWebBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 
           Return R 
       End Function 
-      Public Shared Async Function ConsultarDatos_ConLista_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of  AreasDeAccesoWebBase_ConListaC)) 
+      Public Shared Async Function ConsultarDatos_ConLista_Async(  Parametros As SeccionConsultaParametrosC ) As Task(Of List(Of  AreasDeAccesoWebBase_ConListaC)) 
           Dim R As New List(Of AreasDeAccesoWebBase_ConListaC )  
-          Dim d =  Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, AreasDeAccesoWebBaseES._SeccionID, True, Campo, Valor) 
+          Dim d =  Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(AreasDeAccesoWebBaseES._SeccionID, True, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Valores_Lista = Actual.Value.Item2
                   Dim Obj_Listador As New AreasDeAccesoWebBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   Dim Objs_Listas As New List(Of AreasDeAccesoWebBaseListaD.AreasDeAccesoWebBaseListaC) 
                   If Valores_Lista.TieneDatos Then  
                       For Each ValoresLista In Valores_Lista 
@@ -140,10 +142,7 @@ Partial Public Class SeccionesD
           Public Property TodasLasConexionesLocalesObsoleto As Boolean
           Public Shared ___TodasLasConexionesLocalesObsoleto As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""TodasLasConexionesLocalesObsoleto"",""etiqueta"": ""Todas las conexiones locales (Obsoleto)"",""oculta"": false,""formato"": 1,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Todas las conexiones locales (Obsoleto)"",""descripcion"": """",""keyword"": ""TodasLasConexionesLocalesObsoleto"",""formato"": 1,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __TodasLasConexionesLocalesObsoleto As DinaNETCore.APID.DinaupAPI_CampoC = ___TodasLasConexionesLocalesObsoleto
-          <Description("Direcciones IP separadas por salto de linea
-Ej:
-192.168.1.10
-192.*")>
+          <Description("Direcciones IP separadas por salto de linea" & vbCrLf & "Ej:" & vbCrLf & "192.168.1.10" & vbCrLf & "192.*")>
           <DisplayName("Direcciones IP en lista blanca")>
           Public Property DireccionesIPEnListaBlanca As String
           Public Shared ___DireccionesIPEnListaBlanca As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""DireccionesIPEnListaBlanca"",""etiqueta"": ""Direcciones IP en lista blanca"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 50,""decimales"": ""0"",""multilinea"": true,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Direcciones IP en lista blanca"",""descripcion"": """",""keyword"": ""DireccionesIPEnListaBlanca"",""formato"": 5,""rol"": 50,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")

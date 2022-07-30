@@ -10,16 +10,16 @@ Partial Public Class InformesD
               me.ID = new GUID("e33d9547-d22c-47f5-87ca-ab7efc7896a6")
               me.Titulo  = "Catálogos > Todos los catálogos"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CatalogosTodosLosCatalogos_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(102)>  Public SeccionPrincipal As String
-                <ProtoBuf.ProtoMember(103)>  Public SeccionID As Guid
-                <ProtoBuf.ProtoMember(104)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(105)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(106)>  Public SecciondecatalogoID As Guid
-                <ProtoBuf.ProtoMember(107)>  Public SecciondeCatalogo As String
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(102)>  Public SeccionPrincipal As String
+                <ProtoMember(103)>  Public SeccionID As Guid
+                <ProtoMember(104)>  Public ID As Guid
+                <ProtoMember(105)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(106)>  Public SecciondecatalogoID As Guid
+                <ProtoMember(107)>  Public SecciondeCatalogo As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.FechaUltimaModificacion = o("FechaUltimaModificacion").ToDateTime_UTC

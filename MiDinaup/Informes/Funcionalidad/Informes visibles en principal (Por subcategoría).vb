@@ -12,10 +12,10 @@ Partial Public Class InformesD
               Agregar_Respuesta("Categoria",Categoria)
               Agregar_Respuesta("Subcategoria",Subcategoria)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class InformesVisiblesEnPrincipalPorSubcategoria_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public InformeIcono As Guid
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public InformeIcono As Guid
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.InformeIcono = o("InformeIcono").ToGuid

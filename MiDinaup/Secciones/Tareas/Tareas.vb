@@ -1,42 +1,43 @@
 ﻿   Imports System.ComponentModel
    Imports DinaNETCore
-   Imports DinaNETCore.APID
+Imports DinaNETCore.APID
 Partial Public Class SeccionesD
-  Public Class TareasD
-      Public Shared _SeccionID As String = "22aff5d9-acb9-4fa7-a9e0-1a4e297abfdb"
-      Public Shared _SeccionIDGUID As New Guid("22aff5d9-acb9-4fa7-a9e0-1a4e297abfdb")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of TareasC )) 
-          Dim R As New List(Of TareasC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, TareasES._SeccionID, False, Campo, Valor) 
-          If d.Datos.TieneDatos Then 
-              For Each Actual In d.Datos 
-                  Dim Valores_Listador = Actual.Value.Item1
-                  Dim Obj_Listador As New TareasC 
-                  Obj_Listador.CargarDatos(Valores_Listador) 
-                  R.Add(Obj_Listador) 
-              Next 
-          End If 
-          Return R 
-      End Function 
-      Public Shared Async Function DatosGuardar_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, DAtos As TareasC, Optional CampoWhere$ = "id") As Task(Of HTTPRespuestaAPIC_Formualario_GuardarC)
-          Return Await DatosGuardar_Async(DinaupSesion, New List(Of TareasC)({DAtos}), CampoWhere )
-      End Function
-      Public Shared Async Function DatosGuardar_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, DAtos As List(Of TareasC), Optional CampoWhere$ = "id") As Task(Of HTTPRespuestaAPIC_Formualario_GuardarC)
-          Dim Importar As New List(Of DinaupAPI_ImportacionProcesableC)
-          For Each Actual In DAtos 
-              Dim RegistroActual = New DinaupAPI_ImportacionProcesableC() 
-               RegistroActual.dinaup_listador_datos = Actual.ToDic 
-               Importar.Add(RegistroActual)  
-          Next 
-          Return Await DinaupSesion.ConexionServidor.Funcion_Importar_Ejecutar_Async(DinaupSesion, TareasES._SeccionID, Importar, CampoWhere, "") 
-      End Function
-      Public Shared Function AbrirVentana_Agregar(DinaupSesion As DinaNETCore.APID.DinaupSesionC) As Tareas_FormularioC
-          Dim Form_Nuevo = DinaupSesion.ConexionServidor.Funcion_Formulario_Abrir(DinaupSesion, TareasES._SeccionID, "id", "")
-          Dim API_VV = New DinaNETCore.API_VVC
-          API_VV.Actualizar(Form_Nuevo)
-          Return New Tareas_FormularioC(API_VV, API_VV.TokenListador)
-      End Function
-      Public Shared Function AbrirVentana_Editar(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, Valor$) As Tareas_FormularioC
+    Public Class TareasD
+        Public Shared _SeccionID As String = "22aff5d9-acb9-4fa7-a9e0-1a4e297abfdb"
+        Public Shared _SeccionIDGUID As New Guid("22aff5d9-acb9-4fa7-a9e0-1a4e297abfdb")
+        Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of TareasC))
+            Dim R As New List(Of TareasC)
+            Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_ASync(TareasES._SeccionID, False, Parametros)
+            If d.Datos.TieneDatos Then
+                For Each Actual In d.Datos
+                    Dim Valores_Listador = Actual.Value.Item1
+                    Dim Obj_Listador As New TareasC
+                    Obj_Listador.CargarDatos(Valores_Listador)
+                    Obj_Listador.CargaInterna(Actual.Value)
+                    R.Add(Obj_Listador)
+                Next
+            End If
+            Return R
+        End Function
+        Public Shared Async Function DatosGuardar_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, DAtos As TareasC, Optional CampoWhere$ = "id") As Task(Of HTTPRespuestaAPIC_Formualario_GuardarC)
+            Return Await DatosGuardar_Async(DinaupSesion, New List(Of TareasC)({DAtos}), CampoWhere)
+        End Function
+        Public Shared Async Function DatosGuardar_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, DAtos As List(Of TareasC), Optional CampoWhere$ = "id") As Task(Of HTTPRespuestaAPIC_Formualario_GuardarC)
+            Dim Importar As New List(Of DinaupAPI_ImportacionProcesableC)
+            For Each Actual In DAtos
+                Dim RegistroActual = New DinaupAPI_ImportacionProcesableC()
+                RegistroActual.dinaup_listador_datos = Actual.ToDic
+                Importar.Add(RegistroActual)
+            Next
+            Return Await DinaupSesion.ConexionServidor.Funcion_Importar_Ejecutar_Async(DinaupSesion, TareasES._SeccionID, Importar, CampoWhere, "")
+        End Function
+        Public Shared Function AbrirVentana_Agregar(DinaupSesion As DinaNETCore.APID.DinaupSesionC) As Tareas_FormularioC
+            Dim Form_Nuevo = DinaupSesion.ConexionServidor.Funcion_Formulario_Abrir(DinaupSesion, TareasES._SeccionID, "id", "")
+            Dim API_VV = New DinaNETCore.API_VVC
+            API_VV.Actualizar(Form_Nuevo)
+            Return New Tareas_FormularioC(API_VV, API_VV.TokenListador)
+        End Function
+        Public Shared Function AbrirVentana_Editar(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, Valor$) As Tareas_FormularioC
           Dim Form_Nuevo = DinaupSesion.ConexionServidor.Funcion_Formulario_Abrir(DinaupSesion, TareasES._SeccionID,Campo, Valor)
           Dim API_VV = New DinaNETCore.API_VVC
           API_VV.Actualizar(Form_Nuevo)
@@ -115,7 +116,7 @@ Partial Public Class SeccionesD
           Public Property ReferenciaEmpleadoPrincipal As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
           Public Shared ___ReferenciaEmpleadoPrincipal As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaEmpleadoPrincipal"",""etiqueta"": ""Empleado"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""c6e071c7-776f-4300-aa55-c711fd1da916"",""titulo"": ""Empleados"",""iconoid"": ""1c8abf82-640c-4d18-b62c-89de310923dd"",""etiquetasingular"": ""Empleado"",""etiquetaplural"": ""Empleados"",""etiquetaesfemenino"": false,""contienelista"": false,""eslista"": false,""esbase"": false,""puedeagregar"": false},""seccionrelacionadaid"": ""c6e071c7-776f-4300-aa55-c711fd1da916"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": true,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Empleado"",""descripcion"": """",""keyword"": ""ReferenciaEmpleadoPrincipal"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __ReferenciaEmpleadoPrincipal As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaEmpleadoPrincipal
-          <DisplayName("Descripción")>
+          <DisplayName("Descripción")>                                                                        
           Public Property Descripcion As String
           Public Shared ___Descripcion As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""Descripcion"",""etiqueta"": ""Descripción"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 140,""decimales"": ""0"",""multilinea"": true,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Descripción"",""descripcion"": """",""keyword"": ""Descripcion"",""formato"": 5,""rol"": 140,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __Descripcion As DinaNETCore.APID.DinaupAPI_CampoC = ___Descripcion

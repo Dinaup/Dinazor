@@ -1,0 +1,35 @@
+﻿@inject DinaupConfiguracionC  Dinaup_Servidor
+@inject DatosCacheC  DatosCacheados
+@inject DinaupConfiguracionC   DinaupConfiguracion
+
+
+
+
+@if (DinaupConfiguracion.Conexion.ConexionValida == false)
+{
+
+    <div>Cargando 1/3...</div>
+}
+else if (DinaupConfiguracion.Conexion.ConexionDisponible == false)
+{
+
+    <div>Cargando 2/3...</div>
+    <div style="opacity:0 "> @DinaupConfiguracion.Conexion.DescripcionDeErrorDeConexion  </div>
+}
+else if (DatosCacheados.CacheCargado == false)
+{
+    <div>Cargando 3/3...</div>
+}
+else
+{
+    @ChildContent
+    
+
+}
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+}

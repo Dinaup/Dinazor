@@ -10,18 +10,18 @@ Partial Public Class InformesD
               me.ID = new GUID("ec0ea9c2-828c-4c06-bd4a-86616e4350d1")
               me.Titulo  = "Campos > Autorrellenado"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CamposAutorrellenado_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Seccion As String
-                <ProtoBuf.ProtoMember(101)>  Public Valor5 As String
-                <ProtoBuf.ProtoMember(102)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(103)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(104)>  Public Valor4 As String
-                <ProtoBuf.ProtoMember(105)>  Public Valor2 As String
-                <ProtoBuf.ProtoMember(106)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(107)>  Public Valor1 As String
-                <ProtoBuf.ProtoMember(108)>  Public Valor3 As String
-                <ProtoBuf.ProtoMember(109)>  Public Etiqueta As String
+                <ProtoMember(100)>  Public Seccion As String
+                <ProtoMember(101)>  Public Valor5 As String
+                <ProtoMember(102)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(103)>  Public ID As Guid
+                <ProtoMember(104)>  Public Valor4 As String
+                <ProtoMember(105)>  Public Valor2 As String
+                <ProtoMember(106)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(107)>  Public Valor1 As String
+                <ProtoMember(108)>  Public Valor3 As String
+                <ProtoMember(109)>  Public Etiqueta As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Seccion = o("Seccion").STR
               Me.Valor5 = o("Valor5").STR

@@ -11,12 +11,12 @@ Partial Public Class InformesD
               me.Titulo  = "Servidores > Ubicaciones por servidor"
               Agregar_Respuesta("Servidor",Servidor)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class ServidoresUbicacionesPorServidor_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public Telefono As String
-                <ProtoBuf.ProtoMember(102)>  Public Direccion As String
-                <ProtoBuf.ProtoMember(103)>  Public CodigoPostal As String
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public Telefono As String
+                <ProtoMember(102)>  Public Direccion As String
+                <ProtoMember(103)>  Public CodigoPostal As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.Telefono = o("Telefono").STR

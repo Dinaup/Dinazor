@@ -10,15 +10,15 @@ Partial Public Class InformesD
               me.ID = new GUID("48ba9aac-c44b-463d-a513-024f046f4c3a")
               me.Titulo  = "Campos > Sistema de importación"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class CamposSistemaDeImportacion_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Etiqueta As String
-                <ProtoBuf.ProtoMember(101)>  Public Formato As Decimal
-                <ProtoBuf.ProtoMember(102)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(103)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(104)>  Public Obligatorio As Boolean
-                <ProtoBuf.ProtoMember(105)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(106)>  Public IconoID As Guid
+                <ProtoMember(100)>  Public Etiqueta As String
+                <ProtoMember(101)>  Public Formato As Decimal
+                <ProtoMember(102)>  Public ID As Guid
+                <ProtoMember(103)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(104)>  Public Obligatorio As Boolean
+                <ProtoMember(105)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(106)>  Public IconoID As Guid
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Etiqueta = o("Etiqueta").STR
               Me.Formato = o("Formato").DEC

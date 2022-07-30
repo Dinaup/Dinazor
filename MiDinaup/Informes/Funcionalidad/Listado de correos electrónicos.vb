@@ -10,20 +10,20 @@ Partial Public Class InformesD
               me.ID = new GUID("d8586be4-74b1-4750-9b5a-ea00079cbc35")
               me.Titulo  = "Listado de correos electrónicos"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class ListadoDeCorreosElectronicos_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Asunto As String
-                <ProtoBuf.ProtoMember(101)>  Public Autor As String
-                <ProtoBuf.ProtoMember(102)>  Public Fecha As Date?
-                <ProtoBuf.ProtoMember(103)>  Public De As String
-                <ProtoBuf.ProtoMember(104)>  Public Para As String
-                <ProtoBuf.ProtoMember(105)>  Public Adjuntos As Integer
-                <ProtoBuf.ProtoMember(106)>  Public Estado As String
-                <ProtoBuf.ProtoMember(107)>  Public EstadoIcono As Integer
-                <ProtoBuf.ProtoMember(108)>  Public Tipodeestado As Integer
-                <ProtoBuf.ProtoMember(109)>  Public Buzon As String
-                <ProtoBuf.ProtoMember(110)>  Public Empresa As String
-                <ProtoBuf.ProtoMember(111)>  Public Tipo As Integer
+                <ProtoMember(100)>  Public Asunto As String
+                <ProtoMember(101)>  Public Autor As String
+                <ProtoMember(102)>  Public Fecha As Date?
+                <ProtoMember(103)>  Public De As String
+                <ProtoMember(104)>  Public Para As String
+                <ProtoMember(105)>  Public Adjuntos As Integer
+                <ProtoMember(106)>  Public Estado As String
+                <ProtoMember(107)>  Public EstadoIcono As Integer
+                <ProtoMember(108)>  Public Tipodeestado As Integer
+                <ProtoMember(109)>  Public Buzon As String
+                <ProtoMember(110)>  Public Empresa As String
+                <ProtoMember(111)>  Public Tipo As Integer
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Asunto = o("Asunto").STR
               Me.Autor = o("Autor").STR

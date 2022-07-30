@@ -10,20 +10,20 @@ Partial Public Class InformesD
               me.ID = new GUID("e7ffd09f-74a9-4358-9878-b1024917fa04")
               me.Titulo  = "Destinadores > Todos los destinadores"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class DestinadoresTodosLosDestinadores_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Puedeagregarlibre As Boolean
-                <ProtoBuf.ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
-                <ProtoBuf.ProtoMember(102)>  Public EtiquetaSingular As String
-                <ProtoBuf.ProtoMember(103)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(104)>  Public SeccionDestino As String
-                <ProtoBuf.ProtoMember(105)>  Public Eliminado As Boolean
-                <ProtoBuf.ProtoMember(106)>  Public FechaAltaSistema As DateTime
-                <ProtoBuf.ProtoMember(107)>  Public SeccionDestinoID As Guid
-                <ProtoBuf.ProtoMember(108)>  Public SeccionOrigen As String
-                <ProtoBuf.ProtoMember(109)>  Public ID As Guid
-                <ProtoBuf.ProtoMember(110)>  Public SeccionID As Guid
-                <ProtoBuf.ProtoMember(111)>  Public EtiquetaPlural As String
+                <ProtoMember(100)>  Public Puedeagregarlibre As Boolean
+                <ProtoMember(101)>  Public FechaUltimaModificacion As DateTime
+                <ProtoMember(102)>  Public EtiquetaSingular As String
+                <ProtoMember(103)>  Public TextoPrincipal As String
+                <ProtoMember(104)>  Public SeccionDestino As String
+                <ProtoMember(105)>  Public Eliminado As Boolean
+                <ProtoMember(106)>  Public FechaAltaSistema As DateTime
+                <ProtoMember(107)>  Public SeccionDestinoID As Guid
+                <ProtoMember(108)>  Public SeccionOrigen As String
+                <ProtoMember(109)>  Public ID As Guid
+                <ProtoMember(110)>  Public SeccionID As Guid
+                <ProtoMember(111)>  Public EtiquetaPlural As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Puedeagregarlibre = o("Puedeagregarlibre").BOOL
               Me.FechaUltimaModificacion = o("FechaUltimaModificacion").ToDateTime_UTC

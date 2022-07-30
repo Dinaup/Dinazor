@@ -1,0 +1,29 @@
+﻿@inject DinaupConfiguracionC  Dinaup_Servidor
+@page "/example-upload"
+
+
+
+
+
+
+
+
+
+
+<h1>Subida estandar</h1>
+<p>Únicamente se puede seleccionar un archivo. La subida no es automática. Tiene barra de progreso.</p>
+<Dinaup_Form_SubirArchivoU TamanoMaximoPorArchivoenMB=5000 ></Dinaup_Form_SubirArchivoU>
+
+
+
+
+
+<h1>Subida automática</h1>
+<p>El archivo se sube automáticamente al seleccionarlo.</p>
+<Dinaup_Form_SubirArchivoU  SubidaAutomatica=true ></Dinaup_Form_SubirArchivoU>
+
+
+
+<h1>Múltiples archivos</h1>
+<p>Permite seleccionar múltiples archivos.</p>
+<Dinaup_Form_SubirArchivoU  SubidaAutomatica=true NumeroMaximoDeArchivos=10 ></Dinaup_Form_SubirArchivoU>

@@ -13,28 +13,30 @@ Partial Public Class SeccionesD
       End Class
       Public Shared _SeccionID As String = "8ff1e68d-76e7-4a8c-ae2b-8ea0180a6c49"
       Public Shared _SeccionIDGUID As New Guid("8ff1e68d-76e7-4a8c-ae2b-8ea0180a6c49")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of DocumentosPrediseñadosBaseC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of DocumentosPrediseñadosBaseC )) 
           Dim R As New List(Of DocumentosPrediseñadosBaseC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, DocumentosPrediseñadosBaseES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DocumentosPrediseñadosBaseES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New DocumentosPrediseñadosBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 
           Return R 
       End Function 
-      Public Shared Async Function ConsultarDatos_ConLista_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of  DocumentosPrediseñadosBase_ConListaC)) 
+      Public Shared Async Function ConsultarDatos_ConLista_Async(  Parametros As SeccionConsultaParametrosC ) As Task(Of List(Of  DocumentosPrediseñadosBase_ConListaC)) 
           Dim R As New List(Of DocumentosPrediseñadosBase_ConListaC )  
-          Dim d =  Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, DocumentosPrediseñadosBaseES._SeccionID, True, Campo, Valor) 
+          Dim d =  Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DocumentosPrediseñadosBaseES._SeccionID, True, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Valores_Lista = Actual.Value.Item2
                   Dim Obj_Listador As New DocumentosPrediseñadosBaseC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   Dim Objs_Listas As New List(Of DocumentosPrediseñadosBaseListaD.DocumentosPrediseñadosBaseListaC) 
                   If Valores_Lista.TieneDatos Then  
                       For Each ValoresLista In Valores_Lista 
@@ -64,6 +66,7 @@ Partial Public Class SeccionesD
       Public Shared ReferenciaDocumentoPrediseñadoPrimeraVersion$ = "pr_60040237495"
       Public Shared Tipo$ = "pr_20040237527"
       Public Shared Archivado$ = "pr_20040237671"
+      Public Shared ReferenciaPlanContable$ = "pr_20040237528"
       Public Shared ID$ = "id"
       Public Shared TextoPrincipal$ = "nombre"
       Public Shared FechaAltaDato_UTC$ = "fecha"
@@ -127,6 +130,10 @@ Partial Public Class SeccionesD
           Public Property Archivado As Boolean
           Public Shared ___Archivado As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""Archivado"",""etiqueta"": ""Archivado"",""oculta"": false,""formato"": 1,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Archivado"",""descripcion"": """",""keyword"": ""Archivado"",""formato"": 1,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __Archivado As DinaNETCore.APID.DinaupAPI_CampoC = ___Archivado
+          <DisplayName("Plan contable")>
+          Public Property ReferenciaPlanContable As DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC
+          Public Shared ___ReferenciaPlanContable As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ReferenciaPlanContable"",""etiqueta"": ""Plan contable"",""oculta"": false,""formato"": 9,""porubicacion"": false,""seccionrelacionada"": {""id"": ""2c6bd0f7-cead-437f-a8ae-b4daa0219e32"",""titulo"": ""Base - Cuadros de cuentas oficiales"",""iconoid"": ""1879b6d0-dfd6-416e-a6f7-21468ad7d6ab"",""etiquetasingular"": ""Cuadro de cuenta oficial"",""etiquetaplural"": ""Cuadros de cuentas oficiales"",""etiquetaesfemenino"": false,""contienelista"": true,""eslista"": false,""esbase"": true,""puedeagregar"": false},""seccionrelacionadaid"": ""2c6bd0f7-cead-437f-a8ae-b4daa0219e32"",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Plan contable"",""descripcion"": """",""keyword"": ""ReferenciaPlanContable"",""formato"": 9,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
+          Public  __ReferenciaPlanContable As DinaNETCore.APID.DinaupAPI_CampoC = ___ReferenciaPlanContable
           <ReadOnlyAttribute(True)>
           <DisplayName("ID")>
           Public Property ID As Guid
@@ -197,6 +204,7 @@ Partial Public Class SeccionesD
           me.ReferenciaDocumentoPrediseñadoPrimeraVersion = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_60040237495"), _Datos.Leer_String("pr_60040237495.nombre"))
           me.Tipo = _Datos.Leer_EnumTipoDeDocumentoE("pr_20040237527")
           me.Archivado = _Datos.Leer_Boolean("pr_20040237671")
+          me.ReferenciaPlanContable = new DinaNETCore.APID.DinaupAPI_IdentificacionRegistroC( _Datos.Leer_Guid("pr_20040237528"), _Datos.Leer_String("pr_20040237528.nombre"))
           me.ID = _Datos.Leer_Guid("id")
           me.TextoPrincipal = _Datos.Leer_String("nombre")
           me.FechaAltaDato_UTC = _Datos.Leer_DateTime("fecha")
@@ -236,6 +244,11 @@ Partial Public Class SeccionesD
          End if
          R.add("pr_20040237527", me.Tipo.AdaptarMySQL_EnumTipoDeDocumentoE())
          R.add("pr_20040237671", me.Archivado.AdaptarMySQL_Boolean())
+         If Me.ReferenciaPlanContable IsNot nothing then
+           R.add("pr_20040237528",me.ReferenciaPlanContable.ID.STR())
+         Else
+           R.add("pr_20040237528","")
+         End if
          R.add("id", me.ID.AdaptarMySQL_Guid())
          R.add("nombre", me.TextoPrincipal.AdaptarMySQL_String())
          R.add("fecha", me.FechaAltaDato_UTC.AdaptarMySQL_DateTime())

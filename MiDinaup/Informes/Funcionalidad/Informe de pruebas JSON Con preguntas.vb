@@ -11,11 +11,11 @@ Partial Public Class InformesD
               me.Titulo  = "Informe de pruebas JSON Con preguntas"
               Agregar_Respuesta("ValorASumar",ValorASumar)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class InformeDePruebasJSONConPreguntas_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public TextoPrincipal As String
-                <ProtoBuf.ProtoMember(101)>  Public ValorDecimal As Decimal
-                <ProtoBuf.ProtoMember(102)>  Public DecimalConSuma As Decimal
+                <ProtoMember(100)>  Public TextoPrincipal As String
+                <ProtoMember(101)>  Public ValorDecimal As Decimal
+                <ProtoMember(102)>  Public DecimalConSuma As Decimal
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.TextoPrincipal = o("TextoPrincipal").STR
               Me.ValorDecimal = o("ValorDecimal").DEC

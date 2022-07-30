@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components;
-using static DinaNETCore.ExtensionesM;
-using static DinaNETCore.ModelosD;
-using static DinaNETCore.APID;
+using static DinaNetCore.ExtensionesM;
+using static DinaNetCore.ModelosD;
+using static DinaNetCore.APID;
 using Radzen;
 
 namespace Dinazor.Pages
@@ -29,11 +29,11 @@ namespace Dinazor.Pages
         public CrearCuenta_ModelC Form_CrearCuenta = new();
         public CrearCuenta_Activar_ModelC? Form_CrearCuenta_Activar = null;
 
-        public static DinaNETCore.RateLimitsD.RateLimitsC FormLimites_IniciarSesion = new(10, 100, 60 * 5);
-        public static DinaNETCore.RateLimitsD.RateLimitsC FormLimites_CambiarContrasena = new(10, 100, 60 * 5);
-        public static DinaNETCore.RateLimitsD.RateLimitsC FormLimites_RecuperarContrasena = new(10, 100, 60 * 5);
-        public static DinaNETCore.RateLimitsD.RateLimitsC FormLimites_CrearCuenta = new(10, 100, 60 * 5);
-        public static DinaNETCore.RateLimitsD.RateLimitsC FormLimites_CrearCuenta_Activar = new(10, 100, 60 * 5);
+        public static DinaNetCore.RateLimitsD.RateLimitsC FormLimites_IniciarSesion = new(10, 100, 60 * 5);
+        public static DinaNetCore.RateLimitsD.RateLimitsC FormLimites_CambiarContrasena = new(10, 100, 60 * 5);
+        public static DinaNetCore.RateLimitsD.RateLimitsC FormLimites_RecuperarContrasena = new(10, 100, 60 * 5);
+        public static DinaNetCore.RateLimitsD.RateLimitsC FormLimites_CrearCuenta = new(10, 100, 60 * 5);
+        public static DinaNetCore.RateLimitsD.RateLimitsC FormLimites_CrearCuenta_Activar = new(10, 100, 60 * 5);
 
 
 

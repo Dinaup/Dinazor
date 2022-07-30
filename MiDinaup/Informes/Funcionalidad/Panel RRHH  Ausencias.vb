@@ -10,10 +10,10 @@ Partial Public Class InformesD
               me.ID = new GUID("7c7dc502-996e-493f-954d-932b924ee79d")
               me.Titulo  = "Panel RRHH > Ausencias"
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class PanelRRHHAusencias_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Fecha As Date?
-                <ProtoBuf.ProtoMember(101)>  Public Empleado As String
+                <ProtoMember(100)>  Public Fecha As Date?
+                <ProtoMember(101)>  Public Empleado As String
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Fecha = o("Fecha").ToDateTime_UTC
               Me.Empleado = o("Empleado").STR

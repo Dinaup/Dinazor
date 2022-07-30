@@ -8,7 +8,7 @@ namespace Dinazor.Services
 
 
 
-        public  static  void AplicarConfiguracionDeCargaAInforme(LoadDataArgs RadZen_Args, DinaNETCore.APID.APID_InformeC Dinaup_Informe)
+        public static void AplicarConfiguracionDeCargaAInforme(LoadDataArgs RadZen_Args, DinaNetCore.APID.APID_InformeC Dinaup_Informe)
         {
 
 

@@ -5,14 +5,15 @@ Partial Public Class SeccionesD
   Public Class DatosFiscalesD
       Public Shared _SeccionID As String = "f3b161a4-dbe4-44ea-9259-b41dc8f88fc1"
       Public Shared _SeccionIDGUID As New Guid("f3b161a4-dbe4-44ea-9259-b41dc8f88fc1")
-      Public Shared Async Function ConsultarDatos_Async(DinaupSesion As DinaNETCore.APID.DinaupSesionC, Campo$, ParamArray Valor As String()) As Task(Of List(Of DatosFiscalesC )) 
+      Public Shared Async Function ConsultarDatos_Async(Parametros As SeccionConsultaParametrosC) As Task(Of List(Of DatosFiscalesC )) 
           Dim R As New List(Of DatosFiscalesC )  
-          Dim d = Await DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DinaupSesion, DatosFiscalesES._SeccionID, False, Campo, Valor) 
+          Dim d = Await Parametros.DinaupSesion.ConexionServidor.Funcion_Datos_Recibir_Async(DatosFiscalesES._SeccionID, False, Parametros) 
           If d.Datos.TieneDatos Then 
               For Each Actual In d.Datos 
                   Dim Valores_Listador = Actual.Value.Item1
                   Dim Obj_Listador As New DatosFiscalesC 
                   Obj_Listador.CargarDatos(Valores_Listador) 
+                  Obj_Listador.CargaInterna(Actual.Value)
                   R.Add(Obj_Listador) 
               Next 
           End If 
@@ -119,12 +120,7 @@ Partial Public Class SeccionesD
           Public Property NIF As String
           Public Shared ___NIF As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""NIF"",""etiqueta"": ""NIF"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 79,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""NIF"",""descripcion"": """",""keyword"": ""NIF"",""formato"": 5,""rol"": 79,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")
           Public  __NIF As DinaNETCore.APID.DinaupAPI_CampoC = ___NIF
-          <Description("Si es una persona física se consignará el primer apellido, un
-espacio, el segundo apellido, un espacio y el nombre
-completo, necesariamente en este orden.
-Para personas jurídicas y entidades sin personalidad jurídica,
-se consignará la razón social completa o denominación, sin
-anagrama.")>
+          <Description("Si es una persona física se consignará el primer apellido, un" & vbCrLf & "espacio, el segundo apellido, un espacio y el nombre" & vbCrLf & "completo, necesariamente en este orden." & vbCrLf & "Para personas jurídicas y entidades sin personalidad jurídica," & vbCrLf & "se consignará la razón social completa o denominación, sin" & vbCrLf & "anagrama.")>
           <DisplayName("Apellidos y Nombre o Razón social")>
           Public Property ApellidosYNombreORazonSocial As String
           Public Shared ___ApellidosYNombreORazonSocial As New DinaNETCore.APID.DinaupAPI_CampoC("{""esid"": false,""eseliminado"": false,""keyword"": ""ApellidosYNombreORazonSocial"",""etiqueta"": ""Apellidos y Nombre o Razón social"",""oculta"": false,""formato"": 5,""porubicacion"": false,""seccionrelacionada"": null,""seccionrelacionadaid"": """",""rol"": 0,""decimales"": ""0"",""multilinea"": false,""obligatorio"": false,""motivobloqueo"": """",""esutc"": false,""aceptasegundos"": false,""aceptacero"": true,""aceptapositivos"": true,""aceptanegativos"": true,""predefinidos_valores"": [],""predefinidos_textos"": [],""predefinidos_iconos"": [],""filtro"": {""titulo"": ""Apellidos y Nombre o Razón social"",""descripcion"": """",""keyword"": ""ApellidosYNombreORazonSocial"",""formato"": 5,""rol"": 0,""seccionrelacionada"": null,""desplegableinforme"": null,""rango"": false},""solovalorespredefinidos"": false}")

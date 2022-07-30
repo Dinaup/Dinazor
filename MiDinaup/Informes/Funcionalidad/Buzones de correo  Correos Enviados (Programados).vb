@@ -11,14 +11,14 @@ Partial Public Class InformesD
               me.Titulo  = "Buzones de correo > Correos Enviados (Programados)"
               Agregar_Respuesta("Buzon",Buzon)
           End sub
-          <ProtoBuf.ProtoContract>
+          <ProtoContract>
           Public Class BuzonesDeCorreoCorreosEnviadosProgramados_FilaC
-                <ProtoBuf.ProtoMember(100)>  Public Empresa As String
-                <ProtoBuf.ProtoMember(101)>  Public Empleado As String
-                <ProtoBuf.ProtoMember(102)>  Public Asunto As String
-                <ProtoBuf.ProtoMember(103)>  Public Fecha As Date?
-                <ProtoBuf.ProtoMember(104)>  Public Archivos As Integer
-                <ProtoBuf.ProtoMember(105)>  Public Estado As Integer
+                <ProtoMember(100)>  Public Empresa As String
+                <ProtoMember(101)>  Public Empleado As String
+                <ProtoMember(102)>  Public Asunto As String
+                <ProtoMember(103)>  Public Fecha As Date?
+                <ProtoMember(104)>  Public Archivos As Integer
+                <ProtoMember(105)>  Public Estado As Integer
               Sub new(O As Newtonsoft.Json.Linq.JToken)
               Me.Empresa = o("Empresa").STR
               Me.Empleado = o("Empleado").STR

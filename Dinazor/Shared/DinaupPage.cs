@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using static DinaNETCore.APID;
+using static DinaNetCore.APID;
 using Microsoft.JSInterop;
 using Radzen;
 using Dinazor.Services;
@@ -13,7 +13,7 @@ namespace Dinazor
 
 
         [Inject]
-        public DinaNETCore.ASP_NETD.SesionServicio Dinaup_Sesion { get; set; }
+        public DinaNetCore.ASP_NETD.SesionServicio Dinaup_Sesion { get; set; }
 
         [Inject]
         public Dinazor.Services.DinaupConfiguracionC Dinaup_Servidor { get; set; }
@@ -33,11 +33,7 @@ namespace Dinazor
         [Inject]
         public DatosCacheC DatosCacheados { get; set; }
 
-        [Inject]
-        public ControladorDeArchivosC  ControladorDeArchivos { get; set; }
-
-
-
+  
 
         //TODO Pendiente sacar la zona horaria del usuario
         public DateTime Convertir_A_FechaLocal(DateTime Fecha)

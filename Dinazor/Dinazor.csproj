@@ -7,25 +7,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\**" />
+    <Content Remove="Controllers\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <None Remove="Controllers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\ServicioFirmasURLC.cs" />
     <Compile Remove="Services\UserService.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Shared\Dinaup_Archivo_Tarjeta_Imagen.razor.css" />
     <None Remove="Shared\NavFooter.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Shared\Dinaup_Archivo_Tarjeta_Imagen.razor.css" />
     <Content Include="Shared\NavFooter.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Radzen.Blazor" Version="3.18.16" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\GitHub\DinaNet\src\DinaNetCore\DinaNETCore.vbproj" />
-    <ProjectReference Include="..\MiDinaup\MiDinaup.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +47,11 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\duparchivos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DinaNetCore\DinaNetCore\DinaNetCore.vbproj" />
+    <ProjectReference Include="..\MiDinaup\MiDinaup.vbproj" />
   </ItemGroup>
 
 </Project>

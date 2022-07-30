@@ -1,0 +1,37 @@
+﻿
+
+
+
+.Galeria{
+    border: 1px solid red;
+    width: calc(500px + 20px);
+    background: black;
+    padding: 10px
+
+    
+}
+    .Galeria img.Previa {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+    .Galeria img.Previa[activa] {
+        opacity:0.6;
+        border: 1px solid #808080
+    }
+        .Galeria img.Previa:hover {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 1px solid var(--bs-primary);
+            cursor:pointer
+        }
+    .Galeria img.Principal {
+        width: 100%;
+    }
+
+
+    .Galeria .ListaDeImagenes {
+        display:flex;
+    }
+
